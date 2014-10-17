@@ -45,6 +45,9 @@
 	void SnacTemperature_BoundaryConditions( void* _context );
 	void SnacTemperature_HeatFluxBC( void* _context );
 	void _SnacTemperature_Top2BottomSweep( Node_LocalIndex node_lI, Variable_Index var_I, void* context, void* result );
+
+    void _SnacTemperature_05Buck( Node_LocalIndex node_lI, Variable_Index var_I, void* context, void* result );
+
 	void _SnacTemperature_Top2BottomSweep_Spherical( 
 		Node_LocalIndex			node_lI, 
 		Variable_Index			var_I, 
