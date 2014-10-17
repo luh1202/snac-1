@@ -89,6 +89,12 @@ void _SnacTemperature_ConstructExtensions( void* _context, void* data ) {
 	ConditionFunction_Register_Add(
 		context->condFunc_Register,
 		ConditionFunction_New( _SnacTemperature_Top2BottomSweep, "SnacTemperature_Top2BottomSweep" ) );
+
+        ConditionFunction_Register_Add(
+				       context->condFunc_Register,
+				       ConditionFunction_New( _SnacTemperature_05Buck, "SnacTemperature_05Buck" ) );
+
+
 	ConditionFunction_Register_Add(
 		context->condFunc_Register,
 		ConditionFunction_New( _SnacTemperature_Top2BottomSweep_Spherical, "SnacTemperature_Top2BottomSweep_Spherical" ) );
