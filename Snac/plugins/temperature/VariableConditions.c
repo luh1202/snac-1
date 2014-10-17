@@ -73,6 +73,45 @@ void _SnacTemperature_Top2BottomSweep( Node_LocalIndex node_lI, Variable_Index v
 }
 
 
+void _SnacTemperature_05Buck( Node_LocalIndex node_lI, Variable_Index var_I, void* _context, void* result ) {
+  Snac_Context*                   context = (Snac_Context*)_context;
+  SnacTemperature_Context*        contextExt = ExtensionManager_Get(
+								    context->extensionMgr,
+								    context,
+								    SnacTemperature_ContextHandle );
+  double*                         temperature = (double*)result;
+  MeshLayout*                     meshLayout = (MeshLayout*)context->meshLayout;
+  HexaMD*                         decomp = (HexaMD*)meshLayout->decomp;
+  Node_GlobalIndex                node_gI;
+  IJK                             ijk;
+  const Index                     jCount = decomp->nodeGlobal3DCounts[1];
+
+  //later added begin                                                                                                                                                                   
+  Coord*                          coord = Snac_NodeCoord_P( context, node_lI );
+  //later added end                                                                                                                                                                     
+
+  node_gI = context->mesh->nodeL2G[node_lI];
+  RegularMeshUtils_Node_1DTo3D( decomp, node_gI, &ijk[0], &ijk[1], &ijk[2] );
+  //      fprintf(stderr,"contextExt->topTemp=%e, contextExt->bottomTemp=%e", contextExt->topTemp=%e, contextExt->bottomTemp=%e);                                                       
+  //fprintf(stderr, "(*coord)[1]=%e",(*coord)[1]);                                                                                                                                      
+  double        BDTisotherm = 450.0;
+  double         midcoord = 30000.0;
+  double        isotherm_slope = (20000.0 - 6000.0) / midcoord;
+  double         isotherm_depth = fabs((*coord)[0] - midcoord) * isotherm_slope + 6000.0;
+
+
+  if(fabs((*coord)[1]) <= isotherm_depth){
+    *temperature = BDTisotherm / isotherm_depth * fabs((*coord)[1]);
+    //fprintf(stderr, "(*coord)[1]=%e, isotherm_slope=%e, isotherm_depth=%e, temperature=%e\n", (*coord)[1], isotherm_slope, isotherm_depth, *temperature);                             
+  }else{
+    *temperature = (contextExt->bottomTemp - BDTisotherm) / (20000.0 - isotherm_depth) * (fabs((*coord)[1]) - isotherm_depth) + BDTisotherm;
+  }
+
+}
+
+
+
+
 void _SnacTemperature_Top2BottomSweep_Spherical(
 		Node_LocalIndex			node_lI,
 		Variable_Index			var_I,
