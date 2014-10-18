@@ -94,6 +94,14 @@ void _SnacRemesher_InterpolateElements( void* _context ) {
 	meshExt->local_range_min[2] = (have_zneg_shadow?decomp->shadowDepth:0);
 	meshExt->local_range_max[2] = (have_zpos_shadow?(neldK-1-decomp->shadowDepth):(neldK-1));
 
+	if(context->rank==24)
+	 	fprintf(stderr,"me=%d (%d %d) (%d %d) (%d %d)\n",context->rank,
+				meshExt->local_range_min[0], 
+				meshExt->local_range_max[0], 
+				meshExt->local_range_min[1], 
+				meshExt->local_range_max[1], 
+				meshExt->local_range_min[2], 
+				meshExt->local_range_max[2] ); 
 	/* Create old and new grids of barycenters */
 	createBarycenterGrids( context );
 	
@@ -301,8 +309,21 @@ void _SnacRemesher_CopyElement( void*					_context,
 	SnacRemesher_Element* srcElt;
 	Snac_Element* dstElt;
 
+	Mesh*			mesh = context->mesh;
+	SnacRemesher_Mesh*	meshExt = ExtensionManager_Get( context->meshExtensionMgr,
+								mesh, 
+								SnacRemesher_MeshHandle );
 	Index i,j;
+#if 0
+	unsigned int		skip = 0, coef_I;
 
+	for(coef_I=0;coef_I<4;coef_I++)
+		if( meshExt->barcord[EltInd].L[coef_I] == -999.0 ) {
+			skip=1;
+			break;
+		}
+	if( skip == 0 ) {
+#endif
 	srcElt = &elementArray[EltInd];
 	dstElt = Snac_Element_At( context, EltInd );
 	for( i=0; i<3; i++ )
@@ -312,7 +333,7 @@ void _SnacRemesher_CopyElement( void*					_context,
 		}
 	dstElt->tetra[tetInd].density = srcElt->tetra[tetInd].density;
 	dstElt->tetra[tetInd].material_I = srcElt->tetra[tetInd].material_I;
-
+//	}
 }
 
 
@@ -321,24 +342,27 @@ void createBarycenterGrids( void* _context )
 	Snac_Context*			context = (Snac_Context*)_context;
 	Mesh*					mesh = context->mesh;
 	SnacRemesher_Mesh*		meshExt = ExtensionManager_Get( context->meshExtensionMgr,
-															mesh, 
-															SnacRemesher_MeshHandle );
-	MeshLayout*             layout = (MeshLayout*)mesh->layout;
-	HexaMD*                 decomp = (HexaMD*)layout->decomp;
-	NodeLayout*				nLayout = mesh->layout->nodeLayout;
+									mesh, 
+									SnacRemesher_MeshHandle );
+	MeshLayout*             	layout = (MeshLayout*)mesh->layout;
+	HexaMD*                 	decomp = (HexaMD*)layout->decomp;
+	NodeLayout*			nLayout = mesh->layout->nodeLayout;
+	Element_GlobalIndex		nelgI = decomp->elementGlobal3DCounts[0];
+	Element_GlobalIndex		nelgJ = decomp->elementGlobal3DCounts[1];
+	Element_GlobalIndex		nelgK = decomp->elementGlobal3DCounts[2];
+	Element_GlobalIndex		elgI, elgJ, elgK;
 	Element_LocalIndex		element_lI;
 	Element_DomainIndex		element_dI;
-	double					tempBC[mesh->elementDomainCount][3];
+	double				tempBC[mesh->elementDomainCount][3];
 
 	/* Loop over the new elements. */
 	for( element_lI = 0; element_lI < mesh->elementLocalCount; element_lI++ ) {
-		unsigned			nEltNodes;
+		unsigned		nEltNodes;
 		Node_DomainIndex*	eltNodes;
+		Element_GlobalIndex	gEltInd;
 		
 		/* Extract the element's node indices.  Note that there should always be eight of these. */
 		{
-			Element_GlobalIndex	gEltInd;
-			
 			nEltNodes = 8;
 			eltNodes = Memory_Alloc_Array( Node_DomainIndex, nEltNodes, "SnacRemesher" );
 			gEltInd = Mesh_ElementMapLocalToGlobal( mesh, element_lI );
@@ -363,6 +387,19 @@ void createBarycenterGrids( void* _context )
 			/* 			meshExt->newBarycenters[element_lI][0],meshExt->newBarycenters[element_lI][1], */
 			/* 			meshExt->newBarycenters[element_lI][2]); */
 		}
+
+		// special treatment for testing.
+		// Since some boundary elements of the new mesh fail to find containing old element, push the barycenters "inward"
+		// by a small amount so that these elements are forced to be inside the old mesh.
+		/* Decompose gEltInd into ijk indexes. */
+		RegularMeshUtils_Element_1DTo3D( decomp, gEltInd, &elgI, &elgJ, &elgK );
+		if( elgI == 0 )  meshExt->newBarycenters[element_lI][0] += 0.01*fabs(meshExt->newBarycenters[element_lI][0]);
+		if( elgI == nelgI-1 )  meshExt->newBarycenters[element_lI][0] -= 0.01*fabs(meshExt->newBarycenters[element_lI][0]);
+		if( elgJ == 0 )  meshExt->newBarycenters[element_lI][1] += 0.01*fabs(meshExt->newBarycenters[element_lI][1]);
+		if( elgJ == nelgJ-1 )  meshExt->newBarycenters[element_lI][1] -= 0.05*fabs(meshExt->newBarycenters[element_lI][1]);
+		if( elgK == 0 )  meshExt->newBarycenters[element_lI][2] += 0.01*fabs(meshExt->newBarycenters[element_lI][2]);
+		if( elgK == nelgK-1 )  meshExt->newBarycenters[element_lI][2] -= 0.01*fabs(meshExt->newBarycenters[element_lI][2]);
+
 	}
 
 	/* Loop over the old elements. */
@@ -394,6 +431,12 @@ void createBarycenterGrids( void* _context )
 				tempBC[element_dI][2] += (mesh->nodeCoord[eltNodes[eltNode_i]][2]/nEltNodes);
 			}
 		}
+#if 0
+		if(context->rank==24)
+		 	fprintf(stderr,"me=%d eldI=%d newBC=%e %e %e\n",context->rank,element_dI,
+		 			tempBC[element_dI][0],tempBC[element_dI][1],
+		 			tempBC[element_dI][2]);
+#endif
 	}
 	/* Sort the tempBC array for a structured BC grid. */
 	{
@@ -437,11 +480,13 @@ void createBarycenterGrids( void* _context )
 						meshExt->orderedToDomain[orderedDomainID] = mesh->elementLocalCount+ghostElementCount;
 						ghostElementCount++;
 					}
-					/* if(context->rank==13) */
-					/* 	fprintf(stderr,"me=%d el=%d oldBC=%e %e %e\n",context->rank,orderedDomainID, */
-					/* 			meshExt->oldBarycenters[orderedDomainID][0], */
-					/* 			meshExt->oldBarycenters[orderedDomainID][1], */
-					/* 			meshExt->oldBarycenters[orderedDomainID][2]); */
+#if 0
+					if(context->rank==24)
+						fprintf(stderr,"me=%d el=%d oldBC=%e %e %e\n",context->rank,orderedDomainID,
+							meshExt->oldBarycenters[orderedDomainID][0],
+								meshExt->oldBarycenters[orderedDomainID][1],
+								meshExt->oldBarycenters[orderedDomainID][2]);
+#endif
 				}
 		assert( mesh->elementDomainCount==(mesh->elementLocalCount+ghostElementCount) );
 	}
@@ -551,12 +596,20 @@ void computeCoefficients( void* _context )
 						/*
 						  f(r)=lambda1(r)*f(r1)+lambda2(r)*f(r2)+lambda3(r)*f(r3)+lambda4(r)*f(r4)
 						  
-						  lambda(r)=inv(T)*(r-r4), 
-						  where lambda is the vector of first three coefficients (lambda4=1.0-sum(lambda,1 to 3)).
-						  r is the position vector, r4 is the position of the fourth apex, and finally T is given by
+						  from http://en.wikipedia.org/wiki/Barycentric_coordinates_(mathematics)#Barycentric_coordinates_on_tetrahedra
+
+						  r = lambda1 * r1 + lambda2 * r2 + lambda3 * r3 + lambda4 * r4, where
+						  whre r1, r2, r3, r4 are the coordinate vector of four apexes and r is a location at which f(r) is interpolated.
+						  Plugging in r = (x, y, z)^T, r1 = (x0, y0, z0)^T, r2 = (x1, y1, z1)^T, etc and 
+						  using lambda4=1.0-sum(lambda,1 to 3), we get
+
+						  lambda = inv(T)*(r-r4), 
+
+						  where lambda is the vector of first three coefficients,
+						  r is the position vector, r4 is the coordinates (x3, y3, z3) of the fourth apex, and finally T is given by
 						  [Ta Tb Tc]   [x0-x3 x1-x3 x2-x3]
 						  [Td Te Tf] = [y0-y3 y1-y3 y2-y3]
-						  [Tg Th Tk]   [z0-z3 z1-z3 z2-z3]
+						  [Tg Th Tk]   [z0-z3 z1-z3 z2-z3].
 						*/
 						double Ta = hexCrds[TetraToNode[tet_I][0]][0] - hexCrds[TetraToNode[tet_I][3]][0];
 						double Tb = hexCrds[TetraToNode[tet_I][1]][0] - hexCrds[TetraToNode[tet_I][3]][0];
@@ -573,6 +626,9 @@ void computeCoefficients( void* _context )
 						  lambda_i(x,y,z) = invT_ij * (r-r4)_j 
 						  = invT_i1*r_1+invT_i2*r_2+invT_i3*r_3 - (invT_i1*r4_1+invT_i2*r4_2+invT_i3*r4_3)
 						  = coef_i1*r_1 + coef_i2*r_2 + coef_i3*r_3 + coef_i4
+
+						  Inversion formula and notations follow 
+							http://en.wikipedia.org/wiki/Invertible_matrix#Inversion_of_3.C3.973_matrices
 						*/
 						/* lambda1 coeffs */
 						meshExt->barcoef[element_dI].coef[tet_I][0][0] = (Te*Tk-Tf*Th)/detT;
@@ -596,6 +652,29 @@ void computeCoefficients( void* _context )
 							meshExt->barcoef[element_dI].coef[tet_I][1][3] -= meshExt->barcoef[element_dI].coef[tet_I][1][coef_i]*hexCrds[TetraToNode[tet_I][3]][coef_i];
 							meshExt->barcoef[element_dI].coef[tet_I][2][3] -= meshExt->barcoef[element_dI].coef[tet_I][2][coef_i]*hexCrds[TetraToNode[tet_I][3]][coef_i];
 						}
+#if 0
+						// comprehensie debugging prints
+						if(context->rank==24)
+							fprintf(stderr,"me=%d element_dI=%d tet_I=%d hexCoords: (%.4e %.4e %.4e) (%.4e %.4e %.4e) (%.4e %.4e %.4e) (%.4e %.4e %.4e)\nT= (%.4e %.4e %.4e)\n   (%.4e %.4e %.4e)\n   (%.4e %.4e %.4e)\n coeff = (%.4e %.4e %.4e %.4e)\n         (%.4e %.4e %.4e %.4e)\n         (%.4e %.4e %.4e %.4e)\n",
+							context->rank,element_dI,tet_I,
+							hexCrds[TetraToNode[tet_I][0]][0], hexCrds[TetraToNode[tet_I][0]][1], hexCrds[TetraToNode[tet_I][0]][2], 
+							hexCrds[TetraToNode[tet_I][1]][0], hexCrds[TetraToNode[tet_I][1]][1], hexCrds[TetraToNode[tet_I][1]][2], 
+							hexCrds[TetraToNode[tet_I][2]][0], hexCrds[TetraToNode[tet_I][2]][1], hexCrds[TetraToNode[tet_I][2]][2], 
+							hexCrds[TetraToNode[tet_I][3]][0], hexCrds[TetraToNode[tet_I][3]][1], hexCrds[TetraToNode[tet_I][3]][2], 
+							Ta, Tb, Tc, Td, Te, Tf, Tg, Th, Tk,
+							meshExt->barcoef[element_dI].coef[tet_I][0][0],
+							meshExt->barcoef[element_dI].coef[tet_I][0][1],
+							meshExt->barcoef[element_dI].coef[tet_I][0][2],
+							meshExt->barcoef[element_dI].coef[tet_I][0][3],
+							meshExt->barcoef[element_dI].coef[tet_I][1][0],
+							meshExt->barcoef[element_dI].coef[tet_I][1][1],
+							meshExt->barcoef[element_dI].coef[tet_I][1][2],
+							meshExt->barcoef[element_dI].coef[tet_I][1][3],
+							meshExt->barcoef[element_dI].coef[tet_I][2][0],
+							meshExt->barcoef[element_dI].coef[tet_I][2][1],
+							meshExt->barcoef[element_dI].coef[tet_I][2][2],
+							meshExt->barcoef[element_dI].coef[tet_I][2][3]);
+#endif
 					}
 				}
 	break;
@@ -671,6 +750,11 @@ void computeBaryCoords( void* _context )
 					if(mindJ==maxdJ) maxdJ++;
 					if(mindK==maxdK) maxdK++;
 					
+#if 0
+					if(context->rank==24)
+						fprintf(stderr,"me=%d element_lI=%d (%d %d) (%d %d) (%d %d)\n",context->rank, element_lI, mindI, maxdI, mindJ, maxdJ, mindK, maxdK);
+#endif
+
 					found_tet = 0;
 					
 					for( eldK = mindK; eldK < maxdK; eldK++ ) {
@@ -680,7 +764,7 @@ void computeBaryCoords( void* _context )
 								for(tet_I=0;tet_I<5;tet_I++) {
 									Index	coef_I;
 									double 	lambda[4];
-									double 	tol_error = 1e-6;
+									double 	tol_error = 1e-4;
 									
 									lambda[3] = 1.0;
 									for(coef_I=0;coef_I<3;coef_I++) {
@@ -691,9 +775,10 @@ void computeBaryCoords( void* _context )
 											meshExt->barcoef[element_dI].coef[tet_I][coef_I][3];
 										lambda[3] -= lambda[coef_I];
 									}
-									for(coef_I=0;coef_I<4;coef_I++) {
+									// Handle small values.
+									for(coef_I=0;coef_I<4;coef_I++) 
 										if( fabs(lambda[coef_I]) < tol_error ) lambda[coef_I] = 0.0;
-									}
+									
 									/* Keep track of closest element in case the current new barycenter is outside of the old grid. */
 									lambda_sqrd = 0.0;
 									for(coef_I=0;coef_I<4;coef_I++) 
@@ -703,7 +788,17 @@ void computeBaryCoords( void* _context )
 										closest_dI = element_dI;
 										closest_tI = tet_I;
 									}
-									
+#if 0									
+									if( context->rank == 24 ) {
+										fprintf(stderr,"me=%d element_lI=%d element_dI=%d tet_I=%d (%e %e %e %e)=%e\n",
+											context->rank, element_lI, element_dI, tet_I,
+											lambda[0],
+											lambda[1],
+											lambda[2],
+											lambda[3], (lambda[0]+lambda[1]+lambda[2]+lambda[3]));
+									}
+#endif
+
 									/* See if the barycenter is inside this tet. */
 									if( (lambda[0] >= -tol_error && lambda[0] <= (1.0+tol_error)) &&
 										(lambda[1] >= -tol_error && lambda[1] <= (1.0+tol_error)) &&
@@ -711,6 +806,7 @@ void computeBaryCoords( void* _context )
 										(lambda[3] >= -tol_error && lambda[3] <= (1.0+tol_error)) ) {
 										found_tet = 1;
 										memcpy( meshExt->barcord[element_lI].L, lambda, sizeof(double)*4);
+										/* hardwired for debugging. */
 										meshExt->barcord[element_lI].elnum = element_dI;
 										meshExt->barcord[element_lI].tetnum = tet_I;
 
@@ -723,7 +819,18 @@ void computeBaryCoords( void* _context )
 						}
 						if( found_tet ) break; /* break eldK loop */
 					}
-					
+#if 0
+					if( context->rank == 24 ) {
+						fprintf(stderr,"me=%d element_lI=%d (%e %e %e %e) %d %d\n",
+							context->rank, element_lI,
+							meshExt->barcord[element_lI].L[0],
+							meshExt->barcord[element_lI].L[1],
+							meshExt->barcord[element_lI].L[2],
+							meshExt->barcord[element_lI].L[3],
+							meshExt->barcord[element_lI].elnum,
+							meshExt->barcord[element_lI].tetnum);
+					}
+#endif
 					/* see if the point is outside of the old mesh.
 					   Assumed is that the current new barycenter is at least closest to "closest_dI" element. */
 					if( !found_tet ) { 
@@ -859,17 +966,17 @@ void computeBaryCoords( void* _context )
 					/* Decompose closest_dI into ijk indexes. */
 					eldI = closest_dI % neldI;
 					eldJ = ((closest_dI-eldI)/neldI) % neldJ;
-					
+
 					/* Four-node element defined. */
 					Vector_Set( hexCrds[0], meshExt->oldBarycenters[eldI+eldJ*neldI] );
 					Vector_Set( hexCrds[1], meshExt->oldBarycenters[eldI+1+eldJ*neldI] );
 					Vector_Set( hexCrds[2], meshExt->oldBarycenters[eldI+1+(eldJ+1)*neldI] );
 					Vector_Set( hexCrds[3], meshExt->oldBarycenters[eldI+(eldJ+1)*neldI] );
-					
+
 					/* compute distances to tri apexes to find the closest two (supposedly forming the closest edge).*/
 					for( apex_I = 0; apex_I < 3; apex_I++ ) {
 						double tmp = 0.0;
-						for( dim_I = 0; dim_I < 2; dim_I++ ) 
+						for( dim_I = 0; dim_I < 2; dim_I++ )
 							tmp += pow((meshExt->newBarycenters[element_lI][dim_I]-hexCrds[TriToNode[closest_tI][apex_I]][dim_I]),2.0);
 						dist_apexes[apex_I].dist = sqrt(tmp);
 						dist_apexes[apex_I].id = apex_I;
