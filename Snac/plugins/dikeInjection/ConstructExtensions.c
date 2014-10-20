@@ -53,24 +53,25 @@ void _SnacDikeInjection_ConstructExtensions( void* _context, void* data ) {
 	/* DikeInjection variables */
 	contextExt->startX = Dictionary_Entry_Value_AsDouble(
 			Dictionary_GetDefault( context->dictionary, "startX", 
-								   Dictionary_Entry_Value_FromDouble( 0.0f ) ) );
-	contextExt->startZ = Dictionary_Entry_Value_AsDouble(
+								   Dictionary_Entry_Value_FromDouble( 29800.0f ) ) );
+	//printf("startX is not the value %d", startX )
+       contextExt->startZ = Dictionary_Entry_Value_AsDouble(
 			Dictionary_GetDefault( context->dictionary, "startZ", 
 								   Dictionary_Entry_Value_FromDouble( 0.0f ) ) );
 	contextExt->endX = Dictionary_Entry_Value_AsDouble(
 			Dictionary_GetDefault( context->dictionary, "endX", 
-								   Dictionary_Entry_Value_FromDouble( 0.0f ) ) );
+								   Dictionary_Entry_Value_FromDouble( 30200.0f ) ) );
 	contextExt->endZ = Dictionary_Entry_Value_AsDouble(
 			Dictionary_GetDefault( context->dictionary, "endZ", 
-								   Dictionary_Entry_Value_FromDouble( 1.0e+04 ) ) );
+								   Dictionary_Entry_Value_FromDouble( 1000.0f ) ) );
 	contextExt->dikeDepth = Dictionary_Entry_Value_AsDouble(
 			Dictionary_GetDefault( context->dictionary, "dikeDepth", 
-								   Dictionary_Entry_Value_FromDouble( 1.0e+04 ) ) );
+								   Dictionary_Entry_Value_FromDouble( 6000.0 ) ) );
 	contextExt->dikeWidth = Dictionary_Entry_Value_AsDouble(
 			Dictionary_GetDefault( context->dictionary, "dikeWidth", 
-								   Dictionary_Entry_Value_FromDouble( 1.8e+03 ) ) ); /* 1.8 * dx looks appropriate. */
+								   Dictionary_Entry_Value_FromDouble( 720 ) ) ); /* 1.8 * dx looks appropriate. */
 	contextExt->injectionRate = Dictionary_Entry_Value_AsDouble(
 			Dictionary_GetDefault( context->dictionary, "injectionRate", 
-								   Dictionary_Entry_Value_FromDouble( 4.8e+03 ) ) ); /* a fraction of applied plate vel. */
+								   Dictionary_Entry_Value_FromDouble( 7.9e-10 ) ) ); /* a fraction of applied plate vel. */
 
 }
