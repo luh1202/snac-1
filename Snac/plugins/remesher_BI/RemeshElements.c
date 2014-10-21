@@ -396,7 +396,7 @@ void createBarycenterGrids( void* _context )
 		if( elgI == 0 )  meshExt->newBarycenters[element_lI][0] += 0.01*fabs(meshExt->newBarycenters[element_lI][0]);
 		if( elgI == nelgI-1 )  meshExt->newBarycenters[element_lI][0] -= 0.01*fabs(meshExt->newBarycenters[element_lI][0]);
 		if( elgJ == 0 )  meshExt->newBarycenters[element_lI][1] += 0.01*fabs(meshExt->newBarycenters[element_lI][1]);
-		if( elgJ == nelgJ-1 )  meshExt->newBarycenters[element_lI][1] -= 0.05*fabs(meshExt->newBarycenters[element_lI][1]);
+		if( elgJ == nelgJ-1 )  meshExt->newBarycenters[element_lI][1] -= 0.01*fabs(meshExt->newBarycenters[element_lI][1]);
 		if( elgK == 0 )  meshExt->newBarycenters[element_lI][2] += 0.01*fabs(meshExt->newBarycenters[element_lI][2]);
 		if( elgK == nelgK-1 )  meshExt->newBarycenters[element_lI][2] -= 0.01*fabs(meshExt->newBarycenters[element_lI][2]);
 
