@@ -178,11 +178,11 @@ void SnacDikeInjection_Constitutive( void* _context, Element_LocalIndex element_
         (Snac_Element_NodeCoord( context, element_lI, 6)[0]-Snac_Element_NodeCoord( context, element_lI, 7)[0]) 
 	 );
 	
-	fprintf(stderr,"elem_dX=%e\n",elem_dX);
+	//fprintf(stderr,"elem_dX=%e \n",elem_dX);
 
 	epsilon_xx = (contextExt->injectionRate*context->dt)/elem_dX/2; 
 
-
+	//fprintf(stderr,"epsilon_xx=%e \n",epsilon_xx);
 	         StressTensor*		stress = &element->tetra[tetra_I].stress;
 			//fprintf(stderr, "baryCenter[1]=%e\n", baryCenter[1]);
             		//fprintf(stderr, "distance = %e\n", distance);
@@ -200,11 +200,18 @@ void SnacDikeInjection_Constitutive( void* _context, Element_LocalIndex element_
               (*stress)[1][1] -= material->lambda * epsilon_xx * ijk[2] / maxxK;
               (*stress)[2][2] -= material->lambda * epsilon_xx * ijk[2] / maxxK;
 		 */
-
+		 //the if global_K_range==1 is for 1d pseudo test
+		 if (global_K_range==1){
+		 (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx;
+		 (*stress)[1][1] -= material->lambda * epsilon_xx;
+		 //(*stress)[2][2] -= material->lambda * epsilon_xx;
+		 
+                 }else{
 		 (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * (ijk[2]+1) / ( global_K_range);
 		 (*stress)[1][1] -= material->lambda * epsilon_xx * (ijk[2]+1) / ( global_K_range);
 		 (*stress)[2][2] -= material->lambda * epsilon_xx * (ijk[2]+1) / ( global_K_range);
-		 //fprintf(stderr, " global_K_range=%d\n ijk[2]=%d\n",  global_K_range, ijk[2]);
+		 }		 
+//fprintf(stderr, " global_K_range=%d\n ijk[2]=%d\n",  global_K_range, ijk[2]);
 		 
 			//fprintf(stderr, "dike(*stress)[0][0]=%e\n", (*stress)[0][0]);			
 			/* Also assuming viscoplastic rheology is used. */
