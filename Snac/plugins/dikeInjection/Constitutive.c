@@ -215,8 +215,18 @@ void SnacDikeInjection_Constitutive( void* _context, Element_LocalIndex element_
 		 
 			//fprintf(stderr, "dike(*stress)[0][0]=%e\n", (*stress)[0][0]);			
 			/* Also assuming viscoplastic rheology is used. */
-			//			viscoplasticElement->plasticStrain[tetra_I] = 0.0;
-	     
+		       	viscoplasticElement->plasticStrain[tetra_I] = 0.0;
+			//just add the above line code can solve the plastic strain too much at dike problem!!
+			//However, I took 4hours playing around in viscoplastic_BI
+			//try to add everything here at there, which is so hard
+			//adding a variable i.e. endZ itsel is already hard, let along finding the diking element and 
+			//get zero plasticStrain
+			//Point is
+			//1)Before doing thing, really think carefully, sometimes life will be much easier
+			// when you use a easier method
+			//2) Pointer is great, it can let things easier.
+			//3)you have to know exactly what is the global variable, what does it contains, which 
+			//pointers can you use everywhere and how to use it. 
 	     }
 	}
 }
