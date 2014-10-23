@@ -592,9 +592,13 @@ fi
 DoCritialConftest ./VMake/SystemTests/C-CompilerType CC_TYPE
 ## Set CC_TYPE to mpicc if on ranger
 ## Choi, 2009/02/17.
-if test "${SYSTEM}x" = "rangerx"; then
-	CC_TYPE="pgi"
-fi
+
+#if test "${SYSTEM}x" = "rangerx"; then
+#	CC_TYPE="pgi"
+#fi
+echo "CC_TYPE="${CC_TYPE}
+CC_TYPE="intel"
+
 if test "${CC_TYPE}x" = "x"; then
 	echo "Warning: Unknown C compiler type \"${CC_TYPE}\"."
 	unset CC_TYPE
@@ -688,15 +692,15 @@ if test "${CXX}x" = "x"; then
 	CXX=`${WHICH} cxx 2> /dev/null`
 	if whichFailed "${CXX}"; then
 		case ${SYSTEM} in
-			Linux|Darwin|CYGWIN|SunOS|ranger)
+			linux|Darwin|CYGWIN|SunOS|ranger)
 				CXX=`${WHICH} g++ 2> /dev/null`
 				if whichFailed "${CXX}"; then
 					CXX="/usr/bin/g++";
 				fi;;
-			OSF1)
-				CXX="/usr/bin/cxx";;
-			*)
-				CXX="";;
+#			OSF1)
+#				CXX="/usr/bin/cxx";;
+#			*)
+#				CXX="";;
 		esac
 	fi	
 	export CXX
