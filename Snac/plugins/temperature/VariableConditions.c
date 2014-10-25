@@ -94,9 +94,9 @@ void _SnacTemperature_05Buck( Node_LocalIndex node_lI, Variable_Index var_I, voi
   RegularMeshUtils_Node_1DTo3D( decomp, node_gI, &ijk[0], &ijk[1], &ijk[2] );
   //      fprintf(stderr,"contextExt->topTemp=%e, contextExt->bottomTemp=%e", contextExt->topTemp=%e, contextExt->bottomTemp=%e);                                                       
   //fprintf(stderr, "(*coord)[1]=%e",(*coord)[1]);                                                                                                                                      
-  double        BDTisotherm = 650.0;
-  double         midcoord = 60000.0;
-  double        isotherm_slope = (20000.0 - 6000.0) / midcoord;
+  double        BDTisotherm = 600.0;
+  double         midcoord = 30000.0;
+  double        isotherm_slope = (16000.0 - 6000.0) / midcoord;
   double         isotherm_depth = fabs((*coord)[0] - midcoord) * isotherm_slope + 6000.0;
 
 
