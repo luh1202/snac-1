@@ -203,13 +203,13 @@ void SnacDikeInjection_Constitutive( void* _context, Element_LocalIndex element_
 		 //the if global_K_range==1 is for 1d pseudo test
 		 if (global_K_range==1){
 		 (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx;
-		 (*stress)[1][1] -= material->lambda * epsilon_xx;
+		 // (*stress)[1][1] -= material->lambda * epsilon_xx;
 		 //(*stress)[2][2] -= material->lambda * epsilon_xx;
 		 
                  }else{
 		 (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * (ijk[2]+1) / ( global_K_range);
-		 (*stress)[1][1] -= material->lambda * epsilon_xx * (ijk[2]+1) / ( global_K_range);
-		 (*stress)[2][2] -= material->lambda * epsilon_xx * (ijk[2]+1) / ( global_K_range);
+		 // (*stress)[1][1] -= material->lambda * epsilon_xx * (ijk[2]+1) / ( global_K_range);
+		 //(*stress)[2][2] -= material->lambda * epsilon_xx * (ijk[2]+1) / ( global_K_range);
 		 }		 
 //fprintf(stderr, " global_K_range=%d\n ijk[2]=%d\n",  global_K_range, ijk[2]);
 		 
