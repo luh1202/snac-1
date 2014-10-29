@@ -96,15 +96,15 @@ void _SnacTemperature_05Buck( Node_LocalIndex node_lI, Variable_Index var_I, voi
   //fprintf(stderr, "(*coord)[1]=%e",(*coord)[1]);                                                                                                                                      
   double        BDTisotherm = 600.0;
   double         midcoord = 30000.0;
-  double        isotherm_slope = (16000.0 - 6000.0) / midcoord;
+  double        isotherm_slope = (12000.0 - 6000.0) / midcoord;
   double         isotherm_depth = fabs((*coord)[0] - midcoord) * isotherm_slope + 6000.0;
 
-
+  //
   if(fabs((*coord)[1]) <= isotherm_depth){
     *temperature = BDTisotherm / isotherm_depth * fabs((*coord)[1]);
     //fprintf(stderr, "(*coord)[1]=%e, isotherm_slope=%e, isotherm_depth=%e, temperature=%e\n", (*coord)[1], isotherm_slope, isotherm_depth, *temperature);                             
   }else{
-    *temperature = (contextExt->bottomTemp - BDTisotherm) / (20000.0 - isotherm_depth) * (fabs((*coord)[1]) - isotherm_depth) + BDTisotherm;
+    *temperature = (contextExt->bottomTemp - BDTisotherm) / (16000.0 - isotherm_depth) * (fabs((*coord)[1]) - isotherm_depth) + BDTisotherm;
   }
 
 }
