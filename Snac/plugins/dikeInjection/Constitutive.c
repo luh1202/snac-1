@@ -76,7 +76,8 @@ void SnacDikeInjection_Constitutive( void* _context, Element_LocalIndex element_
 	double endZ = contextExt->endZ;
 	double dX = endX-startX;
 	double dZ = endZ-startZ;
-	
+	double Mb = contextExt->Mb;
+        double Me = contextExt->Me; 
 	//double maxK = contextExt->maxK; //new added;   why this not working        
 	//	fprintf (stderr, "maxK1 = %f\n", maxK);
         double elem_dX = 0.0;
@@ -207,9 +208,9 @@ void SnacDikeInjection_Constitutive( void* _context, Element_LocalIndex element_
 		 (*stress)[2][2] -= material->lambda * epsilon_xx;
 		 
                  }else{
-		 (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * (ijk[2]+1) / ( global_K_range);
-		 (*stress)[1][1] -= material->lambda * epsilon_xx * (ijk[2]+1) / ( global_K_range);
-		 (*stress)[2][2] -= material->lambda * epsilon_xx * (ijk[2]+1) / ( global_K_range);
+		   (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * ((ijk[2]+1) / ( global_K_range)*(Me-Mb)+Mb);
+		 (*stress)[1][1] -= material->lambda * epsilon_xx * ((ijk[2]+1) / ( global_K_range)*(Me-Mb)+Mb);
+		 (*stress)[2][2] -= material->lambda * epsilon_xx * ((ijk[2]+1) / ( global_K_range)*(Me-Mb)+Mb);
 		 }		 
 //fprintf(stderr, " global_K_range=%d\n ijk[2]=%d\n",  global_K_range, ijk[2]);
 		 

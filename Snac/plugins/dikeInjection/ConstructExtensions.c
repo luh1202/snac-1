@@ -73,5 +73,11 @@ void _SnacDikeInjection_ConstructExtensions( void* _context, void* data ) {
 	contextExt->injectionRate = Dictionary_Entry_Value_AsDouble(
 			Dictionary_GetDefault( context->dictionary, "injectionRate", 
 								   Dictionary_Entry_Value_FromDouble( 7.9e-10 ) ) ); /* a fraction of applied plate vel. */
+	contextExt->Mb = Dictionary_Entry_Value_AsDouble(
+			Dictionary_GetDefault( context->dictionary, "Mb", 
+								   Dictionary_Entry_Value_FromDouble( 0.3 ) ) ); 
+	contextExt->Me = Dictionary_Entry_Value_AsDouble(
+			Dictionary_GetDefault( context->dictionary, "Me", 
+								   Dictionary_Entry_Value_FromDouble( 0.5 ) ) ); 
 
 }

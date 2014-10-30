@@ -52,6 +52,8 @@
 		double dikeDepth;
 		double dikeWidth;
 		double injectionRate;
+	  double Mb;
+	  double Me;
 	};
 	
 	/* Print the contents of the context extension */
