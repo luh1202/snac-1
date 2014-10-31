@@ -313,16 +313,18 @@ void SnacViscoPlastic_Constitutive( void* _context, Element_LocalIndex element_l
 					double ft = s[2] - tension_cutoff;
 					/* CHECK FOR COMPOSITE YIELD CRITERION  */
 					ind=0;
+					/*
 					if( fs < 0.0f || ft > 0.0f ) {
-						/*! Failure: shear or tensile */
+				
+						//! Failure: shear or tensile 
 						double aP = sqrt( 1.0f + anphi * anphi ) + anphi;
 						double sP = tension_cutoff * anphi - 2 * cohesion * sqrt( anphi );
 						double h = s[2] - tension_cutoff + aP * ( s[0] - sP );
 
 						ind=1;
-
+												
 						if( h < 0.0f ) {
-							/* !shear failure  */
+							// !shear failure  
 							alam = fs / ( a1 - a2 * anpsi + a1 * anphi * anpsi - a2 * anphi + 2.0*sqrt(anphi)*hardening );
 							s[0] -= alam * ( a1 - a2 * anpsi );
 							s[1] -= alam * a2 * ( 1.0f - anpsi );
@@ -332,7 +334,10 @@ void SnacViscoPlastic_Constitutive( void* _context, Element_LocalIndex element_l
 							dep3 = -alam * anpsi;
 						}
 						else {
-							/* tensile failure */
+fprintf(stderr,"h=%e\n",h);
+
+ fprintf(stderr,"ten_off=%e\n", tension_cutoff);
+ //tensile failure
 							alam = ft / a1;
 							s[0] -= alam * a2;
 							s[1] -= alam * a2;
@@ -341,7 +346,23 @@ void SnacViscoPlastic_Constitutive( void* _context, Element_LocalIndex element_l
 							dep2 = 0.0f;
 							dep3 = alam;
 						}
-					}
+*/
+
+					//no tenoff version
+					if( fs < 0.0f) {   ind=1;
+	// !shear failure  
+							alam = fs / ( a1 - a2 * anpsi + a1 * anphi * anpsi - a2 * anphi + 2.0*sqrt(anphi)*hardening );
+							s[0] -= alam * ( a1 - a2 * anpsi );
+							s[1] -= alam * a2 * ( 1.0f - anpsi );
+							s[2] -= alam * ( a2 - a1 * anpsi );
+							dep1 = alam;
+							dep2 = 0.0f;
+							dep3 = -alam * anpsi;
+						}
+
+
+					//no tenoff version end
+
 					else {
 						/* ! no failure - just elastic increment */
 
