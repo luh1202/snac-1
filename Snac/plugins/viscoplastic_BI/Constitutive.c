@@ -189,10 +189,16 @@ void SnacViscoPlastic_Constitutive( void* _context, Element_LocalIndex element_l
 					avgTemp += 0.25 * temperatureNodeExt->temperature;
 					assert( !isnan(avgTemp) && !isinf(avgTemp) );
 				}
-				// Hall et. al., 2004, G3
+				/*	// Hall et. al., 2004, G3
 				(*viscosity)= rviscosity*pow((srJ2/rstrainrate),(1./srexponent-1.))
 					*exp(H/R*(1./(avgTemp+273.15)-1./(rTemp+273.15)));
-				if((*viscosity) < material->vis_min) (*viscosity) = material->vis_min;
+					*/
+				//viscosity follow the same rheology as 05Buck and its reference s7:Kirby,1987
+				(*viscosity)= pow(rviscosity,-1./srexponent)*pow((srJ2/rstrainrate),(1./srexponent-1.))
+				  *exp(-H/srexponent/R*(1./(avgTemp+273.15)));
+
+
+                                if((*viscosity) < material->vis_min) (*viscosity) = material->vis_min;
 				if((*viscosity) > material->vis_max) (*viscosity) = material->vis_max;
 				Journal_Firewall(
 								 !isnan((*viscosity)) && !isinf((*viscosity)),
