@@ -106,7 +106,7 @@ void SnacViscoPlastic_Constitutive( void* _context, Element_LocalIndex element_l
 		/* values are from paper by Hall et. al., EPSL, 2003 */
 		double				rstrainrate = material->refsrate;
 		double				rTemp = material->reftemp;
-		double				H = material->activationE; // kJ/mol
+		double				H = material->activationE; // J/mol
 		double				srexponent = material->srexponent;
 		double				srexponent1 = material->srexponent1;
 		double				srexponent2 = material->srexponent2;
@@ -195,7 +195,7 @@ void SnacViscoPlastic_Constitutive( void* _context, Element_LocalIndex element_l
 					*/
 				//viscosity follow the same rheology as 05Buck and its reference s7:Kirby,1987
 				(*viscosity)= pow(rviscosity,-1./srexponent)*pow((srJ2/rstrainrate),(1./srexponent-1.))
-				  *exp(-H/srexponent/R*(1./(avgTemp+273.15)));
+				  *exp(H/srexponent/R*(1./(avgTemp+273.15)));
 
 
                                 if((*viscosity) < material->vis_min) (*viscosity) = material->vis_min;
