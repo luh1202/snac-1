@@ -194,7 +194,7 @@ void SnacViscoPlastic_Constitutive( void* _context, Element_LocalIndex element_l
 					*exp(H/R*(1./(avgTemp+273.15)-1./(rTemp+273.15)));
 					*/
 				//viscosity follow the same rheology as 05Buck and its reference s7:Kirby,1987
-				(*viscosity)= pow(rviscosity,-1./srexponent)*pow((srJ2/rstrainrate),(1./srexponent-1.))
+				(*viscosity)= pow(rviscosity,-1./srexponent)*pow((srJ2),(1./srexponent-1.))
 				  *exp(H/srexponent/R*(1./(avgTemp+273.15)));
 
 
