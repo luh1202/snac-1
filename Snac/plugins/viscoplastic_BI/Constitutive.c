@@ -179,12 +179,12 @@ void SnacViscoPlastic_Constitutive( void* _context, Element_LocalIndex element_l
 				avgTemp=0.0;
 				for(node_lI=0; node_lI<4; node_lI++) {
 					Snac_Node* contributingNode = Snac_Element_Node_P(
-																	  context,
-																	  element_lI,
-																	  TetraToNode[tetra_I][node_lI] );
+					 						  context,
+						      					  element_lI,
+											  TetraToNode[tetra_I][node_lI] );
 					SnacTemperature_Node* temperatureNodeExt = ExtensionManager_Get(
-																					context->mesh->nodeExtensionMgr,contributingNode,
-																					SnacTemperature_NodeHandle );
+											context->mesh->nodeExtensionMgr,contributingNode,
+											SnacTemperature_NodeHandle );
 
 					avgTemp += 0.25 * temperatureNodeExt->temperature;
 					assert( !isnan(avgTemp) && !isinf(avgTemp) );
@@ -194,11 +194,18 @@ void SnacViscoPlastic_Constitutive( void* _context, Element_LocalIndex element_l
 					*exp(H/R*(1./(avgTemp+273.15)-1./(rTemp+273.15)));
 					*/
 				//viscosity follow the same rheology as 05Buck and its reference s7:Kirby,1987
-				(*viscosity)= pow(rviscosity,-1./srexponent)*pow((srJ2),(1./srexponent-1.))
+				(*viscosity) = pow(rviscosity,-1./srexponent)*pow((srJ2),(1./srexponent-1.))
 				  *exp(H/srexponent/R*(1./(avgTemp+273.15)));
 
-
-                                if((*viscosity) < material->vis_min) (*viscosity) = material->vis_min;
+				
+                                if((*viscosity) < material->vis_min) {
+				  (*viscosity) = material->vis_min;
+				  fprintf(stderr,"visc=%e rvisc=%e srexp=%e srJ2=%e H=%e R=%e avtT=%e (%e %e %e)\n",
+					  (*viscosity), rviscosity, srexponent, srJ2, H, R, avgTemp,
+					  pow(rviscosity,-1./srexponent), pow((srJ2),(1./srexponent-1.)),
+					  exp(H/srexponent/R*(1./(avgTemp+273.15)))
+					  );
+				}
 				if((*viscosity) > material->vis_max) (*viscosity) = material->vis_max;
 				Journal_Firewall(
 								 !isnan((*viscosity)) && !isinf((*viscosity)),
