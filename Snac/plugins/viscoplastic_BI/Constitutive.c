@@ -200,8 +200,8 @@ void SnacViscoPlastic_Constitutive( void* _context, Element_LocalIndex element_l
 				
                                 if((*viscosity) < material->vis_min) {
 				  (*viscosity) = material->vis_min;
-				  fprintf(stderr,"visc=%e rvisc=%e srexp=%e srJ2=%e H=%e R=%e avtT=%e (%e %e %e)\n",
-					  (*viscosity), rviscosity, srexponent, srJ2, H, R, avgTemp,
+				  fprintf(stderr,"timestep=%e\n visc=%e rvisc=%e srexp=%e srJ2=%e H=%e R=%e avtT=%e (%e %e %e)\n",
+					  context->timeStep ,(*viscosity), rviscosity, srexponent, srJ2, H, R, avgTemp,
 					  pow(rviscosity,-1./srexponent), pow((srJ2),(1./srexponent-1.)),
 					  exp(H/srexponent/R*(1./(avgTemp+273.15)))
 					  );
