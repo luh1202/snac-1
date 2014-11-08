@@ -49,6 +49,92 @@
 
 extern void effectiveDensity( void* _context );
 
+void _SnacTemperature_erf(
+					Node_LocalIndex                 node_lI,
+					Variable_Index                  var_I,
+					void*                           _context,
+					void*                           result )
+{
+  Snac_Context*                   context = (Snac_Context*)_context;
+  SnacTemperature_Context*        contextExt = ExtensionManager_Get(
+							    context->extensionMgr,
+							    context,
+							    SnacTemperature_ContextHandle );
+  Mesh*                           mesh = context->mesh;
+  MeshLayout*                     layout = (MeshLayout*)mesh->layout;
+  HexaMD*                         decomp = (HexaMD*)layout->decomp;
+  Node_GlobalIndex                node_gI = _MeshDecomp_Node_LocalToGlobal1D( decomp, node_lI );
+  Coord*                          coord = Snac_NodeCoord_P( context, node_lI );
+
+  const Snac_Material*            material = &context->materialProperty[0];
+
+  //later added
+        double                    crustal_thickness = contextExt->crustal_thickness;
+	double                    crustal_thermal_gradient = contextExt->crustal_thermal_gradient;
+        double                    T1 = contextExt->T1; //first layer bottom temperature or erf top temperature at 5km depth
+	const double              rTemp = contextExt->bottomTemp - T1; //fprintf(stderr, " contextExt->bottomTemp=%e, rTemp=%e\n",  contextExt->bottomTemp, rTemp);
+  //later added
+
+  const double                    topTemp = contextExt->topTemp;   //fprintf(stderr, "topTemp=%e\n", topTemp);
+  const double                    R = 6371000.0;
+  const double                    kappa = 1.0e-06;
+
+  //later added (variable from input file)
+  double                         v_stretch = contextExt->v_stretch; //fprintf(stderr, "v_stretch=%e\n", v_stretch); 
+  double                         startX = contextExt->startX;
+  double                         endX = contextExt->endX;
+  double                         midcoord = (startX + endX) / 2.0;
+  //later added
+
+  double                          scalet = R*R/kappa/(1.0e+06*365.25*24.0*3600.0);
+  double                          age;
+  double                          temp;
+  double*                         temperature = (double*)result;
+  Dictionary*                     meshStruct= Dictionary_Entry_Value_AsDictionary(
+										  Dictionary_Get( context->dictionary, "mesh" ) );
+  double                          rMin = Dictionary_Entry_Value_AsDouble( Dictionary_Get( meshStruct, "rMin" ) );
+  double                          rMax = Dictionary_Entry_Value_AsDouble( Dictionary_Get( meshStruct, "rMax" ) );
+  double                          r = sqrt((*coord)[0]*(*coord)[0] + (*coord)[1]*(*coord)[1] + (*coord)[2]*(*coord)[2]);
+  //fprintf(stderr,"(*coord)[0]=%e, (*coord)[1]=%e, (*coord)[2]=%e\n",(*coord)[0],(*coord)[1],(*coord)[2]);
+  //fprintf(stderr,"r = %e", r);
+  IJK                             ijk;
+  const Node_GlobalIndex          midI = (decomp->nodeGlobal3DCounts[0] + 1) / 2 - 1;
+  Node_GlobalIndex                lmidI;
+
+  RegularMeshUtils_Node_1DTo3D( decomp, node_gI, &ijk[0], &ijk[1], &ijk[2] );
+
+  /* for Cartesian case */
+  rMin = R - 3.0e+03f;
+  rMax = R;
+  r = rMax + (((*coord)[1]+crustal_thickness));    //+crustal_thickness means depth above 5km is set to linear up to T1 instead of erf
+  /*ccccc*/
+
+  assert( (rMin != 0.0 && rMax != 0.0) );
+  r /= R;
+  rMin /= R;
+  rMax /= R;
+
+#if 1
+  double seconds_in_1Myr = 1000000*365.25*24.0*3600.0; //1.0e+6 means from yr to Myr
+  age = fabs((*coord)[0]-midcoord)/v_stretch/seconds_in_1Myr;
+
+  // fprintf(stderr, "(*coord[0])=%e\n abs=%e\n, v_stretch=%e\n, (1000000*365.25*24.0*3600.0)=%e\n", (*coord)[0], fabs((*coord)[0]-midcoord), v_stretch, (1000000*365.25*24.0*3600.0));
+#endif
+    if ((*coord)[1] >= -crustal_thickness){
+   *temperature = contextExt->topTemp + fabs((*coord)[1]) / 1000 * crustal_thermal_gradient;
+    }
+
+   if((*coord)[1] < -crustal_thickness){
+  temp = (rMax - r) * 0.5f / sqrt(age/scalet);
+
+  //Geodynamics P287 & Tucolke 2008 repository
+  *temperature = rTemp * erf(temp) + T1;
+  //  fprintf(stderr, "midcoord= %e age=%e temp=%e temperature=%e\n ", midcoord, age, temp, *temperature);
+   }
+  if( (*temperature) < 0.0) (*temperature) = 0.0f;
+}
+
+
 void _SnacTemperature_Top2BottomSweep( Node_LocalIndex node_lI, Variable_Index var_I, void* _context, void* result ) {
 	Snac_Context*			context = (Snac_Context*)_context;
 	SnacTemperature_Context*	contextExt = ExtensionManager_Get(
@@ -93,18 +179,22 @@ void _SnacTemperature_05Buck( Node_LocalIndex node_lI, Variable_Index var_I, voi
   node_gI = context->mesh->nodeL2G[node_lI];
   RegularMeshUtils_Node_1DTo3D( decomp, node_gI, &ijk[0], &ijk[1], &ijk[2] );
   //      fprintf(stderr,"contextExt->topTemp=%e, contextExt->bottomTemp=%e", contextExt->topTemp=%e, contextExt->bottomTemp=%e);                                                       
-  //fprintf(stderr, "(*coord)[1]=%e",(*coord)[1]);                                                                                                                                      
-  double        BDTisotherm = 450.0;
-  double         midcoord = 75000.0;
-  double        isotherm_slope = (20000.0 - 6000.0) / midcoord;
-  double         isotherm_depth = fabs((*coord)[0] - midcoord) * isotherm_slope + 6000.0;
+  //fprintf(stderr, "(*coord)[1]=%e",(*coord)[1]);                                                                               
+
+  double                         startX = contextExt->startX;
+  double                         endX = contextExt->endX;
+  double                         midcoord = (startX + endX) / 2.0;
+                                                       
+  double        BDTisotherm = contextExt->T1;   //input file T1 variable
+  double        isotherm_slope = (fabs(contextExt->minY) - contextExt->crustal_thickness) / midcoord;
+  double        isotherm_depth = fabs((*coord)[0] - midcoord) * isotherm_slope + contextExt->crustal_thickness;
 
   //
   if(fabs((*coord)[1]) <= isotherm_depth){
     *temperature = contextExt->topTemp  + BDTisotherm / isotherm_depth * fabs((*coord)[1]);
     //fprintf(stderr, "(*coord)[1]=%e, isotherm_slope=%e, isotherm_depth=%e, temperature=%e\n", (*coord)[1], isotherm_slope, isotherm_depth, *temperature);                             
   }else{
-    *temperature = (contextExt->bottomTemp - BDTisotherm) / (20000.0 - isotherm_depth) * (fabs((*coord)[1]) - isotherm_depth) + BDTisotherm;
+    *temperature = (contextExt->bottomTemp - BDTisotherm) / (fabs(contextExt->minY) - isotherm_depth) * (fabs((*coord)[1]) - isotherm_depth) + BDTisotherm;
   }
 
 }

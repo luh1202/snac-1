@@ -46,6 +46,17 @@
 		double				topTemp;
 		double				bottomTemp;
 		
+	  //for SnacTemperature_erf
+	  double v_stretch;
+	  double startX;
+	  double endX;
+	  double                    crustal_thickness;
+	  double                    crustal_thermal_gradient;
+	  double                    T1; //first layer bottom temperature or erf top temperature at 5km depth  
+
+	  double      minY;
+
+
 		/* ICs and BCs */
 		CompositeVC*			temperatureBCs;
 		

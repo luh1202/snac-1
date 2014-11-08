@@ -93,7 +93,9 @@ void _SnacTemperature_ConstructExtensions( void* _context, void* data ) {
         ConditionFunction_Register_Add(
 				       context->condFunc_Register,
 				       ConditionFunction_New( _SnacTemperature_05Buck, "SnacTemperature_05Buck" ) );
-
+        ConditionFunction_Register_Add(
+				       context->condFunc_Register,
+				       ConditionFunction_New( _SnacTemperature_erf, "SnacTemperature_erf" ) );
 
 	ConditionFunction_Register_Add(
 		context->condFunc_Register,
@@ -108,6 +110,25 @@ void _SnacTemperature_ConstructExtensions( void* _context, void* data ) {
 
 	contextExt->bottomTemp = Dictionary_Entry_Value_AsDouble(
 		Dictionary_GetDefault( context->dictionary, "bottomTemp", Dictionary_Entry_Value_FromDouble( 1300.0f ) ) );
+
+	contextExt->v_stretch = Dictionary_Entry_Value_AsDouble(
+		Dictionary_GetDefault( context->dictionary, "v_stretch", Dictionary_Entry_Value_FromDouble( 9.7e-10 ) ) );
+
+	contextExt->startX = Dictionary_Entry_Value_AsDouble(
+			     Dictionary_GetDefault( context->dictionary, "startX", Dictionary_Entry_Value_FromDouble( 0.0f ) ));
+
+	contextExt->endX = Dictionary_Entry_Value_AsDouble(
+			            Dictionary_GetDefault( context->dictionary, "endX", Dictionary_Entry_Value_FromDouble( 60000.0f ) ));
+	contextExt->crustal_thickness = Dictionary_Entry_Value_AsDouble(
+			            Dictionary_GetDefault( context->dictionary, "crustal_thickness", Dictionary_Entry_Value_FromDouble( 5000.0f ) ));
+	contextExt->crustal_thermal_gradient = Dictionary_Entry_Value_AsDouble(
+			            Dictionary_GetDefault( context->dictionary, "crustal_thermal_gradient", Dictionary_Entry_Value_FromDouble( 60.0f ) ));
+	contextExt->T1 = Dictionary_Entry_Value_AsDouble(
+			            Dictionary_GetDefault( context->dictionary, "T1", Dictionary_Entry_Value_FromDouble( 300.0f ) ));
+
+	contextExt->minY = Dictionary_Entry_Value_AsDouble(
+			            Dictionary_GetDefault( context->dictionary, "minY", Dictionary_Entry_Value_FromDouble( -20000.0f ) ));
+
 
 	/* Build the temperature IC and BC managers */
 	temperatureBCsDict = Dictionary_Entry_Value_AsDictionary( Dictionary_Get( context->dictionary, "temperatureBCs" ) );
