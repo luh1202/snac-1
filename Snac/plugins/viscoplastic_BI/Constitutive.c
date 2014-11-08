@@ -172,9 +172,27 @@ void SnacViscoPlastic_Constitutive( void* _context, Element_LocalIndex element_l
 
 			/* compute viscosity and add thermal stress */
 			if( temperatureEP ) {
+			  
+			  //srJ2 = sqrt(fabs(straind1*straind2+straind2*straind0+straind0*straind1 -(*strain[0][1])*(*strain[0][1])-(*strain[0][2])*(*strain[0][2])-(*strain[1][2])*(*strain[1][2])))/context->dt;
+			  double kkk = sqrt( fabs (straind1 * straind2 + straind2 * straind0 + straind0 * straind1 - (*strain)[0][1] * (*strain)[0][1] - (*strain)[0][2] * (*strain)[0][2] - (*strain)[1][2] * (*strain)[1][2] ) );
+			  
+			  //fprintf(stderr, "kkk=%e, context->dt=%e\n",kkk, context->dt);
+			  
+			  srJ2 = kkk / context->dt;
+			  
+			  if(srJ2 == 0.0f){ srJ2 = rstrainrate; 
+			    fprintf(stderr, "timeStep=%d\n srJ2=%e\n, was set to rstrainrate\n", context->timeStep, srJ2); // temporary. should be vmax/length_scale
+			  }
+			  
+			  if (srJ2 > 2.0e-10) {
+				  fprintf(stderr, "timeStep=%d\n srJ2=%e, kkk=%e, context->dt=%e\n", 
+					  context->timeStep, srJ2, kkk, context->dt);
 
-				srJ2 = sqrt(fabs(straind1*straind2+straind2*straind0+straind0*straind1 -(*strain[0][1])*(*strain[0][1])-(*strain[0][2])*(*strain[0][2])-(*strain[1][2])*(*strain[1][2])))/context->dt;
-				if(srJ2 == 0.0f) srJ2 = rstrainrate; // temporary. should be vmax/length_scale
+				  fprintf(stderr, "straind0=%e, straind1=%e, straind2=%e\n", straind0, straind1, straind2);
+				  fprintf(stderr, "(*strain)[0][1]=%e, (*strain)[0][2]=%e, (*strain)[1][2]=%e\n",
+					  (*strain)[0][1], (*strain)[0][2], (*strain)[1][2]);
+				  
+				    }
 
 				avgTemp=0.0;
 				for(node_lI=0; node_lI<4; node_lI++) {
@@ -199,12 +217,13 @@ void SnacViscoPlastic_Constitutive( void* _context, Element_LocalIndex element_l
 
 				
                                 if((*viscosity) < material->vis_min) {
-				  (*viscosity) = material->vis_min;
-				  fprintf(stderr,"timestep=%e\n visc=%e rvisc=%e srexp=%e srJ2=%e H=%e R=%e avtT=%e (%e %e %e)\n",
+				  
+				  fprintf(stderr,"timestep=%d\n visc=%e rvisc=%e srexp=%e srJ2=%e H=%e R=%e avtT=%e (%e %e %e)\n",
 					  context->timeStep ,(*viscosity), rviscosity, srexponent, srJ2, H, R, avgTemp,
 					  pow(rviscosity,-1./srexponent), pow((srJ2),(1./srexponent-1.)),
 					  exp(H/srexponent/R*(1./(avgTemp+273.15)))
 					  );
+				  (*viscosity) = material->vis_min;
 				}
 				if((*viscosity) > material->vis_max) (*viscosity) = material->vis_max;
 				Journal_Firewall(
