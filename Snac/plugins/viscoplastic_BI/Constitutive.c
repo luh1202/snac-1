@@ -148,6 +148,10 @@ void SnacViscoPlastic_Constitutive( void* _context, Element_LocalIndex element_l
 				(*stress)[2][2] += temperatureElement->thermalStress[tetra_I];
 			}
 
+			//add 4km water at the surface for stress[1][1] (Pa)
+			//if(context->timeStep == 1){
+			//(*stress)[1][1] -= 1000 * 10 * 4000;
+			//}
 			/* storing original stress in local array */
 			Stress0[0][0] = (*stress)[0][0];
 			Stress0[1][1] = (*stress)[1][1];
@@ -181,10 +185,10 @@ void SnacViscoPlastic_Constitutive( void* _context, Element_LocalIndex element_l
 			  srJ2 = kkk / context->dt;
 			  
 			  if(srJ2 == 0.0f){ srJ2 = rstrainrate; 
-			    fprintf(stderr, "timeStep=%d\n srJ2=%e\n, was set to rstrainrate\n", context->timeStep, srJ2); // temporary. should be vmax/length_scale
+			    //fprintf(stderr, "timeStep=%d\n srJ2=%e\n, was set to rstrainrate\n", context->timeStep, srJ2); // temporary. should be vmax/length_scale
 			  }
 			  
-			  if (srJ2 > 2.0e-10) {
+			  /* if (srJ2 > 2.0e-10) {
 				  fprintf(stderr, "timeStep=%d\n srJ2=%e, kkk=%e, context->dt=%e\n", 
 					  context->timeStep, srJ2, kkk, context->dt);
 
@@ -192,7 +196,7 @@ void SnacViscoPlastic_Constitutive( void* _context, Element_LocalIndex element_l
 				  fprintf(stderr, "(*strain)[0][1]=%e, (*strain)[0][2]=%e, (*strain)[1][2]=%e\n",
 					  (*strain)[0][1], (*strain)[0][2], (*strain)[1][2]);
 				  
-				    }
+					  }*/
 
 				avgTemp=0.0;
 				for(node_lI=0; node_lI<4; node_lI++) {
@@ -218,11 +222,11 @@ void SnacViscoPlastic_Constitutive( void* _context, Element_LocalIndex element_l
 				
                                 if((*viscosity) < material->vis_min) {
 				  
-				  fprintf(stderr,"timestep=%d\n visc=%e rvisc=%e srexp=%e srJ2=%e H=%e R=%e avtT=%e (%e %e %e)\n",
+				  /*fprintf(stderr,"timestep=%d\n visc=%e rvisc=%e srexp=%e srJ2=%e H=%e R=%e avtT=%e (%e %e %e)\n",
 					  context->timeStep ,(*viscosity), rviscosity, srexponent, srJ2, H, R, avgTemp,
 					  pow(rviscosity,-1./srexponent), pow((srJ2),(1./srexponent-1.)),
 					  exp(H/srexponent/R*(1./(avgTemp+273.15)))
-					  );
+					  );*/
 				  (*viscosity) = material->vis_min;
 				}
 				if((*viscosity) > material->vis_max) (*viscosity) = material->vis_max;
