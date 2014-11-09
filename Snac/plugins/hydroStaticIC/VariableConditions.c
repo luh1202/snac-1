@@ -121,10 +121,11 @@ void _SnacHydroStaticIC_IC( void* _context ) {
 
 						dPT = densT * context->gravity * dh;
 						dP = dPT * ( 1.0 - beta*rogh ) / ( 1.0f + beta / 2.0f * dPT );
-						P = rogh + 0.5f * dP;
-						P =  -1.0f * ( P + PfromAbove[elI][elK] + 1000 * 10 * 4500 );
+						P = rogh + 0.5f * dP; 
+						//fprintf(stderr, "P=%e\n rogh=%e dP=%e\n",P, rogh, dP);
+						P =  -1.0f * ( P + PfromAbove[elI][elK]);
 						
-                                                //fprintf(stderr, "P=%e\n", P);
+                                                //fprintf(stderr, "P2=%e\n PfromAbove[%d][%d]=%e\n", P, elI,elK,PfromAbove[elI][elK]);
 						
 						for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
 							element->tetra[tetra_I].stress[0][0] = P;
