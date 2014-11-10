@@ -99,7 +99,9 @@ void _SnacWinklerForce_Apply(
 					double          drosub = 0.0f;
 
 					double p_est = context->pisos + 0.5f * ( phsDensity + drosub ) * context->gravity * ( (*coord)[1] - element->rzbo );
-					double rosubg = context->gravity * ( phsDensity + drosub ) * ( 1.0 - alpha * (nodeT-material->reftemp) + beta * p_est );
+					//double rosubg = context->gravity * ( phsDensity + drosub ) * ( 1.0 - alpha * (nodeT-material->reftemp) + beta * p_est );
+					double rosubg = context->gravity * ( mantleDensity + drosub ) * ( 1.0 - alpha * (nodeT-material->reftemp) + beta * p_est );					
+					//here, rosubg should multiplied by mantleDensity instead of node density
 					double press_norm = 0.0f;
 					double area=0.0f, dhE=0.0f;
 					Normal* normal1;
@@ -139,6 +141,8 @@ void _SnacWinklerForce_Apply(
 					normal[1] = -1.0f * factor4 * ( (*normal1)[1] + (*normal2)[1] + (*normal3)[1] + (*normal4)[1] );
 					normal[2] = factor4 * ( (*normal1)[2] + (*normal2)[2] + (*normal3)[2] + (*normal4)[2] );
 					area *= 0.5f;
+					//fprintf(stderr, "element_lI=%d\n",element_lI);
+					//fprintf(stderr, "normal[0]=%e normal[1]=%e normal[2]=%e\n",normal[0], normal[1], normal[2]);
 
 					/* compute spring force due to the change in displacement */
 					/* if dh > 0, F < 0; dh < 0, F > 0. */
@@ -147,9 +151,16 @@ void _SnacWinklerForce_Apply(
 					/* Let's make isostatic pressure positive and normals to point to the direction of action, +y. */
 					/* dP should then have the same sign with dh. */
 					press_norm = context->pisos + rosubg * ( element->rzbo - dhE );
+					/*fprintf(stderr, "press_norm=%e pisos=%e rosubg=%e rzbo=%e dhE=%e\n",
+					  press_norm, context->pisos, rosubg, element->rzbo, dhE); */
+
 					(*force)[0] += factor4 * ( press_norm * area * normal[0] );
 					(*force)[1] += factor4 * ( press_norm * area * normal[1] );
 					(*force)[2] += factor4 * ( press_norm * area * normal[2] );
+					
+					//fprintf(stderr, "press_norm=%e area=%e\n (*force)[0]=%e (*force)[1]=%e (*force)[2]=%e\n",
+					//press_norm, area, (*force)[0], (*force)[1], (*force)[2]);
+
 				}
 			}
 			if( context->restartTimestep == 0 ) {
@@ -159,14 +170,118 @@ void _SnacWinklerForce_Apply(
 						node->residualFr = Fy;
 				}
 			}
-			(*force)[1] -= node->residualFr;
+			(*force)[1] -= node->residualFr; 
+			//fprintf(stderr, "node->residualFr=%e\n", node->residualFr);
 		} /* end if if(ijk[1] == ) */
+	
+
+
+/* sea water pressure at surface begins (assuming 4km initial depth of water) */
+		
+		Element_GlobalIndex             global_J_range = decomp->elementGlobal3DCounts[1];
+		double                          waterdepth = 4000.0f;
+		double                          waterdensity = 1000.0f;
+		if( ijk[1] == global_J_range) {
+		  //fprintf(stderr, "ijk[1]=%d  global_J_range=%d\n", ijk[1], global_J_range);
+			nodeElementCount = context->mesh->nodeElementCountTbl[node_lI];
+			for( nodeElement_I = 0; nodeElement_I < nodeElementCount; nodeElement_I++ ) {
+				Element_LocalIndex		element_lI = context->mesh->nodeElementTbl[node_lI][nodeElement_I];
+				if( element_lI < context->mesh->elementDomainCount ) {
+					Snac_Element*		element = Snac_Element_At( context, element_lI );
+					Material_Index          material_I = element->material_I;
+					Snac_Material*          material = &context->materialProperty[material_I];
+					Density                 phsDensity = material->phsDensity; /* node->density */
+					Density                 mantleDensity = 3300.0f;
+					double          alpha = material->alpha;
+					double          beta = material->beta;
+					double          drosub = 0.0f;
+
+					double p_est = context->pisos + 0.5f * ( phsDensity + drosub ) * context->gravity * ( (*coord)[1] - element->rzbo );
+					double rosubg = context->gravity * ( phsDensity + drosub ) * ( 1.0 - alpha * (nodeT-material->reftemp) + beta * p_est );
+					double press_norm = 0.0f;
+					double area=0.0f, dhE=0.0f;
+					Normal* normal1;
+					Normal* normal2;
+					Normal* normal3;
+					Normal* normal4;
+
+					Snac_Element_Tetrahedra*		tetra;
+					Snac_Element_Tetrahedra_Surface*	surface;
+
+					//fprintf(stderr,"element_lI=%d\n", element_lI);
+
+					dhE = factor4 * ( Snac_Element_NodeCoord( context, element_lI, 2 )[1] +
+									  Snac_Element_NodeCoord( context, element_lI, 3 )[1] +
+									  Snac_Element_NodeCoord( context, element_lI, 6 )[1] +
+									  Snac_Element_NodeCoord( context, element_lI, 7 )[1] );
+					/*fprintf(stderr, "Snac_Element_NodeCoord( context, element_lI, 0 )[1]=%e\n, Snac_Element_NodeCoord( context, element_lI, 1 )[1]=%e\n, Snac_Element_NodeCoord( context, element_lI, 4 )[1]=%e\n, Snac_Element_NodeCoord( context, element_lI, 5 )[1]=%e\n", 
+						Snac_Element_NodeCoord( context, element_lI, 2 )[1],
+						Snac_Element_NodeCoord( context, element_lI, 3 )[1],
+						Snac_Element_NodeCoord( context, element_lI, 6 )[1],
+						Snac_Element_NodeCoord( context, element_lI, 7 )[1]); */
+
+					tetra = &element->tetra[0];
+					surface = &tetra->surface[0];
+					normal1 = &surface->normal;
+					area += surface->area;
+
+					tetra = &element->tetra[3];
+					surface = &tetra->surface[1];
+					normal2 = &surface->normal;
+					area += surface->area;
+
+					tetra = &element->tetra[5];
+					surface = &tetra->surface[2];
+					normal3 = &surface->normal;
+					area += surface->area;
+
+					tetra = &element->tetra[7];
+					surface = &tetra->surface[2];
+					normal4 = &surface->normal;
+					area += surface->area;
+
+					/* negative value of normal means downward normal*/
+					normal[0] = factor4 * ( (*normal1)[0] + (*normal2)[0] + (*normal3)[0] + (*normal4)[0] );
+					normal[1] = -1.0f * factor4 * ( (*normal1)[1] + (*normal2)[1] + (*normal3)[1] + (*normal4)[1] );
+					normal[2] = factor4 * ( (*normal1)[2] + (*normal2)[2] + (*normal3)[2] + (*normal4)[2] );
+					area *= 0.5f;
+					//fprintf(stderr, "element_lI=%d\n",element_lI);
+					//fprintf(stderr, "normal[0]=%e normal[1]=%e normal[2]=%e\n",normal[0], normal[1], normal[2]);
+					/* compute spring force due to the change in displacement */
+					/* if dh > 0, F < 0; dh < 0, F > 0. */
+					/* So, bottom surface goes up, Force in -y direction; down, F acts in +y direction */
+					/* Adjust all the signs to be consistent with this principle. */
+					/* Let's make isostatic pressure positive and normals to point to the direction of action, +y. */
+					/* dP should then have the same sign with dh. */
+					press_norm = waterdensity * context->gravity * ( waterdepth - dhE );//upward positive for dhE
+					(*force)[0] += factor4 * ( press_norm * area * normal[0] );
+					(*force)[1] += factor4 * ( press_norm * area * normal[1] );
+					(*force)[2] += factor4 * ( press_norm * area * normal[2] );
+					//fprintf(stderr, "press_norm=%e area=%e\n (*force)[0]=%e (*force)[1]=%e (*force)[2]=%e\n",
+					//press_norm, area, (*force)[0], (*force)[1], (*force)[2]);
+					//why the (*force)[1] print out to be alternative 2.5 or 5.0 e 12???????????????????????
+				}
+			}
+			if( context->restartTimestep == 0 ) {
+				if( context->timeStep == 1 ) {
+					Fy = (*force)[1];
+					if(Fy != 0.0)
+						node->residualFr = Fy;
+				}
+			}
+			//(*force)[1] -= node->residualFr;
+			//why what is this node->residualFr????????????
+		} /* end if if(ijk[1] == ) */
+
+/* sea water pressure at surface ends (assuming 4km initial depth of water) */
+	
+
+
 	}
-/* 	_SnacWinklerForce_Apply_North( context, node_lI, force, balance ); */
-/* 	_SnacWinklerForce_Apply_South( context, node_lI, force, balance ); */
-/* 	_SnacWinklerForce_Apply_East( context, node_lI, force, balance ); */
-/* 	_SnacWinklerForce_Apply_West( context, node_lI, force, balance ); */
 }
+
+
+
 
 void _SnacWinklerForce_Apply_South( void* _context, Node_LocalIndex	node_lI, Force* force, Force* balance )
 {
