@@ -83,7 +83,12 @@ void _SnacHydroStaticIC_IC( void* _context ) {
 			/* Accumulate dPs of elements from above */
 			for( elK = 0; elK < elz; elK++ )
 				for( elI = 0; elI < elx; elI++ ) {
-					double rogh = 0.0f;
+				  //later added for water pressure
+				  double waterdensity = 1000.0f;
+				  double waterdepth = 4000.0f;
+				  //later added for water pressure
+				  double rogh = waterdensity * context->gravity * waterdepth;
+				  
 					for( elJ = ely - 1; elJ > -1; elJ--) {
 						Element_LocalIndex  element_lI = elI + elJ*elx + elK*elx*ely;
 						Snac_Element*		element = Snac_Element_At( context, element_lI );
