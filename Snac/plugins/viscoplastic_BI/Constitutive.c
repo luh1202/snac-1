@@ -326,7 +326,7 @@ void SnacViscoPlastic_Constitutive( void* _context, Element_LocalIndex element_l
 				if( plasticStrain < 0.0 ) {
 					viscoplasticElement->plasticStrain[tetra_I] = 0.0;
 					plasticStrain = viscoplasticElement->plasticStrain[tetra_I];
-					fprintf(stderr,"Warning: negative plastic strain. Setting to zero, but check if remesher is on and this happended for an external tet. rank:%d elem:%d tet:%d plasticStrain=%e frictionAngle=%e\n",context->rank,element_lI,tetra_I,plasticStrain,frictionAngle);
+					fprintf(stderr,"timeStep=%d\n Warning: negative plastic strain. Setting to zero, but check if remesher is on and this happended for an external tet. rank:%d elem:%d tet:%d plasticStrain=%e frictionAngle=%e\n",context->timeStep, context->rank,element_lI,tetra_I,plasticStrain,frictionAngle);
 					frictionAngle = material->frictionAngle[0];
 					dilationAngle = material->dilationAngle[0];
 					cohesion = material->cohesion[0];
@@ -379,6 +379,8 @@ void SnacViscoPlastic_Constitutive( void* _context, Element_LocalIndex element_l
 						}
 					}
 					else {
+					  fprintf(stderr,"timeStep=%d\n h=%e s[2]=%e tenoff=%e\n fs=%e s[0]=%e s[2]=%e\n ",
+						  context->timeStep, h, s[2], tension_cutoff, fs, s[0], s[2] );
 						/* ! no failure - just elastic increment */
 
 						dep1 = 0.0f;
