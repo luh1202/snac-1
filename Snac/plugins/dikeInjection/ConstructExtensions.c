@@ -79,5 +79,8 @@ void _SnacDikeInjection_ConstructExtensions( void* _context, void* data ) {
 	contextExt->Me = Dictionary_Entry_Value_AsDouble(
 			Dictionary_GetDefault( context->dictionary, "Me", 
 								   Dictionary_Entry_Value_FromDouble( 0.5 ) ) ); 
+	contextExt->M_type = Dictionary_Entry_Value_AsDouble(
+			Dictionary_GetDefault( context->dictionary, "M_type", 
+								   Dictionary_Entry_Value_FromDouble( 1.0 ) ) ); 
 
 }

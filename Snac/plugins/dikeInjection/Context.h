@@ -54,6 +54,7 @@
 		double injectionRate;
 	  double Mb;
 	  double Me;
+	  double M_type;
 	};
 	
 	/* Print the contents of the context extension */

@@ -78,6 +78,7 @@ void SnacDikeInjection_Constitutive( void* _context, Element_LocalIndex element_
 	double dZ = endZ-startZ;
 	double Mb = contextExt->Mb;
         double Me = contextExt->Me; 
+        double M_type = contextExt->M_type;
 	//double maxK = contextExt->maxK; //new added;   why this not working        
 	//	fprintf (stderr, "maxK1 = %f\n", maxK);
         double elem_dX = 0.0;
@@ -201,18 +202,59 @@ void SnacDikeInjection_Constitutive( void* _context, Element_LocalIndex element_
               (*stress)[1][1] -= material->lambda * epsilon_xx * ijk[2] / maxxK;
               (*stress)[2][2] -= material->lambda * epsilon_xx * ijk[2] / maxxK;
 		 */
+		 /*
+                  Ways of implementing M along axis:
+		  1) linear
+		  2) sinusoidal
+		  3) sqrt
+		  4) one third
+		  */
+		 //global_K_range is the total elements in z axis
+		 //ijk[2] vary from 0 to global_K_range - 1
+
 		 //the if global_K_range==1 is for 1d pseudo test
 		 if (global_K_range==1){
-		 (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx;
-		 (*stress)[1][1] -= material->lambda * epsilon_xx;
-		 (*stress)[2][2] -= material->lambda * epsilon_xx;
+		   (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx;
+		   (*stress)[1][1] -= material->lambda * epsilon_xx;
+		   (*stress)[2][2] -= material->lambda * epsilon_xx;
 		 
                  }else{
-		   (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * ((ijk[2]+1) / ( global_K_range)*(Me-Mb)+Mb);
-		 (*stress)[1][1] -= material->lambda * epsilon_xx * ((ijk[2]+1) / ( global_K_range)*(Me-Mb)+Mb);
-		 (*stress)[2][2] -= material->lambda * epsilon_xx * ((ijk[2]+1) / ( global_K_range)*(Me-Mb)+Mb);
-		 }		 
-//fprintf(stderr, " global_K_range=%d\n ijk[2]=%d\n",  global_K_range, ijk[2]);
+		   if( M_type == 1 ){
+		   double M = ((ijk[2]+0.0f) / ( global_K_range + 0.0f) * (Me - Mb) + Mb);
+		   /*(*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * ((ijk[2]+1) / ( global_K_range)*(Me-Mb)+Mb);
+		   (*stress)[1][1] -= material->lambda * epsilon_xx * ((ijk[2]+1) / ( global_K_range)*(Me-Mb)+Mb);
+		   (*stress)[2][2] -= material->lambda * epsilon_xx * ((ijk[2]+1) / ( global_K_range)*(Me-Mb)+Mb);
+		   */
+		   (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * M;
+		   (*stress)[1][1] -= material->lambda * epsilon_xx * M;
+		   (*stress)[2][2] -= material->lambda * epsilon_xx * M;
+		   //fprintf(stderr, " M_type=%f\n global_K_range=%d\n ijk[2]=%d\n, M = %f\n \n \n",  M_type, global_K_range, ijk[2], M);
+		   }		 
+		   if( M_type == 2 ){
+		     double M = ( sin( (ijk[2]+0.0f) / ( global_K_range + 0.0f) * PI / 2) * (Me - Mb) + Mb);
+		     (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * M;
+		     (*stress)[1][1] -= material->lambda * epsilon_xx * M;
+		     (*stress)[2][2] -= material->lambda * epsilon_xx * M;
+		     //fprintf(stderr, " M_type=%f\n global_K_range=%d\n ijk[2]=%d\n, M = %f\n \n \n",  M_type, global_K_range, ijk[2], M);
+		   }		 
+		   if( M_type == 3 ){
+		     double M =  pow( (ijk[2]+0.0f) / ( global_K_range + 0.0f), 0.5 ) * (Me - Mb) + Mb;
+		     (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * M;
+		     (*stress)[1][1] -= material->lambda * epsilon_xx * M;
+		     (*stress)[2][2] -= material->lambda * epsilon_xx * M;
+		     //fprintf(stderr, " M_type=%f\n global_K_range=%d\n ijk[2]=%d\n, M = %f\n \n \n",  M_type, global_K_range, ijk[2], M);
+		   }		 
+		   if( M_type == 4 ){
+		     double M =  pow( (ijk[2]+0.0f) / ( global_K_range + 0.0f), 0.333333 ) * (Me - Mb) + Mb;
+		     (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * M;
+		     (*stress)[1][1] -= material->lambda * epsilon_xx * M;
+		     (*stress)[2][2] -= material->lambda * epsilon_xx * M;
+		     //fprintf(stderr, " M_type=%f\n global_K_range=%d\n ijk[2]=%d\n, M = %f\n \n \n",  M_type, global_K_range, ijk[2], M);
+		   }		 
+		   
+
+		 }
+
 		 
 			//fprintf(stderr, "dike(*stress)[0][0]=%e\n", (*stress)[0][0]);			
 			/* Also assuming viscoplastic rheology is used. */
