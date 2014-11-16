@@ -84,10 +84,11 @@ void _SnacHydroStaticIC_IC( void* _context ) {
 			for( elK = 0; elK < elz; elK++ )
 				for( elI = 0; elI < elx; elI++ ) {
 				  //later added for water pressure
-				  double waterdensity = 1000.0f;
+				  double waterdensity = 1040.0f;
 				  double waterdepth = 4000.0f;
 				  //later added for water pressure
-				  double rogh = waterdensity * context->gravity * waterdepth;
+				  // double rogh = waterdensity * context->gravity * waterdepth;
+				  double rogh = 0.0f;
 				  
 					for( elJ = ely - 1; elJ > -1; elJ--) {
 						Element_LocalIndex  element_lI = elI + elJ*elx + elK*elx*ely;
@@ -128,8 +129,8 @@ void _SnacHydroStaticIC_IC( void* _context ) {
 						dP = dPT * ( 1.0 - beta*rogh ) / ( 1.0f + beta / 2.0f * dPT );
 						P = rogh + 0.5f * dP; 
 						//fprintf(stderr, "P=%e\n rogh=%e dP=%e\n",P, rogh, dP);
-						P =  -1.0f * ( P + PfromAbove[elI][elK]);
-						
+						P =  -1.0f * ( P + PfromAbove[elI][elK] + waterdensity * context->gravity * waterdepth);
+						// initial water pressure should be added to here instead of rogh  
                                                 //fprintf(stderr, "P2=%e\n PfromAbove[%d][%d]=%e\n", P, elI,elK,PfromAbove[elI][elK]);
 						
 						for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {

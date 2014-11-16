@@ -141,26 +141,36 @@ void _SnacWinklerForce_Apply(
 					normal[1] = -1.0f * factor4 * ( (*normal1)[1] + (*normal2)[1] + (*normal3)[1] + (*normal4)[1] );
 					normal[2] = factor4 * ( (*normal1)[2] + (*normal2)[2] + (*normal3)[2] + (*normal4)[2] );
 					area *= 0.5f;
-					//fprintf(stderr, "element_lI=%d\n",element_lI);
+					
+					if (context->timeStep % 500 ==0){
+					  //fprintf(stderr, "element_lI=%d\n",element_lI);
 					//fprintf(stderr, "normal[0]=%e normal[1]=%e normal[2]=%e\n",normal[0], normal[1], normal[2]);
-
+					}
+					
 					/* compute spring force due to the change in displacement */
 					/* if dh > 0, F < 0; dh < 0, F > 0. */
 					/* So, bottom surface goes up, Force in -y direction; down, F acts in +y direction */
 					/* Adjust all the signs to be consistent with this principle. */
 					/* Let's make isostatic pressure positive and normals to point to the direction of action, +y. */
 					/* dP should then have the same sign with dh. */
+					
 					press_norm = context->pisos + rosubg * ( element->rzbo - dhE );
-					/*fprintf(stderr, "press_norm=%e pisos=%e rosubg=%e rzbo=%e dhE=%e\n",
-					  press_norm, context->pisos, rosubg, element->rzbo, dhE); */
-
+					//4e7 needed to be replaced by real water pressure, due to topo change later
+					
+					//note! might need to add 4km water pressure at here too
+					
+					/*if (context->timeStep % 500 ==0){
+					fprintf(stderr, "timeStep=%d\n press_norm=%e pisos=%e rosubg=%e rzbo=%e dhE=%e\n",
+						context->timeStep, press_norm, context->pisos, rosubg, element->rzbo, dhE); 
+						}*/
 					(*force)[0] += factor4 * ( press_norm * area * normal[0] );
 					(*force)[1] += factor4 * ( press_norm * area * normal[1] );
 					(*force)[2] += factor4 * ( press_norm * area * normal[2] );
 					
-					//fprintf(stderr, "press_norm=%e area=%e\n (*force)[0]=%e (*force)[1]=%e (*force)[2]=%e\n",
-					//press_norm, area, (*force)[0], (*force)[1], (*force)[2]);
-
+					/*if (context->timeStep % 500 ==0){
+					fprintf(stderr, "press_norm=%e area=%e\n (*force)[0]=%e (*force)[1]=%e (*force)[2]=%e\n",
+					press_norm, area, (*force)[0], (*force)[1], (*force)[2]);
+					}*/
 				}
 			}
 			if( context->restartTimestep == 0 ) {
@@ -180,7 +190,7 @@ void _SnacWinklerForce_Apply(
 		
 		Element_GlobalIndex             global_J_range = decomp->elementGlobal3DCounts[1];
 		double                          waterdepth = 4000.0f;
-		double                          waterdensity = 1000.0f;
+		double                          waterdensity = 1040.0f; //from wiki average water density in sea
 		if( ijk[1] == global_J_range) {
 		  //fprintf(stderr, "ijk[1]=%d  global_J_range=%d\n", ijk[1], global_J_range);
 			nodeElementCount = context->mesh->nodeElementCountTbl[node_lI];
@@ -245,9 +255,13 @@ void _SnacWinklerForce_Apply(
 					normal[1] = -1.0f * factor4 * ( (*normal1)[1] + (*normal2)[1] + (*normal3)[1] + (*normal4)[1] );
 					normal[2] = factor4 * ( (*normal1)[2] + (*normal2)[2] + (*normal3)[2] + (*normal4)[2] );
 					area *= 0.5f;
-					//fprintf(stderr, "element_lI=%d\n",element_lI);
-					//fprintf(stderr, "normal[0]=%e normal[1]=%e normal[2]=%e\n",normal[0], normal[1], normal[2]);
-					/* compute spring force due to the change in displacement */
+
+					/*if (context->timeStep % 500 ==0){
+					  fprintf(stderr, "timeStep=%d\n element_lI=%d", context->timeStep, element_lI);
+					fprintf(stderr, "  normal[0]=%e normal[1]=%e nozmal[2]=%e\n",normal[0], normal[1], normal[2]);
+					}*/
+					  
+					  /* compute spring force due to the change in displacement */
 					/* if dh > 0, F < 0; dh < 0, F > 0. */
 					/* So, bottom surface goes up, Force in -y direction; down, F acts in +y direction */
 					/* Adjust all the signs to be consistent with this principle. */
@@ -257,19 +271,22 @@ void _SnacWinklerForce_Apply(
 					(*force)[0] += factor4 * ( press_norm * area * normal[0] );
 					(*force)[1] += factor4 * ( press_norm * area * normal[1] );
 					(*force)[2] += factor4 * ( press_norm * area * normal[2] );
-					//fprintf(stderr, "press_norm=%e area=%e\n (*force)[0]=%e (*force)[1]=%e (*force)[2]=%e\n",
-					//press_norm, area, (*force)[0], (*force)[1], (*force)[2]);
+					/*if (context->timeStep % 500 ==0 || context->timeStep==1){
+					fprintf(stderr, " timeStep=%d\n element_lI=%d\n, normal[0]=%e normal[1]=%e normal[2]=%e\n, dhE=%e press_norm=%e area=%e\n (*force)[0]=%e (*force)[1]=%e (*force)[2]=%e\n \n \n",
+						context->timeStep, element_lI, normal[0], normal[1], normal[2],
+						dhE, press_norm, area, (*force)[0], (*force)[1], (*force)[2]);
+						}*/
 					//why the (*force)[1] print out to be alternative 2.5 or 5.0 e 12???????????????????????
 				}
 			}
-			if( context->restartTimestep == 0 ) {
+			/*if( context->restartTimestep == 0 ) {
 				if( context->timeStep == 1 ) {
 					Fy = (*force)[1];
 					if(Fy != 0.0)
 						node->residualFr = Fy;
-				}
-			}
-			//(*force)[1] -= node->residualFr;
+						}
+						}
+						(*force)[1] -= node->residualFr; */
 			//why what is this node->residualFr????????????
 		} /* end if if(ijk[1] == ) */
 
