@@ -368,6 +368,9 @@ void SnacViscoPlastic_Constitutive( void* _context, Element_LocalIndex element_l
 							dep3 = -alam * anpsi;
 						}
 						else {
+						  fprintf(stderr,"timeStep=%d\n h=%e s[2]=%e tenoff=%e\n fs=%e s[0]=%e s[2]=%e\n ",
+							  context->timeStep, h, s[2], tension_cutoff, fs, s[0], s[2] );
+
 							/* tensile failure */
 							alam = ft / a1;
 							s[0] -= alam * a2;
@@ -379,9 +382,7 @@ void SnacViscoPlastic_Constitutive( void* _context, Element_LocalIndex element_l
 						}
 					}
 					else {
-					  fprintf(stderr,"timeStep=%d\n h=%e s[2]=%e tenoff=%e\n fs=%e s[0]=%e s[2]=%e\n ",
-						  context->timeStep, h, s[2], tension_cutoff, fs, s[0], s[2] );
-						/* ! no failure - just elastic increment */
+					  	/* ! no failure - just elastic increment */
 
 						dep1 = 0.0f;
 						dep2 = 0.0f;
