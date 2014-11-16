@@ -382,7 +382,7 @@ void SnacViscoPlastic_Constitutive( void* _context, Element_LocalIndex element_l
 						}
 					}
 					else {
-					  	/* ! no failure - just elastic increment */
+				        	/* ! no failure - just elastic increment */
 
 						dep1 = 0.0f;
 						dep2 = 0.0f;
