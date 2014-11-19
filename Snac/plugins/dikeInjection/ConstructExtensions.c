@@ -64,6 +64,11 @@ void _SnacDikeInjection_ConstructExtensions( void* _context, void* data ) {
 	contextExt->endZ = Dictionary_Entry_Value_AsDouble(
 			Dictionary_GetDefault( context->dictionary, "endZ", 
 								   Dictionary_Entry_Value_FromDouble( 1000.0f ) ) );
+
+	contextExt->dikeTop = Dictionary_Entry_Value_AsDouble(
+			Dictionary_GetDefault( context->dictionary, "dikeTop", 
+								   Dictionary_Entry_Value_FromDouble( 500.0 ) ) );
+
 	contextExt->dikeDepth = Dictionary_Entry_Value_AsDouble(
 			Dictionary_GetDefault( context->dictionary, "dikeDepth", 
 								   Dictionary_Entry_Value_FromDouble( 6000.0 ) ) );

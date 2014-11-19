@@ -171,7 +171,7 @@ void SnacDikeInjection_Constitutive( void* _context, Element_LocalIndex element_
 		 */
 	      
 
-             if( (distance < 0.5*contextExt->dikeWidth) && (baryCenter[1] >= -contextExt->dikeDepth) ){
+	       if( (distance < 0.5*contextExt->dikeWidth) && (baryCenter[1] >= -contextExt->dikeDepth) && (-contextExt->dikeTop >= baryCenter[1]) ){
 
 	elem_dX = 0.25*( 
       	(Snac_Element_NodeCoord( context, element_lI, 1)[0]-Snac_Element_NodeCoord( context, element_lI, 0)[0]) + 

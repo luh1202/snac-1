@@ -49,6 +49,7 @@
 		double startZ;
 		double endX;
 		double endZ;
+		double dikeTop;
 		double dikeDepth;
 		double dikeWidth;
 		double injectionRate;
