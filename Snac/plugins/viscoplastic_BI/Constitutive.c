@@ -38,6 +38,7 @@
 #include "types.h"
 #include "Element.h"
 #include "Constitutive.h"
+#include "Context.h"
 #include "Register.h"
 #include <math.h>
 #include "Snac/Temperature/Temperature.h"
@@ -59,11 +60,19 @@
 
 void SnacViscoPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 	Snac_Context* context = (Snac_Context*)_context;
+	/* for adding parameter healing_time_begin*/
+	SnacViscoPlastic_Context*                       contextExt = ExtensionManager_Get(
+											  context->extensionMgr,
+                                                                                          context,
+                                                                                     SnacViscoPlastic_ContextHandle );		
+
+	double healing_time = contextExt->healing_time;
+	/* for adding parameter healing_time_end*/
+
 	Snac_Element* element = Snac_Element_At( context, element_lI );
 	SnacViscoPlastic_Element* viscoplasticElement = ExtensionManager_Get( context->mesh->elementExtensionMgr, element, SnacViscoPlastic_ElementHandle );
 	SnacTemperature_Element* temperatureElement = ExtensionManager_Get( context->mesh->elementExtensionMgr, element, SnacTemperature_ElementHandle );
 	const Snac_Material* material = &context->materialProperty[element->material_I];
-
 	/*ccccc*/
 	MeshLayout*			meshLayout = (MeshLayout*)context->meshLayout;
 	HexaMD*				decomp = (HexaMD*)meshLayout->decomp;
@@ -100,7 +109,7 @@ void SnacViscoPlastic_Constitutive( void* _context, Element_LocalIndex element_l
 		double				srJ2;
 		double				avgTemp;
 		plModel				yieldcriterion=material->yieldcriterion;
-
+	
 		/* For now reference values of viscosity, second invariant of deviatoric */
 		/* strain rate and reference temperature  are being hard wired ( these specific */
 		/* values are from paper by Hall et. al., EPSL, 2003 */
@@ -413,7 +422,8 @@ void SnacViscoPlastic_Constitutive( void* _context, Element_LocalIndex element_l
 			/* linear healing: applied whether this tet has yielded or not. 
 			   Parameters are hardwired for now, but should be given through an input file. */
 #if 1		
-	viscoplasticElement->plasticStrain[tetra_I] *= (1.0/(1.0+context->dt/1.0e+12)); 
+	viscoplasticElement->plasticStrain[tetra_I] *= (1.0/(1.0+context->dt/healing_time));
+	//fprintf(stderr, "healing_time=%e\n", healing_time);
 #endif
 			/*viscoplasticElement->plasticStrain[tetra_I] *= (1.0/(1.0+context->dt/(ind?1.0e+13:5.0e+11)));*/
 
