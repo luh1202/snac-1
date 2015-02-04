@@ -272,7 +272,7 @@ void SnacDikeInjection_Constitutive( void* _context, Element_LocalIndex element_
 			//pointers can you use everywhere and how to use it. 
 	     }
 
-             if( (distance < contextExt->dikeWidth) && (baryCenter[1] >= -contextExt->dikeDepth) ){
+             if( (distance < 0.5 * contextExt->dikeWidth) && (baryCenter[1] >= -contextExt->dikeDepth) ){
 
  	viscoplasticElement->plasticStrain[tetra_I] = 0.0;
 
