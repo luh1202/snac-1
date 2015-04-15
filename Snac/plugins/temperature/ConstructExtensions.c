@@ -96,6 +96,9 @@ void _SnacTemperature_ConstructExtensions( void* _context, void* data ) {
         ConditionFunction_Register_Add(
 				       context->condFunc_Register,
 				       ConditionFunction_New( _SnacTemperature_erf, "SnacTemperature_erf" ) );
+        ConditionFunction_Register_Add(
+				       context->condFunc_Register,
+				       ConditionFunction_New( _SnacTemperature_Transform_Fault, "SnacTemperature_Transform_Fault" ) );
 
 	ConditionFunction_Register_Add(
 		context->condFunc_Register,
@@ -129,6 +132,26 @@ void _SnacTemperature_ConstructExtensions( void* _context, void* data ) {
 	contextExt->minY = Dictionary_Entry_Value_AsDouble(
 			            Dictionary_GetDefault( context->dictionary, "minY", Dictionary_Entry_Value_FromDouble( -20000.0f ) ));
 
+	//Transform_Fault related
+	contextExt->Segment1_x = Dictionary_Entry_Value_AsDouble(
+			            Dictionary_GetDefault( context->dictionary, "Segment1_x", Dictionary_Entry_Value_FromDouble( 50000.0f ) ));
+
+	contextExt->Segment1_z_min = Dictionary_Entry_Value_AsDouble(
+			            Dictionary_GetDefault( context->dictionary, "Segment1_z_min", Dictionary_Entry_Value_FromDouble( 0.0f ) ));
+
+	contextExt->Segment1_z_max = Dictionary_Entry_Value_AsDouble(
+			            Dictionary_GetDefault( context->dictionary, "Segment1_z_max", Dictionary_Entry_Value_FromDouble( 60000.0f ) ));
+
+	contextExt->Segment2_x = Dictionary_Entry_Value_AsDouble(
+			            Dictionary_GetDefault( context->dictionary, "Segment2_x", Dictionary_Entry_Value_FromDouble( 70000.0f ) ));
+
+	contextExt->Segment2_z_min = Dictionary_Entry_Value_AsDouble(
+			            Dictionary_GetDefault( context->dictionary, "Segment2_z_min", Dictionary_Entry_Value_FromDouble( 60000.0f ) ));
+
+	contextExt->Segment2_z_max = Dictionary_Entry_Value_AsDouble(
+			            Dictionary_GetDefault( context->dictionary, "Segment2_z_max", Dictionary_Entry_Value_FromDouble( 120000.0f ) ));
+	//Transform_Fault related
+	
 
 	/* Build the temperature IC and BC managers */
 	temperatureBCsDict = Dictionary_Entry_Value_AsDictionary( Dictionary_Get( context->dictionary, "temperatureBCs" ) );

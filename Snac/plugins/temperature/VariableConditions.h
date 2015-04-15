@@ -64,4 +64,10 @@
 		void*				context, 
 		void*				result );
 
+	void _SnacTemperature_Transform_Fault( 
+		Node_LocalIndex			node_lI, 
+		Variable_Index			var_I, 
+		void*				context, 
+		void*				result );
+
 #endif

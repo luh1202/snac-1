@@ -56,7 +56,15 @@
 
 	  double      minY;
 
-
+	  //For SnacTemperature_Transform_Fault
+	  double Segment1_x;
+	  double Segment1_z_min;
+	  double Segment1_z_max;
+	  
+	  double Segment2_x;
+	  double Segment2_z_min;
+	  double Segment2_z_max;
+	  
 		/* ICs and BCs */
 		CompositeVC*			temperatureBCs;
 		

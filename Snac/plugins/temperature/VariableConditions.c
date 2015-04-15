@@ -49,6 +49,120 @@
 
 extern void effectiveDensity( void* _context );
 
+//Transform_Fault
+void _SnacTemperature_Transform_Fault(
+					Node_LocalIndex                 node_lI,
+					Variable_Index                  var_I,
+					void*                           _context,
+					void*                           result )
+{
+  Snac_Context*                   context = (Snac_Context*)_context;
+  SnacTemperature_Context*        contextExt = ExtensionManager_Get(
+							    context->extensionMgr,
+							    context,
+							    SnacTemperature_ContextHandle );
+  Mesh*                           mesh = context->mesh;
+  MeshLayout*                     layout = (MeshLayout*)mesh->layout;
+  HexaMD*                         decomp = (HexaMD*)layout->decomp;
+  Node_GlobalIndex                node_gI = _MeshDecomp_Node_LocalToGlobal1D( decomp, node_lI );
+  Coord*                          coord = Snac_NodeCoord_P( context, node_lI );
+
+  const Snac_Material*            material = &context->materialProperty[0];
+
+  //later added
+        double                    crustal_thickness = contextExt->crustal_thickness;
+	double                    crustal_thermal_gradient = contextExt->crustal_thermal_gradient;
+        double                    T1 = contextExt->T1; //first layer bottom temperature or erf top temperature at 5km depth
+	const double              rTemp = contextExt->bottomTemp - T1; //fprintf(stderr, " contextExt->bottomTemp=%e, rTemp=%e\n",  contextExt->bottomTemp, rTemp);
+  //later added
+
+  const double                    topTemp = contextExt->topTemp;   //fprintf(stderr, "topTemp=%e\n", topTemp);
+  const double                    R = 6371000.0;
+  const double                    kappa = 1.0e-06;
+
+  //later added (variable from input file)
+  double                         v_stretch = contextExt->v_stretch; //fprintf(stderr, "v_stretch=%e\n", v_stretch); 
+  double                         startX = contextExt->startX;
+  double                         endX = contextExt->endX;
+  double                         midcoord = (startX + endX) / 2.0;
+  //later added
+
+  // Transform_Fault_Specific
+          double Segment1_x = contextExt->Segment1_x;
+	  double Segment1_z_min = contextExt->Segment1_z_min;
+	  double Segment1_z_max = contextExt->Segment1_z_max;
+	  
+	  double Segment2_x = contextExt->Segment2_x;
+	  double Segment2_z_min = contextExt->Segment2_z_min;
+	  double Segment2_z_max = contextExt->Segment2_z_max;
+  // Transform_Fault_Specific
+
+  double                          scalet = R*R/kappa/(1.0e+06*365.25*24.0*3600.0);
+  double                          age_Seg1;
+  double                          age_Seg2;
+  double                          temp_Seg1;
+  double                          temp_Seg2;
+  double*                         temperature = (double*)result;
+  Dictionary*                     meshStruct= Dictionary_Entry_Value_AsDictionary(
+										  Dictionary_Get( context->dictionary, "mesh" ) );
+  double                          rMin = Dictionary_Entry_Value_AsDouble( Dictionary_Get( meshStruct, "rMin" ) );
+  double                          rMax = Dictionary_Entry_Value_AsDouble( Dictionary_Get( meshStruct, "rMax" ) );
+  double                          r = sqrt((*coord)[0]*(*coord)[0] + (*coord)[1]*(*coord)[1] + (*coord)[2]*(*coord)[2]);
+  //fprintf(stderr,"(*coord)[0]=%e, (*coord)[1]=%e, (*coord)[2]=%e\n",(*coord)[0],(*coord)[1],(*coord)[2]);
+  //fprintf(stderr,"r = %e", r);
+  IJK                             ijk;
+  const Node_GlobalIndex          midI = (decomp->nodeGlobal3DCounts[0] + 1) / 2 - 1;
+  Node_GlobalIndex                lmidI;
+
+  RegularMeshUtils_Node_1DTo3D( decomp, node_gI, &ijk[0], &ijk[1], &ijk[2] );
+
+  /* for Cartesian case */
+  rMin = R - 3.0e+03f;
+  rMax = R;
+  r = rMax + (((*coord)[1]+crustal_thickness));    //+crustal_thickness means depth above 5km is set to linear up to T1 instead of erf
+  /*ccccc*/
+
+  assert( (rMin != 0.0 && rMax != 0.0) );
+  r /= R;
+  rMin /= R;
+  rMax /= R;
+
+#if 1
+  double seconds_in_1Myr = 1000000*365.25*24.0*3600.0; //1.0e+6 means from yr to Myr
+  age_Seg1 = fabs((*coord)[0]-Segment1_x)/v_stretch/seconds_in_1Myr;
+  age_Seg2 = fabs((*coord)[0]-Segment2_x)/v_stretch/seconds_in_1Myr;
+
+  //fprintf(stderr, "Segment1_x=%e, Segment2_x=%e, age_Seg1=%e, age_Seg2=%e\n", Segment1_x, Segment2_x, age_Seg1, age_Seg2);
+  
+  // fprintf(stderr, "(*coord[0])=%e\n abs=%e\n, v_stretch=%e\n, (1000000*365.25*24.0*3600.0)=%e\n", (*coord)[0], fabs((*coord)[0]-midcoord), v_stretch, (1000000*365.25*24.0*3600.0));
+#endif
+    if ((*coord)[1] >= -crustal_thickness){
+      *temperature = contextExt->topTemp + fabs((*coord)[1]) / 1000 * crustal_thermal_gradient;
+#if 0   //for an thiner crust in the dike  
+      if ((*coord)[1] <= - pow(fabs((*coord)[0]-midcoord), 1.06) - 3000){
+	*temperature = 600;}
+#endif  //for an thiner crust in the dike  
+    }
+
+   if((*coord)[1] < -crustal_thickness){
+     if((*coord)[2] < Segment1_z_max && (*coord)[2] >= Segment1_z_min){
+       temp_Seg1 = (rMax - r) * 0.5f / sqrt(age_Seg1/scalet);
+         *temperature = rTemp * erf(temp_Seg1) + T1;
+     }
+     if((*coord)[2] <= Segment2_z_max && (*coord)[2] >= Segment2_z_min){
+       temp_Seg2 = (rMax - r) * 0.5f / sqrt(age_Seg2/scalet);
+         *temperature = rTemp * erf(temp_Seg2) + T1;
+     }
+   }
+     //Geodynamics P287 & Tucolke 2008 repository
+     //  *temperature = rTemp * erf(temp) + T1;
+  //  fprintf(stderr, "midcoord= %e age=%e temp=%e temperature=%e\n ", midcoord, age, temp, *temperature);
+  
+  if( (*temperature) < 0.0) (*temperature) = 0.0f;
+}
+//Transform_Fault
+
+
 void _SnacTemperature_erf(
 					Node_LocalIndex                 node_lI,
 					Variable_Index                  var_I,
