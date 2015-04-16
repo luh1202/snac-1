@@ -219,7 +219,10 @@ void SnacDikeInjection_Constitutive( void* _context, Element_LocalIndex element_
 		   (*stress)[2][2] -= material->lambda * epsilon_xx;
 		 
                  }else{
+		   //fprintf(stderr, "context->timeStep=%d, context->maxTimeSteps=%d\n", context->timeStep, context->maxTimeSteps);
 		   if( M_type == 1 ){
+		     //add time varying M into diking by context->timeStep and context->maxTimeSteps
+		     // double M = ((ijk[2]+0.0f) / ( global_K_range + 0.0f) * (Me - Mb) + Mb) * context->timeStep / context->maxTimeSteps; 
 		   double M = ((ijk[2]+0.0f) / ( global_K_range + 0.0f) * (Me - Mb) + Mb);
 		   /*(*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * ((ijk[2]+1) / ( global_K_range)*(Me-Mb)+Mb);
 		   (*stress)[1][1] -= material->lambda * epsilon_xx * ((ijk[2]+1) / ( global_K_range)*(Me-Mb)+Mb);
