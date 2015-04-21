@@ -236,7 +236,7 @@ void _SnacTemperature_erf(
 #endif
     if ((*coord)[1] >= -crustal_thickness){
       *temperature = contextExt->topTemp + fabs((*coord)[1]) / 1000 * crustal_thermal_gradient;
-#if 1   //for an thiner crust in the dike  
+#if 0   //for an thiner crust in the dike  
       if ((*coord)[1] <= - pow(fabs((*coord)[0]-midcoord), 1.06) - 3000){
 	*temperature = 600;}
 #endif  //for an thiner crust in the dike  
