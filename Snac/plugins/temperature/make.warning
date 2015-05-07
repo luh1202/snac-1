@@ -1,0 +1,21 @@
+HeatFlux.c:153:196: warning: incompatible integer to pointer conversion passing 'unsigned int' to parameter of type 'char *' [-Wint-conversion]
+1 warning generated.
+Heat.c:66:27: warning: unused variable 'contextExt' [-Wunused-variable]
+1 warning generated.
+VariableConditions.c:114:35: warning: unused variable 'midI' [-Wunused-variable]
+VariableConditions.c:70:35: warning: unused variable 'material' [-Wunused-variable]
+VariableConditions.c:79:35: warning: unused variable 'topTemp' [-Wunused-variable]
+VariableConditions.c:115:35: warning: unused variable 'lmidI' [-Wunused-variable]
+VariableConditions.c:87:34: warning: unused variable 'midcoord' [-Wunused-variable]
+VariableConditions.c:216:35: warning: unused variable 'lmidI' [-Wunused-variable]
+VariableConditions.c:215:35: warning: unused variable 'midI' [-Wunused-variable]
+VariableConditions.c:192:35: warning: unused variable 'topTemp' [-Wunused-variable]
+VariableConditions.c:183:35: warning: unused variable 'material' [-Wunused-variable]
+VariableConditions.c:291:35: warning: unused variable 'jCount' [-Wunused-variable]
+VariableConditions.c:394:26: warning: unused variable 'midI' [-Wunused-variable]
+VariableConditions.c:380:34: warning: unused variable 'material' [-Wunused-variable]
+VariableConditions.c:395:20: warning: unused variable 'lmidI' [-Wunused-variable]
+VariableConditions.c:433:26: warning: unused variable 'plugin' [-Wunused-variable]
+VariableConditions.c:432:26: warning: unused variable 'pluginsList' [-Wunused-variable]
+15 warnings generated.
+ld: warning: directory not found for option '-L/sw/lib'

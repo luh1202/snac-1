@@ -1,0 +1,8 @@
+Constitutive.c:141:14: warning: incompatible pointer types initializing 'Coord *' (aka 'double (*)[3]') with an expression of type 'Coord' (aka 'double [3]'); take the address with & [-Wincompatible-pointer-types]
+Constitutive.c:197:22: warning: unused variable 'TT' [-Wunused-variable]
+Constitutive.c:118:10: warning: unused variable 'numer' [-Wunused-variable]
+Constitutive.c:119:10: warning: unused variable 'denom' [-Wunused-variable]
+Constitutive.c:78:9: warning: unused variable 'dZ' [-Wunused-variable]
+Constitutive.c:77:9: warning: unused variable 'dX' [-Wunused-variable]
+6 warnings generated.
+ld: warning: directory not found for option '-L/sw/lib'

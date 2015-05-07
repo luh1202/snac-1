@@ -1,0 +1,12 @@
+Constitutive.c:420:97: warning: passing 'const char [30]' to parameter of type 'char *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+Constitutive.c:121:13: warning: unused variable 'srexponent2' [-Wunused-variable]
+Constitutive.c:120:13: warning: unused variable 'srexponent1' [-Wunused-variable]
+Constitutive.c:488:29: warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+Constitutive.c:607:19: warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+Constitutive.c:607:31: warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+Constitutive.c:607:19: warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+Constitutive.c:607:31: warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+Constitutive.c:611:17: warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+Constitutive.c:681:22: warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+10 warnings generated.
+ld: warning: directory not found for option '-L/sw/lib'

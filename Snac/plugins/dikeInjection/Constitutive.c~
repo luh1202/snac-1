@@ -160,8 +160,7 @@ void SnacDikeInjection_Constitutive( void* _context, Element_LocalIndex element_
           	//	fprintf(stderr,"distance=%e, dikeDepth=%e",distance,contextExt->dikeDepth);
 	       
 /*the above way for restricting dike in x-axis can be replaced by simple method be low*/		
-	       //distance = fabs( baryCenter[0] - 0.5 * (startX + endX) );
-	       distance = fabs( baryCenter[0] - 500 ); //Third element from left as dike
+	       distance = fabs( baryCenter[0] - 0.5 * (startX + endX) );
 
                  /* 
 		   If part of the dike, adjust stresses. 
@@ -220,10 +219,7 @@ void SnacDikeInjection_Constitutive( void* _context, Element_LocalIndex element_
 		   (*stress)[2][2] -= material->lambda * epsilon_xx;
 		 
                  }else{
-		   //fprintf(stderr, "context->timeStep=%d, context->maxTimeSteps=%d\n", context->timeStep, context->maxTimeSteps);
 		   if( M_type == 1 ){
-		     //add time varying M into diking by context->timeStep and context->maxTimeSteps
-		     // double M = ((ijk[2]+0.0f) / ( global_K_range + 0.0f) * (Me - Mb) + Mb) * context->timeStep / context->maxTimeSteps; 
 		   double M = ((ijk[2]+0.0f) / ( global_K_range + 0.0f) * (Me - Mb) + Mb);
 		   /*(*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * ((ijk[2]+1) / ( global_K_range)*(Me-Mb)+Mb);
 		   (*stress)[1][1] -= material->lambda * epsilon_xx * ((ijk[2]+1) / ( global_K_range)*(Me-Mb)+Mb);
@@ -232,7 +228,7 @@ void SnacDikeInjection_Constitutive( void* _context, Element_LocalIndex element_
 		   (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * M;
 		   (*stress)[1][1] -= material->lambda * epsilon_xx * M;
 		   (*stress)[2][2] -= material->lambda * epsilon_xx * M;
-		   //fprintf(stderr, " M_type=%f\n global_K_range=%d\n ijk[2]=%d\n, M = %f\n \n \n",  M_type, global_K_range, ijk[2], M);
+		   fprintf(stderr, " M_type=%f\n global_K_range=%d\n ijk[2]=%d\n, M = %f\n \n \n",  M_type, global_K_range, ijk[2], M);
 		   }		 
 		   if( M_type == 2 ){
 		     double M = ( sin( (ijk[2]+0.0f) / ( global_K_range + 0.0f) * PI / 2) * (Me - Mb) + Mb);
@@ -275,33 +271,12 @@ void SnacDikeInjection_Constitutive( void* _context, Element_LocalIndex element_
 			//3)you have to know exactly what is the global variable, what does it contains, which 
 			//pointers can you use everywhere and how to use it. 
 	     }
-	       if( (distance < 0.5 * contextExt->dikeWidth) ){
-		 viscoplasticElement->plasticStrain[tetra_I] = 0;
-	       }
-	       /*Add in Seeds initially*/
-	       if(context->timeStep==1){
-		 if( (baryCenter[0] >= 1000) && (baryCenter[0] <= 2000) && (baryCenter[1] >= -6000) && (baryCenter[1] <= -5000) /*&& (baryCenter[2] <= 4000)*/){
-		   viscoplasticElement->plasticStrain[tetra_I] = 0.5;
-		 }
-		 
-		 if( (baryCenter[0] >= 2000) && (baryCenter[0] <= 3000) && (baryCenter[1] >= -5000) && (baryCenter[1] <= -4000) /*&& (baryCenter[2] <= 4000)*/){
-		   viscoplasticElement->plasticStrain[tetra_I] = 0.5;
-		 }
-		 if( (baryCenter[0] >= 2000) && (baryCenter[0] <= 3000) && (baryCenter[1] >= -4000) && (baryCenter[1] <= -3000) /*&& (baryCenter[2] <= 4000)*/){
-		   viscoplasticElement->plasticStrain[tetra_I] = 0.5;
-		 }
-		 
-		 if( (baryCenter[0] >= 3000) && (baryCenter[0] <= 4000) && (baryCenter[1] >= -3000) && (baryCenter[1] <= -2000) /*&& (baryCenter[2] <= 4000)*/){
-		   viscoplasticElement->plasticStrain[tetra_I] = 0.5;
-		 }
-		 if( (baryCenter[0] >= 3000) && (baryCenter[0] <= 4000) && (baryCenter[1] >= -2000) && (baryCenter[1] <= -1000) /*&& (baryCenter[2] <= 4000)*/){
-		   viscoplasticElement->plasticStrain[tetra_I] = 0.5;
-		 }
 
-		 if( (baryCenter[0] >= 4000) && (baryCenter[0] <= 5000) && (baryCenter[1] >= -1000) && (baryCenter[1] <= -0) /*&& (baryCenter[2] <= 4000)*/){
-		   viscoplasticElement->plasticStrain[tetra_I] = 0.5;
-		 }
-	       }
-	       /*Add in Seeds initially*/	       
+             if( (distance < 0.5 * contextExt->dikeWidth) && (baryCenter[1] >= -contextExt->dikeDepth) ){
+
+ 	viscoplasticElement->plasticStrain[tetra_I] = 0.0;
+
+
+	     }
 	}
 }

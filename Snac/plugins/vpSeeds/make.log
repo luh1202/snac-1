@@ -1,0 +1,17 @@
+mpicc-openmpi-mp -pipe  -DVERSION=\"0\" -DCURR_MODULE_NAME=\"SnacVPSeeds\" -DPLUGIN_NAME=SnacVPSeeds -Wall -g    -c -o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacVPSeedsmodule.so/InitialConditions.o -I/Users/Tian/repos/github/snac-1/build/include   -I/Users/Tian/repos/github/snac-1/build/include/StGermain -I/Users/Tian/repos/github/snac-1/build/include   -I/opt/local/include/openmpi-mp   -I/opt/local/include/libxml2      InitialConditions.c
+InitialConditions.c:91:48: warning: comparison of unsigned expression >= 0 is always true [-Wtautological-compare]
+        while( incZ < global_K_range && ijk[2] >=0 && ijk[2] < decomp->elementGlobal3DCounts[2] ) {
+                                        ~~~~~~ ^ ~
+InitialConditions.c:63:8: warning: unused variable 'restart' [-Wunused-variable]
+        int                     restart = 0;
+                                ^
+InitialConditions.c:65:26: warning: unused variable 'plugin' [-Wunused-variable]
+        Dictionary_Entry_Value* plugin;
+                                ^
+InitialConditions.c:64:26: warning: unused variable 'pluginsList' [-Wunused-variable]
+        Dictionary_Entry_Value* pluginsList;
+                                ^
+4 warnings generated.
+mpicc-openmpi-mp -pipe  -DVERSION=\"0\" -DCURR_MODULE_NAME=\"SnacVPSeeds\" -DPLUGIN_NAME=SnacVPSeeds -Wall -g   -o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacVPSeedsmodule.so/SnacVPSeedsmodule.so /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacVPSeedsmodule.so/InitialConditions.o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacVPSeedsmodule.so/Register.o  -bundle -flat_namespace -undefined suppress  -L/Users/Tian/repos/github/snac-1/build/lib   -L/Users/Tian/repos/github/snac-1/build/lib  -lSnac -lStGermain   -L/Users/Tian/repos/github/snac-1/build/lib -lmpi -L/opt/local/lib/openmpi-mp -lmpi -L/sw/lib    -L/opt/local/lib -lxml2 -lz -lpthread -liconv -lm   -lm -lmx            
+ld: warning: directory not found for option '-L/sw/lib'
+/bin/cp -f /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacVPSeedsmodule.so/SnacVPSeedsmodule.so /Users/Tian/repos/github/snac-1/build/lib/SnacVPSeedsmodule.so

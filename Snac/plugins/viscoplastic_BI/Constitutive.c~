@@ -377,8 +377,8 @@ void SnacViscoPlastic_Constitutive( void* _context, Element_LocalIndex element_l
 							dep3 = -alam * anpsi;
 						}
 						else {
-						  fprintf(stderr,"timeStep=%d\n ijk=%d %d %d\n h=%e s[2]=%e tenoff=%e\n fs=%e s[0]=%e s[2]=%e\n ",
-						  	  context->timeStep, ijk[0],ijk[1],ijk[2], h, s[2], tension_cutoff, fs, s[0], s[2] );
+						  fprintf(stderr,"timeStep=%d\n h=%e s[2]=%e tenoff=%e\n fs=%e s[0]=%e s[2]=%e\n ",
+							  context->timeStep, h, s[2], tension_cutoff, fs, s[0], s[2] );
 
 							/* tensile failure */
 							alam = ft / a1;

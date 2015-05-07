@@ -71,9 +71,11 @@ void _SnacVPSeeds_InitialConditions( void* _context, void* data ) {
     printf( "In: %s\n", __func__ );
 #endif
 
-    global_I_range = decomp->elementGlobal3DCounts[0];
-    global_J_range = decomp->elementGlobal3DCounts[1];
-    global_K_range = decomp->elementGlobal3DCounts[2]; 
+    srand( (unsigned int)time(NULL) );
+    global_I_range = decomp->elementGlobal3DCounts[0]/4;
+    global_J_range = 1; //decomp->elementGlobal3DCounts[1];
+    global_K_range = 1; //decomp->elementGlobal3DCounts[2]; //10;
+    //NUM_SEED = decomp->elementGlobal3DCounts[2] * global_I_range * 0.02;
     NUM_SEED = 2;
 
     for(index_I = 0; index_I < NUM_SEED; index_I++) {

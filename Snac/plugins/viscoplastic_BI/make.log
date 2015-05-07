@@ -1,0 +1,90 @@
+mpicc-openmpi-mp -pipe  -DVERSION=\"0\" -DCURR_MODULE_NAME=\"SnacViscoPlastic\" -DPLUGIN_NAME=SnacViscoPlastic -Wall -g    -c -o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacViscoPlasticmodule.so/Constitutive.o -I/Users/Tian/repos/github/snac-1/build/include   -I/Users/Tian/repos/github/snac-1/build/include/StGermain -I/Users/Tian/repos/github/snac-1/build/include   -I/opt/local/include/openmpi-mp   -I/opt/local/include/libxml2      Constitutive.c
+Constitutive.c:420:97: warning: passing 'const char [30]' to parameter of type 'char *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+                                Journal_Firewall( (0>1), "In %s: \"mohrcoulomb\" is the only available yield criterion.\n", __func__ );
+                                                                                                                            ^~~~~~~~
+/Users/Tian/repos/github/snac-1/build/include/StGermain/Base/IO/Journal.h:226:60: note: passing argument to parameter 'fmt' here
+        int Journal_Firewall( int expression, void* stream, char* fmt, ... );
+                                                                  ^
+Constitutive.c:121:13: warning: unused variable 'srexponent2' [-Wunused-variable]
+                double                          srexponent2 = material->srexponent2;
+                                                ^
+Constitutive.c:120:13: warning: unused variable 'srexponent1' [-Wunused-variable]
+                double                          srexponent1 = material->srexponent1;
+                                                ^
+Constitutive.c:488:29: warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+            scale = scale + abs(d[k]);
+                            ^
+Constitutive.c:488:29: note: use function 'fabs' instead
+            scale = scale + abs(d[k]);
+                            ^~~
+                            fabs
+Constitutive.c:607:19: warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+                tst1 = MAX(tst1,abs(d[l]) + abs(e[l]));
+                                ^
+/Users/Tian/repos/github/snac-1/build/include/StGermain/Base/Foundation/shortcuts.h:46:32: note: expanded from macro 'MAX'
+#define MAX( a, b ) ( ( (a) > (b) ) ? (a) : (b) )
+                               ^
+Constitutive.c:607:19: note: use function 'fabs' instead
+                tst1 = MAX(tst1,abs(d[l]) + abs(e[l]));
+                                ^~~
+                                fabs
+/Users/Tian/repos/github/snac-1/build/include/StGermain/Base/Foundation/shortcuts.h:46:32: note: expanded from macro 'MAX'
+#define MAX( a, b ) ( ( (a) > (b) ) ? (a) : (b) )
+                               ^
+Constitutive.c:607:31: warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+                tst1 = MAX(tst1,abs(d[l]) + abs(e[l]));
+                                            ^
+/Users/Tian/repos/github/snac-1/build/include/StGermain/Base/Foundation/shortcuts.h:46:32: note: expanded from macro 'MAX'
+#define MAX( a, b ) ( ( (a) > (b) ) ? (a) : (b) )
+                               ^
+Constitutive.c:607:31: note: use function 'fabs' instead
+                tst1 = MAX(tst1,abs(d[l]) + abs(e[l]));
+                                            ^~~
+                                            fabs
+/Users/Tian/repos/github/snac-1/build/include/StGermain/Base/Foundation/shortcuts.h:46:32: note: expanded from macro 'MAX'
+#define MAX( a, b ) ( ( (a) > (b) ) ? (a) : (b) )
+                               ^
+Constitutive.c:607:19: warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+                tst1 = MAX(tst1,abs(d[l]) + abs(e[l]));
+                                ^
+/Users/Tian/repos/github/snac-1/build/include/StGermain/Base/Foundation/shortcuts.h:46:46: note: expanded from macro 'MAX'
+#define MAX( a, b ) ( ( (a) > (b) ) ? (a) : (b) )
+                                             ^
+Constitutive.c:607:19: note: use function 'fabs' instead
+                tst1 = MAX(tst1,abs(d[l]) + abs(e[l]));
+                                ^~~
+                                fabs
+/Users/Tian/repos/github/snac-1/build/include/StGermain/Base/Foundation/shortcuts.h:46:46: note: expanded from macro 'MAX'
+#define MAX( a, b ) ( ( (a) > (b) ) ? (a) : (b) )
+                                             ^
+Constitutive.c:607:31: warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+                tst1 = MAX(tst1,abs(d[l]) + abs(e[l]));
+                                            ^
+/Users/Tian/repos/github/snac-1/build/include/StGermain/Base/Foundation/shortcuts.h:46:46: note: expanded from macro 'MAX'
+#define MAX( a, b ) ( ( (a) > (b) ) ? (a) : (b) )
+                                             ^
+Constitutive.c:607:31: note: use function 'fabs' instead
+                tst1 = MAX(tst1,abs(d[l]) + abs(e[l]));
+                                            ^~~
+                                            fabs
+/Users/Tian/repos/github/snac-1/build/include/StGermain/Base/Foundation/shortcuts.h:46:46: note: expanded from macro 'MAX'
+#define MAX( a, b ) ( ( (a) > (b) ) ? (a) : (b) )
+                                             ^
+Constitutive.c:611:17: warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+            if (abs(e[m]) <= eps*tst1) {
+                ^
+Constitutive.c:611:17: note: use function 'fabs' instead
+            if (abs(e[m]) <= eps*tst1) {
+                ^~~
+                fabs
+Constitutive.c:681:22: warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+            } while (abs(e[l]) > eps*tst1);
+                     ^
+Constitutive.c:681:22: note: use function 'fabs' instead
+            } while (abs(e[l]) > eps*tst1);
+                     ^~~
+                     fabs
+10 warnings generated.
+mpicc-openmpi-mp -pipe  -DVERSION=\"0\" -DCURR_MODULE_NAME=\"SnacViscoPlastic\" -DPLUGIN_NAME=SnacViscoPlastic -Wall -g   -o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacViscoPlasticmodule.so/SnacViscoPlasticmodule.so /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacViscoPlasticmodule.so/Element.o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacViscoPlasticmodule.so/Context.o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacViscoPlasticmodule.so/ConstructExtensions.o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacViscoPlasticmodule.so/Constitutive.o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacViscoPlasticmodule.so/Output.o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacViscoPlasticmodule.so/Register.o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacViscoPlasticmodule.so/InitialConditions.o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacViscoPlasticmodule.so/Destroy.o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacViscoPlasticmodule.so/Remesh.o  -bundle -flat_namespace -undefined suppress  -L/Users/Tian/repos/github/snac-1/build/lib   -L/Users/Tian/repos/github/snac-1/build/lib  -lSnac -lStGermain  -L/Users/Tian/repos/github/snac-1/build/lib -lmpi -L/opt/local/lib/openmpi-mp -lmpi -L/sw/lib    -L/opt/local/lib -lxml2 -lz -lpthread -liconv -lm   -lm -lmx            
+ld: warning: directory not found for option '-L/sw/lib'
+/bin/cp -f /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacViscoPlasticmodule.so/SnacViscoPlasticmodule.so /Users/Tian/repos/github/snac-1/build/lib/SnacViscoPlasticmodule.so

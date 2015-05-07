@@ -185,12 +185,12 @@ void _SnacWinklerForce_Apply(
 		} /* end if if(ijk[1] == ) */
 	
 
-#if 0
+
 /* sea water pressure at surface begins (assuming 4km initial depth of water) */
 		
 		Element_GlobalIndex             global_J_range = decomp->elementGlobal3DCounts[1];
 		double                          waterdepth = 4000.0f;
-		double                          waterdensity = 1040.0f; //from wiki average water density in sea
+		double                          waterdensity = 1000.0f;
 		if( ijk[1] == global_J_range) {
 		  //fprintf(stderr, "ijk[1]=%d  global_J_range=%d\n", ijk[1], global_J_range);
 			nodeElementCount = context->mesh->nodeElementCountTbl[node_lI];
@@ -291,7 +291,7 @@ void _SnacWinklerForce_Apply(
 		} /* end if if(ijk[1] == ) */
 
 /* sea water pressure at surface ends (assuming 4km initial depth of water) */
-#endif	
+	
 
 
 	}

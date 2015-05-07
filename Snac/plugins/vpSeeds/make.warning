@@ -1,0 +1,6 @@
+InitialConditions.c:91:48: warning: comparison of unsigned expression >= 0 is always true [-Wtautological-compare]
+InitialConditions.c:63:8: warning: unused variable 'restart' [-Wunused-variable]
+InitialConditions.c:65:26: warning: unused variable 'plugin' [-Wunused-variable]
+InitialConditions.c:64:26: warning: unused variable 'pluginsList' [-Wunused-variable]
+4 warnings generated.
+ld: warning: directory not found for option '-L/sw/lib'

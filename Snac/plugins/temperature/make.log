@@ -1,0 +1,72 @@
+mpicc-openmpi-mp -pipe  -DVERSION=\"0\" -DCURR_MODULE_NAME=\"SnacTemperature\" -DPLUGIN_NAME=SnacTemperature -Wall -g    -c -o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacTemperaturemodule.so/Context.o -I/Users/Tian/repos/github/snac-1/build/include   -I/Users/Tian/repos/github/snac-1/build/include/StGermain -I/Users/Tian/repos/github/snac-1/build/include   -I/opt/local/include/openmpi-mp   -I/opt/local/include/libxml2      Context.c
+mpicc-openmpi-mp -pipe  -DVERSION=\"0\" -DCURR_MODULE_NAME=\"SnacTemperature\" -DPLUGIN_NAME=SnacTemperature -Wall -g    -c -o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacTemperaturemodule.so/Element.o -I/Users/Tian/repos/github/snac-1/build/include   -I/Users/Tian/repos/github/snac-1/build/include/StGermain -I/Users/Tian/repos/github/snac-1/build/include   -I/opt/local/include/openmpi-mp   -I/opt/local/include/libxml2      Element.c
+mpicc-openmpi-mp -pipe  -DVERSION=\"0\" -DCURR_MODULE_NAME=\"SnacTemperature\" -DPLUGIN_NAME=SnacTemperature -Wall -g    -c -o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacTemperaturemodule.so/Node.o -I/Users/Tian/repos/github/snac-1/build/include   -I/Users/Tian/repos/github/snac-1/build/include/StGermain -I/Users/Tian/repos/github/snac-1/build/include   -I/opt/local/include/openmpi-mp   -I/opt/local/include/libxml2      Node.c
+mpicc-openmpi-mp -pipe  -DVERSION=\"0\" -DCURR_MODULE_NAME=\"SnacTemperature\" -DPLUGIN_NAME=SnacTemperature -Wall -g    -c -o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacTemperaturemodule.so/Register.o -I/Users/Tian/repos/github/snac-1/build/include   -I/Users/Tian/repos/github/snac-1/build/include/StGermain -I/Users/Tian/repos/github/snac-1/build/include   -I/opt/local/include/openmpi-mp   -I/opt/local/include/libxml2      Register.c
+mpicc-openmpi-mp -pipe  -DVERSION=\"0\" -DCURR_MODULE_NAME=\"SnacTemperature\" -DPLUGIN_NAME=SnacTemperature -Wall -g    -c -o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacTemperaturemodule.so/ConstructExtensions.o -I/Users/Tian/repos/github/snac-1/build/include   -I/Users/Tian/repos/github/snac-1/build/include/StGermain -I/Users/Tian/repos/github/snac-1/build/include   -I/opt/local/include/openmpi-mp   -I/opt/local/include/libxml2      ConstructExtensions.c
+mpicc-openmpi-mp -pipe  -DVERSION=\"0\" -DCURR_MODULE_NAME=\"SnacTemperature\" -DPLUGIN_NAME=SnacTemperature -Wall -g    -c -o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacTemperaturemodule.so/Build.o -I/Users/Tian/repos/github/snac-1/build/include   -I/Users/Tian/repos/github/snac-1/build/include/StGermain -I/Users/Tian/repos/github/snac-1/build/include   -I/opt/local/include/openmpi-mp   -I/opt/local/include/libxml2      Build.c
+mpicc-openmpi-mp -pipe  -DVERSION=\"0\" -DCURR_MODULE_NAME=\"SnacTemperature\" -DPLUGIN_NAME=SnacTemperature -Wall -g    -c -o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacTemperaturemodule.so/HeatFlux.o -I/Users/Tian/repos/github/snac-1/build/include   -I/Users/Tian/repos/github/snac-1/build/include/StGermain -I/Users/Tian/repos/github/snac-1/build/include   -I/opt/local/include/openmpi-mp   -I/opt/local/include/libxml2      HeatFlux.c
+HeatFlux.c:153:196: warning: incompatible integer to pointer conversion passing 'unsigned int' to parameter of type 'char *' [-Wint-conversion]
+                        Journal_Firewall( (!isinf(elementExt->thermalStress[tetra_I]) && !isnan(elementExt->thermalStress[tetra_I])), " timeStep %d thermalStress for element %d tetra %d (T: %e %e) is inf or nan!!\n",context->timeStep,element_lI,tetra_I,temp,temp0);
+                                                                                                                                                                                                                        ^~~~~~~~~~~~~~~~~
+/Users/Tian/repos/github/snac-1/build/include/StGermain/Base/IO/Journal.h:226:60: note: passing argument to parameter 'fmt' here
+        int Journal_Firewall( int expression, void* stream, char* fmt, ... );
+                                                                  ^
+1 warning generated.
+mpicc-openmpi-mp -pipe  -DVERSION=\"0\" -DCURR_MODULE_NAME=\"SnacTemperature\" -DPLUGIN_NAME=SnacTemperature -Wall -g    -c -o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacTemperaturemodule.so/Heat.o -I/Users/Tian/repos/github/snac-1/build/include   -I/Users/Tian/repos/github/snac-1/build/include/StGermain -I/Users/Tian/repos/github/snac-1/build/include   -I/opt/local/include/openmpi-mp   -I/opt/local/include/libxml2      Heat.c
+Heat.c:66:27: warning: unused variable 'contextExt' [-Wunused-variable]
+        SnacTemperature_Context*        contextExt = ExtensionManager_Get(
+                                        ^
+1 warning generated.
+mpicc-openmpi-mp -pipe  -DVERSION=\"0\" -DCURR_MODULE_NAME=\"SnacTemperature\" -DPLUGIN_NAME=SnacTemperature -Wall -g    -c -o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacTemperaturemodule.so/VariableConditions.o -I/Users/Tian/repos/github/snac-1/build/include   -I/Users/Tian/repos/github/snac-1/build/include/StGermain -I/Users/Tian/repos/github/snac-1/build/include   -I/opt/local/include/openmpi-mp   -I/opt/local/include/libxml2      VariableConditions.c
+VariableConditions.c:114:35: warning: unused variable 'midI' [-Wunused-variable]
+  const Node_GlobalIndex          midI = (decomp->nodeGlobal3DCounts[0] + 1) / 2 - 1;
+                                  ^
+VariableConditions.c:70:35: warning: unused variable 'material' [-Wunused-variable]
+  const Snac_Material*            material = &context->materialProperty[0];
+                                  ^
+VariableConditions.c:79:35: warning: unused variable 'topTemp' [-Wunused-variable]
+  const double                    topTemp = contextExt->topTemp;   //fprintf(stderr, "topTemp=%e\n", topTemp);
+                                  ^
+VariableConditions.c:115:35: warning: unused variable 'lmidI' [-Wunused-variable]
+  Node_GlobalIndex                lmidI;
+                                  ^
+VariableConditions.c:87:34: warning: unused variable 'midcoord' [-Wunused-variable]
+  double                         midcoord = (startX + endX) / 2.0;
+                                 ^
+VariableConditions.c:216:35: warning: unused variable 'lmidI' [-Wunused-variable]
+  Node_GlobalIndex                lmidI;
+                                  ^
+VariableConditions.c:215:35: warning: unused variable 'midI' [-Wunused-variable]
+  const Node_GlobalIndex          midI = (decomp->nodeGlobal3DCounts[0] + 1) / 2 - 1;
+                                  ^
+VariableConditions.c:192:35: warning: unused variable 'topTemp' [-Wunused-variable]
+  const double                    topTemp = contextExt->topTemp;   //fprintf(stderr, "topTemp=%e\n", topTemp);
+                                  ^
+VariableConditions.c:183:35: warning: unused variable 'material' [-Wunused-variable]
+  const Snac_Material*            material = &context->materialProperty[0];
+                                  ^
+VariableConditions.c:291:35: warning: unused variable 'jCount' [-Wunused-variable]
+  const Index                     jCount = decomp->nodeGlobal3DCounts[1];
+                                  ^
+VariableConditions.c:394:26: warning: unused variable 'midI' [-Wunused-variable]
+        const Node_GlobalIndex          midI = (decomp->nodeGlobal3DCounts[0] + 1) / 2 - 1;
+                                        ^
+VariableConditions.c:380:34: warning: unused variable 'material' [-Wunused-variable]
+        const Snac_Material*            material = &context->materialProperty[0];
+                                        ^
+VariableConditions.c:395:20: warning: unused variable 'lmidI' [-Wunused-variable]
+        Node_GlobalIndex                lmidI;
+                                        ^
+VariableConditions.c:433:26: warning: unused variable 'plugin' [-Wunused-variable]
+        Dictionary_Entry_Value* plugin;
+                                ^
+VariableConditions.c:432:26: warning: unused variable 'pluginsList' [-Wunused-variable]
+        Dictionary_Entry_Value* pluginsList;
+                                ^
+15 warnings generated.
+mpicc-openmpi-mp -pipe  -DVERSION=\"0\" -DCURR_MODULE_NAME=\"SnacTemperature\" -DPLUGIN_NAME=SnacTemperature -Wall -g    -c -o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacTemperaturemodule.so/Remesh.o -I/Users/Tian/repos/github/snac-1/build/include   -I/Users/Tian/repos/github/snac-1/build/include/StGermain -I/Users/Tian/repos/github/snac-1/build/include   -I/opt/local/include/openmpi-mp   -I/opt/local/include/libxml2      Remesh.c
+mpicc-openmpi-mp -pipe  -DVERSION=\"0\" -DCURR_MODULE_NAME=\"SnacTemperature\" -DPLUGIN_NAME=SnacTemperature -Wall -g    -c -o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacTemperaturemodule.so/DeleteExtensions.o -I/Users/Tian/repos/github/snac-1/build/include   -I/Users/Tian/repos/github/snac-1/build/include/StGermain -I/Users/Tian/repos/github/snac-1/build/include   -I/opt/local/include/openmpi-mp   -I/opt/local/include/libxml2      DeleteExtensions.c
+mpicc-openmpi-mp -pipe  -DVERSION=\"0\" -DCURR_MODULE_NAME=\"SnacTemperature\" -DPLUGIN_NAME=SnacTemperature -Wall -g    -c -o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacTemperaturemodule.so/Output.o -I/Users/Tian/repos/github/snac-1/build/include   -I/Users/Tian/repos/github/snac-1/build/include/StGermain -I/Users/Tian/repos/github/snac-1/build/include   -I/opt/local/include/openmpi-mp   -I/opt/local/include/libxml2      Output.c
+mpicc-openmpi-mp -pipe  -DVERSION=\"0\" -DCURR_MODULE_NAME=\"SnacTemperature\" -DPLUGIN_NAME=SnacTemperature -Wall -g   -o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacTemperaturemodule.so/SnacTemperaturemodule.so /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacTemperaturemodule.so/Context.o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacTemperaturemodule.so/Element.o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacTemperaturemodule.so/Node.o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacTemperaturemodule.so/Register.o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacTemperaturemodule.so/ConstructExtensions.o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacTemperaturemodule.so/Build.o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacTemperaturemodule.so/HeatFlux.o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacTemperaturemodule.so/Heat.o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacTemperaturemodule.so/VariableConditions.o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacTemperaturemodule.so/Remesh.o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacTemperaturemodule.so/DeleteExtensions.o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacTemperaturemodule.so/Output.o  -bundle -flat_namespace -undefined suppress  -L/Users/Tian/repos/github/snac-1/build/lib   -L/Users/Tian/repos/github/snac-1/build/lib  -lSnac -lStGermain  -L/Users/Tian/repos/github/snac-1/build/lib -lmpi -L/opt/local/lib/openmpi-mp -lmpi -L/sw/lib    -L/opt/local/lib -lxml2 -lz -lpthread -liconv -lm   -lm -lmx            
+ld: warning: directory not found for option '-L/sw/lib'
+/bin/cp -f /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacTemperaturemodule.so/SnacTemperaturemodule.so /Users/Tian/repos/github/snac-1/build/lib/SnacTemperaturemodule.so

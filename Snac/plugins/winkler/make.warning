@@ -1,0 +1,3 @@
+Force.c:662:30: warning: unused variable 'mantleDensity' [-Wunused-variable]
+1 warning generated.
+ld: warning: directory not found for option '-L/sw/lib'
