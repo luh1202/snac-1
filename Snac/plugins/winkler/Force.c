@@ -185,7 +185,7 @@ void _SnacWinklerForce_Apply(
 		} /* end if if(ijk[1] == ) */
 	
 
-#if 0
+#if 1   //0 is without waterpressure, 1 is with water pressure
 /* sea water pressure at surface begins (assuming 4km initial depth of water) */
 		
 		Element_GlobalIndex             global_J_range = decomp->elementGlobal3DCounts[1];
