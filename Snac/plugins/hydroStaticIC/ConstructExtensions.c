@@ -39,6 +39,11 @@
 #include "ConstructExtensions.h"
 #include <assert.h>
 #include <limits.h>
+
+/* new added for variable waterdepth */
+#include "Context.h"
+/* new added for variable waterdepth */
+
 #ifndef PATH_MAX
 	#define PATH_MAX 1024
 #endif
@@ -46,7 +51,13 @@
 void _SnacHydroStaticIC_ConstructExtensions( void* _context, void* data ) {
 	Snac_Context*				context = (Snac_Context*)_context;
 	Snac_Element				tmpElement;
-
+	/* for adding water_depth */
+		SnacHydroStaticIC_Context*			contextExt = ExtensionManager_Get(
+										  context->extensionMgr,
+											  context,
+										  SnacHydroStaticIC_ContextHandle );
+	/* for adding water_depth */
+		
 	/* The hydro static stress variable purposely covers many variables... its more of a convenience thing. */
 	#define					hydroStaticComponentCount	24
 	Index					hydroStaticOffsetCount = hydroStaticComponentCount;
@@ -148,4 +159,10 @@ void _SnacHydroStaticIC_ConstructExtensions( void* _context, void* data ) {
 	/* Build the temperature IC and BC managers */
 
 	/* Prepare the dump file */
+
+	/* Add input file variable waterdepth */
+	contextExt->water_depth = Dictionary_Entry_Value_AsDouble(
+							     Dictionary_GetDefault( context->dictionary, "water_depth",
+										    Dictionary_Entry_Value_FromDouble( 4000.0f ) ) );
+	/* Add input file variable waterdepth */
 }

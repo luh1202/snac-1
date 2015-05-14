@@ -39,13 +39,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+//for adding variable waterdepth
+#include "Context.h"
+//for adding variable waterdepth
 void _SnacHydroStaticIC_IC( void* _context ) {
 	Snac_Context*		context = (Snac_Context*)_context;
 	Mesh*           mesh = context->mesh;
 	MeshLayout*		layout = (MeshLayout*)mesh->layout;
 	HexaMD*			decomp = (HexaMD*)layout->decomp;
 	BlockGeometry*		geometry = (BlockGeometry*)layout->elementLayout->geometry;
+
+	/* Add input file variable waterdepth */
+	SnacHydroStaticIC_Context*                       contextExt = ExtensionManager_Get(
+											  context->extensionMgr,
+                                                                                          context,
+                                                                                     SnacHydroStaticIC_ContextHandle );		
+	double water_depth = contextExt->water_depth;
+	/* Add input file variable waterdepth */
 
 	int       procBelow = -1, procAbove = -1;
 	int       procJ, rankPartition[3];
@@ -85,7 +95,9 @@ void _SnacHydroStaticIC_IC( void* _context ) {
 				for( elI = 0; elI < elx; elI++ ) {
 				  //later added for water pressure
 				  double waterdensity = 1040.0f;
-				  double waterdepth = 10000.0f;
+				  double waterdepth = water_depth; //make local copy after implement the water_depth as a input file variable
+				  fprintf(stderr, "from hydrostaticIC waterdepth=%e\n", waterdepth);
+				  //double waterdepth = 10000.0f;
 				  //double waterdepth = 0.0f; //for trying without waterp, also need to modify plugins/winkler/Force.c
 				  //later added for water pressure
 				  //double rogh = waterdensity * context->gravity * waterdepth;

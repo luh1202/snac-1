@@ -25,25 +25,20 @@
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 **
-*/
-/** \file
-** Role:
-**
-** Assumptions:
-**	None as yet.
-**
-** Comments:
-**	None as yet.
-**
-** $Id: types.h 1247 2004-04-20 00:40:15Z SteveQuenette $
+** $Id: Context.c 1958 2004-08-26 19:08:58Z puru $
 **
 **~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-#ifndef __SnacTemperature_types_h__
-#define __SnacTemperature_types_h__
+#include <mpi.h>
+#include <StGermain/StGermain.h>
+#include <StGermain/FD/FD.h>
+#include "Snac/Snac.h"
+#include "types.h"
+#include "Context.h"
+#include <stdio.h>
 
-//for adding variable water_depth
-typedef struct _SnacHydroStaticIC_Context        SnacHydroStaticIC_Context;
-//for adding variable water_depth
-
-#endif /* __SnacTemperature_types_h__ */
+void SnacHydroStaticIC_Context_Print( void* _context ) {
+	SnacHydroStaticIC_Context*	self = (SnacHydroStaticIC_Context*)_context;
+	
+	printf( "SnacHydroStaticIC_Context:\n" );
+}

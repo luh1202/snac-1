@@ -42,6 +42,10 @@
 	
 	/* Textual name of this class */
 	extern const Type SnacHydroStaticIC_Type;
+    //new added for variable water depth
+        extern ExtensionInfo_Index SnacHydroStaticIC_ContextHandle;
+    //new added for variable water depth
+
 
 	Index _SnacHydroStaticIC_Register( PluginsManager* pluginsMgr );
 

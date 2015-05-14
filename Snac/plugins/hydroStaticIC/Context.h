@@ -30,20 +30,22 @@
 ** Role:
 **
 ** Assumptions:
-**	None as yet.
 **
 ** Comments:
-**	None as yet.
 **
-** $Id: types.h 1247 2004-04-20 00:40:15Z SteveQuenette $
+** $Id: Context.h 3104 2005-07-14 22:16:41Z EunseoChoi $
 **
 **~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-#ifndef __SnacTemperature_types_h__
-#define __SnacTemperature_types_h__
-
-//for adding variable water_depth
-typedef struct _SnacHydroStaticIC_Context        SnacHydroStaticIC_Context;
-//for adding variable water_depth
-
-#endif /* __SnacTemperature_types_h__ */
+#ifndef __SnacHydroStaticIC_Context_h__
+#define __SnacHydroStaticIC_Context_h__
+	
+	/* Context Information */
+	struct _SnacHydroStaticIC_Context {
+		double                          water_depth; 
+	};
+	
+	/* Print the contents of the context extension */
+	void SnacHydroStaticIC_Context_Print( void* _context );
+	
+#endif /* __SnacHydrostaticIC_Context_h__ */

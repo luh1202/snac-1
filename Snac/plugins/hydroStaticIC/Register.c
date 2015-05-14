@@ -37,9 +37,16 @@
 #include "Register.h"
 #include "ConstructExtensions.h"
 #include "VariableConditions.h"
+// for adding variable water_depth
+#include "Context.h"
+// for adding variable water_depth
+
 #include <stdio.h>
 #include <assert.h>
 #include <string.h>
+
+
+
 
 /* Textual name of this class */
 const Type SnacHydroStaticIC_Type = "SnacHydroStaticIC";
@@ -48,6 +55,11 @@ static char RMAX_STR[] = "rMax";
 static char MESH_STR[] = "mesh";
 static double MIN[] = { -45.0f, -45.0f, 0.5f };
 static double MAX[] = { 45.0f, 45.0f, 1.0f };
+
+// for adding variable water_depth
+ExtensionInfo_Index SnacHydroStaticIC_ContextHandle;
+// for adding variable water_depth
+
 
 Index _SnacHydroStaticIC_Register( PluginsManager* pluginsMgr ) {
 	return PluginsManager_Submit( pluginsMgr,
@@ -84,6 +96,11 @@ void _SnacHydroStaticIC_Construct( void* component, Stg_ComponentFactory* cf, vo
 	#ifdef DEBUG
 	printf( "In %s()\n", __func__ );
 	#endif
+
+// for adding variable water_depth
+	SnacHydroStaticIC_ContextHandle = ExtensionManager_Add( context->extensionMgr, SnacHydroStaticIC_Type, sizeof(SnacHydroStaticIC_Context) );
+// for adding variable water_depth
+
 
 	if( context->restartTimestep > 0 )
 		return;
