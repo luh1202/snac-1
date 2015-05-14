@@ -187,9 +187,17 @@ void _SnacWinklerForce_Apply(
 
 #if 1   //0 is without waterpressure, 1 is with water pressure
 /* sea water pressure at surface begins (assuming 4km initial depth of water) */
-		
+
+/* Add input file variable waterdepth */
+double	water_depth = Dictionary_Entry_Value_AsDouble(
+							     Dictionary_GetDefault( context->dictionary, "water_depth",
+										    Dictionary_Entry_Value_FromDouble( 4000.0f ) ) );
+//fprintf(stderr, "from Force.c waterdepth=%e\n", water_depth);
+/* Add input file variable waterdepth */
+
 		Element_GlobalIndex             global_J_range = decomp->elementGlobal3DCounts[1];
-		double                          waterdepth = 10000.0f;
+		//double                          waterdepth = 10000.0f;
+		double waterdepth = water_depth; //local copy from dictionary get. 
 		double                          waterdensity = 1040.0f; //from wiki average water density in sea
 		if( ijk[1] == global_J_range) {
 		  //fprintf(stderr, "ijk[1]=%d  global_J_range=%d\n", ijk[1], global_J_range);
