@@ -85,11 +85,11 @@ void _SnacHydroStaticIC_IC( void* _context ) {
 				for( elI = 0; elI < elx; elI++ ) {
 				  //later added for water pressure
 				  double waterdensity = 1040.0f;
-				  double waterdepth = 4000.0f;
+				  double waterdepth = 10000.0f;
 				  //double waterdepth = 0.0f; //for trying without waterp, also need to modify plugins/winkler/Force.c
 				  //later added for water pressure
-				   double rogh = waterdensity * context->gravity * waterdepth;
-				   //double rogh = 0.0f; //for trying without waterp, also need to modify plugins/winkler/Force.c
+				  //double rogh = waterdensity * context->gravity * waterdepth;
+				   double rogh = 0.0f; // also need to modify plugins/winkler/Force.c
 				  
 					for( elJ = ely - 1; elJ > -1; elJ--) {
 						Element_LocalIndex  element_lI = elI + elJ*elx + elK*elx*ely;
