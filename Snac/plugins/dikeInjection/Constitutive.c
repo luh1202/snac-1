@@ -161,7 +161,7 @@ void SnacDikeInjection_Constitutive( void* _context, Element_LocalIndex element_
 	       
 /*the above way for restricting dike in x-axis can be replaced by simple method be low*/		
 	       //distance = fabs( baryCenter[0] - 0.5 * (startX + endX) );
-	       distance = fabs( baryCenter[0] - 500 ); //Third element from left as dike
+	       distance = fabs( baryCenter[0] - 500 ); //First element from left as dike
 
                  /* 
 		   If part of the dike, adjust stresses. 
@@ -280,25 +280,25 @@ void SnacDikeInjection_Constitutive( void* _context, Element_LocalIndex element_
 	       }
 	       /*Add in Seeds initially*/
 	       if(context->timeStep==1){
-		 if( (baryCenter[0] >= 1000) && (baryCenter[0] <= 2000) && (baryCenter[1] >= -6000) && (baryCenter[1] <= -5000) /*&& (baryCenter[2] <= 4000)*/){
+		 if( (baryCenter[0] >= 1000) && (baryCenter[0] <= 2000) && (baryCenter[1] >= -6000) && (baryCenter[1] <= -5000) && (baryCenter[2] <= 3000)){
 		   viscoplasticElement->plasticStrain[tetra_I] = 0.5;
 		 }
 		 
-		 if( (baryCenter[0] >= 2000) && (baryCenter[0] <= 3000) && (baryCenter[1] >= -5000) && (baryCenter[1] <= -4000) /*&& (baryCenter[2] <= 4000)*/){
+		 if( (baryCenter[0] >= 2000) && (baryCenter[0] <= 3000) && (baryCenter[1] >= -5000) && (baryCenter[1] <= -4000) && (baryCenter[2] <= 3000)){
 		   viscoplasticElement->plasticStrain[tetra_I] = 0.5;
 		 }
-		 if( (baryCenter[0] >= 2000) && (baryCenter[0] <= 3000) && (baryCenter[1] >= -4000) && (baryCenter[1] <= -3000) /*&& (baryCenter[2] <= 4000)*/){
+		 if( (baryCenter[0] >= 2000) && (baryCenter[0] <= 3000) && (baryCenter[1] >= -4000) && (baryCenter[1] <= -3000) && (baryCenter[2] <= 3000)){
 		   viscoplasticElement->plasticStrain[tetra_I] = 0.5;
 		 }
 		 
-		 if( (baryCenter[0] >= 3000) && (baryCenter[0] <= 4000) && (baryCenter[1] >= -3000) && (baryCenter[1] <= -2000) /*&& (baryCenter[2] <= 4000)*/){
+		 if( (baryCenter[0] >= 3000) && (baryCenter[0] <= 4000) && (baryCenter[1] >= -3000) && (baryCenter[1] <= -2000) && (baryCenter[2] <= 3000)){
 		   viscoplasticElement->plasticStrain[tetra_I] = 0.5;
 		 }
-		 if( (baryCenter[0] >= 3000) && (baryCenter[0] <= 4000) && (baryCenter[1] >= -2000) && (baryCenter[1] <= -1000) /*&& (baryCenter[2] <= 4000)*/){
+		 if( (baryCenter[0] >= 3000) && (baryCenter[0] <= 4000) && (baryCenter[1] >= -2000) && (baryCenter[1] <= -1000) && (baryCenter[2] <= 3000)){
 		   viscoplasticElement->plasticStrain[tetra_I] = 0.5;
 		 }
 
-		 if( (baryCenter[0] >= 4000) && (baryCenter[0] <= 5000) && (baryCenter[1] >= -1000) && (baryCenter[1] <= -0) /*&& (baryCenter[2] <= 4000)*/){
+		 if( (baryCenter[0] >= 4000) && (baryCenter[0] <= 5000) && (baryCenter[1] >= -1000) && (baryCenter[1] <= -0) && (baryCenter[2] <= 3000)){
 		   viscoplasticElement->plasticStrain[tetra_I] = 0.5;
 		 }
 	       }
