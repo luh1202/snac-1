@@ -43,9 +43,9 @@
 void _SnacViscoPlastic_ConstructExtensions( void* _context, void* data ) {
 	Snac_Context*				context = (Snac_Context*)_context;
 	SnacViscoPlastic_Context*			contextExt = ExtensionManager_Get(
-																		  context->extensionMgr,
-																		  context,
-																		  SnacViscoPlastic_ContextHandle );
+										  context->extensionMgr,
+											  context,
+										  SnacViscoPlastic_ContextHandle );
 	Snac_Element                            tmpElement;
 	SnacViscoPlastic_Element*               tmpElementExt = ExtensionManager_Get(
 																				 context->mesh->elementExtensionMgr,

@@ -96,7 +96,7 @@ void _SnacHydroStaticIC_IC( void* _context ) {
 				  //later added for water pressure
 				  double waterdensity = 1040.0f;
 				  double waterdepth = water_depth; //make local copy after implement the water_depth as a input file variable
-				  fprintf(stderr, "from hydrostaticIC waterdepth=%e\n", waterdepth);
+				  //fprintf(stderr, "from hydrostaticIC waterdepth=%e\n", waterdepth);
 				  //double waterdepth = 10000.0f;
 				  //double waterdepth = 0.0f; //for trying without waterp, also need to modify plugins/winkler/Force.c
 				  //later added for water pressure

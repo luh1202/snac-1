@@ -1,11 +1,11 @@
 mpicc-openmpi-mp -pipe  -DVERSION=\"0\" -DCURR_MODULE_NAME=\"SnacWinklerForce\" -DPLUGIN_NAME=SnacWinklerForce -Wall -g    -c -o /Users/Tian/repos/github/snac-1/build/tmp/mod-SnacWinklerForcemodule.so/Force.o -I/Users/Tian/repos/github/snac-1/build/include   -I/Users/Tian/repos/github/snac-1/build/include/StGermain -I/Users/Tian/repos/github/snac-1/build/include   -I/opt/local/include/openmpi-mp   -I/opt/local/include/libxml2      Force.c
-Force.c:204:30: warning: unused variable 'mantleDensity' [-Wunused-variable]
+Force.c:212:30: warning: unused variable 'mantleDensity' [-Wunused-variable]
                                         Density                 mantleDensity = 3300.0f;
                                                                 ^
-Force.c:210:13: warning: unused variable 'rosubg' [-Wunused-variable]
+Force.c:218:13: warning: unused variable 'rosubg' [-Wunused-variable]
                                         double rosubg = context->gravity * ( phsDensity + drosub ) * ( 1.0 - alpha * (nodeT-material->reftemp) + beta * p_est );
                                                ^
-Force.c:662:30: warning: unused variable 'mantleDensity' [-Wunused-variable]
+Force.c:670:30: warning: unused variable 'mantleDensity' [-Wunused-variable]
                                         Density                 mantleDensity = 3300.0f;
                                                                 ^
 3 warnings generated.

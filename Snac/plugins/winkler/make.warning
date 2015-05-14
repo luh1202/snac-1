@@ -1,5 +1,5 @@
-Force.c:204:30: warning: unused variable 'mantleDensity' [-Wunused-variable]
-Force.c:210:13: warning: unused variable 'rosubg' [-Wunused-variable]
-Force.c:662:30: warning: unused variable 'mantleDensity' [-Wunused-variable]
+Force.c:212:30: warning: unused variable 'mantleDensity' [-Wunused-variable]
+Force.c:218:13: warning: unused variable 'rosubg' [-Wunused-variable]
+Force.c:670:30: warning: unused variable 'mantleDensity' [-Wunused-variable]
 3 warnings generated.
 ld: warning: directory not found for option '-L/sw/lib'

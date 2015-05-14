@@ -1,4 +1,0 @@
-emaConstitutive.c:41:2: error: invalid preprocessing directive
-Constitutive.c:111:35: error: incomplete definition of type 'struct _SnacViscoPlastic_Context'
-1 warning and 2 errors generated.
-make[1]: *** [/Users/Tian/repos/github/snac-1/build/tmp/mod-SnacViscoPlasticmodule.so/Constitutive.o] Error 1
