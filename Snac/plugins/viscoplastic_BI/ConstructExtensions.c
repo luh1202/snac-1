@@ -78,4 +78,8 @@ void _SnacViscoPlastic_ConstructExtensions( void* _context, void* data ) {
 		assert( contextExt->viscCheckpoint /* failed to open file for writing */ );
 		abort();
 	}
+
+	contextExt->healing_time = Dictionary_Entry_Value_AsDouble(
+							     Dictionary_GetDefault( context->dictionary, "healing_time",
+										    Dictionary_Entry_Value_FromDouble( 1.0e+12 ) ) );
 }

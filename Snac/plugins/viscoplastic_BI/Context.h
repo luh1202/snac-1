@@ -47,6 +47,7 @@
 		FILE*				viscOut;
 		FILE*				plStrainCheckpoint;
 		FILE*				viscCheckpoint;
+	        double                          healing_time; 
 	};
 	
 	/* Print the contents of the context extension */
