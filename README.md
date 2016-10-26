@@ -48,7 +48,7 @@ export LD_LIBRARY_PATH=${SNAC_LIBDIR}:{LD_LIBRARY_PATH}
 ## Configure and build
 In `snac-1/`
 ```BASH
-> MAKE=gmake CC=mpicc CXX=mpic++ ./configure
+> MAKE=gmake CC=mpicc CXX=mpic++ ./configure.sh
 > make
 ```
 **Note: If configure fails, delete `snac-1/Makefile.system` before retry.**
