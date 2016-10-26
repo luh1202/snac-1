@@ -65,17 +65,16 @@ For instance, to run a 3D model with M 0.5 to 0.7, linear and the fast weakening
 
 # Post-processing and visualization
 
-* Go to the output directory specified in the input file and run
+* To generate VTS and PVTS files for all the outputs, go to the output directory specified in the input file and 
 ```
 > snac2vtk .
 ```
 
 * The VTS files can be tarred and bzipped with `snac-1/Snac/snac2vtk/vts_tar_cjvf.sh`
-Go to the output directory and run
+This script will create an bzipped tar file, `lowc2.tar.bz2`, which contain all the
+VTS and PVTS files in the current directory. Go to the output directory and run
 ```
 > bash snac-1/Snac/snac2vtk/vts_tar_cjvf.sh
 ```
-This script will create an bzipped tar file, `lowc2.tar.bz2`, which contain all the
-VTS and PVTS files in the current directory.
 
 * [ParaView](http://www.paraview.org/) or [VisIt](https://wci.llnl.gov/simulation/computer-codes/visit) can visualize the VTS and PVTS files.
