@@ -55,7 +55,8 @@ In `snac-1/`
 
 # Running SNAC
 
-Input files are in `snac-1/Snac/examples/input_file_for_3D_M_paper`
+Input files are in `snac-1/Snac/examples/input_file_for_3D_M_paper`.
+
 For instance, to run a 3D model with M 0.5 to 0.7, linear and the fast weakening,
 ```BASH
 > cd snac-1/Snac/examples/input_file_for_3D_M_paper/3D
