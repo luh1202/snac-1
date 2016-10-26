@@ -15,7 +15,7 @@ Check out the `waterp` branch from `https://github.com/kelchuan/snac-1`
 ```BASH
 > git clone https://github.com/kelchuan/snac-1
 > cd snac-1
-> git pull https://github.com/kelchuan/snac-1 waterp
+> git checkout waterp
 ```
 
 # Build SNAC
