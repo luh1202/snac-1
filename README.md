@@ -51,7 +51,8 @@ In `snac-1/`
 > MAKE=gmake CC=mpicc CXX=mpic++ ./configure.sh
 > make
 ```
-**Note: If configure fails, delete `snac-1/Makefile.system` before retry.**
+* If configure fails, delete `snac-1/Makefile.system` before retry.
+* Build logs might seem to indicate errors during the builidng but they actually only warnings that can be ignored.
 
 # Running SNAC
 
