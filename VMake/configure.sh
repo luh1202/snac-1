@@ -595,9 +595,9 @@ DoCritialConftest ./VMake/SystemTests/C-CompilerType CC_TYPE
 
 #if test "${SYSTEM}x" = "rangerx"; then
 #	CC_TYPE="pgi"
+#       CC_TYPE="intel"
 #fi
 echo "CC_TYPE="${CC_TYPE}
-CC_TYPE="intel"
 
 if test "${CC_TYPE}x" = "x"; then
 	echo "Warning: Unknown C compiler type \"${CC_TYPE}\"."
