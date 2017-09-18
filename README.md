@@ -1,3 +1,4 @@
+Please check out my wiki page first for clarification.
 
 This document describes how to build SNAC to reproduce the models presented in
 
