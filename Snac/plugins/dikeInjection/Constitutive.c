@@ -41,7 +41,10 @@
 #include <math.h>
 #include <string.h>
 #include <assert.h>
+#include "Track.h"
+#include <stdio.h>
 
+#define SkipStep 100
 #ifndef PI
 #ifndef M_PIl
 #ifndef M_PI
@@ -58,7 +61,7 @@
 //int maxxK = 9;  //meshSizeK - 2 ; for M-factor vary from 0 to 1
 
 void SnacDikeInjection_Constitutive( void* _context, Element_LocalIndex element_lI ) {
-
+        Snac_Context* self = (Snac_Context*)_context;
       
 	Snac_Context*		        context = (Snac_Context*)_context;
 	SnacDikeInjection_Context*	contextExt = ExtensionManager_Get(
@@ -70,6 +73,7 @@ void SnacDikeInjection_Constitutive( void* _context, Element_LocalIndex element_
 	const Snac_Material		*material = &context->materialProperty[element->material_I];
 	
 	/* make local copies. */
+    long long counter = 0;
 	double startX = contextExt->startX;
 	double endX = contextExt->endX;
 	double startZ = contextExt->startZ;
@@ -111,7 +115,10 @@ void SnacDikeInjection_Constitutive( void* _context, Element_LocalIndex element_
 
 	//fprintf(stderr,"context->dt=%e epsilon_xx=%e\n, injectionRate=%e",context->dt,epsilon_xx, contextExt->injectionRate);
 	//	epsilon_xx = (contextExt->injectionRate*context->dt)/elem_dX; 
-	
+    //fprintf(stderr, "--------debug-----------\n");
+    //fprintf(stderr, "\nSnacDikeInjection_Constitutive() is called!\n");
+    //fprintf(stderr, "self->currentTime = %g\n\n", self->currentTime);
+    
 	for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
 		Coord baryCenter;
 		double distance = 0.0;
@@ -159,7 +166,7 @@ void SnacDikeInjection_Constitutive( void* _context, Element_LocalIndex element_
 	//fprintf(stderr, "distance = %e\n", distance);	
           	//	fprintf(stderr,"distance=%e, dikeDepth=%e",distance,contextExt->dikeDepth);
 	       
-/*the above way for restricting dike in x-axis can be replaced by simple method be low*/		
+/*the above way for restricting dike in x-axis can be replaced by simple method below*/		
 	       distance = fabs( baryCenter[0] - 0.5 * (startX + endX) );
 
                  /* 
@@ -213,12 +220,19 @@ void SnacDikeInjection_Constitutive( void* _context, Element_LocalIndex element_
 		 //ijk[2] vary from 0 to global_K_range - 1
 
 		 //the if global_K_range==1 is for 1d pseudo test
-		 if (global_K_range==1){
+		 if (0){  // if (global_K_range==1){
 		   (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx;
 		   (*stress)[1][1] -= material->lambda * epsilon_xx;
 		   (*stress)[2][2] -= material->lambda * epsilon_xx;
 		 
-                 }else{
+             printf("global_K_range==1\n");
+             
+                 }
+         else{
+             
+             counter += 1;
+             FILE *fp;
+             
 		   if( M_type == 1 ){
 		   double M = ((ijk[2]+0.0f) / ( global_K_range + 0.0f) * (Me - Mb) + Mb);
 		   /*(*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * ((ijk[2]+1) / ( global_K_range)*(Me-Mb)+Mb);
@@ -229,30 +243,413 @@ void SnacDikeInjection_Constitutive( void* _context, Element_LocalIndex element_
 		   (*stress)[1][1] -= material->lambda * epsilon_xx * M;
 		   (*stress)[2][2] -= material->lambda * epsilon_xx * M;
 		   //fprintf(stderr, " M_type=%f\n global_K_range=%d\n ijk[2]=%d\n, M = %f\n \n \n",  M_type, global_K_range, ijk[2], M);
-		   }		 
+           }
 		   if( M_type == 2 ){
-		     double M = ( sin( (ijk[2]+0.0f) / ( global_K_range + 0.0f) * PI / 2) * (Me - Mb) + Mb);
+           double M = ( sin( (ijk[2]+0.0f) / ( global_K_range + 0.0f) * PI / 2) * (Me - Mb) + Mb);
 		     (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * M;
 		     (*stress)[1][1] -= material->lambda * epsilon_xx * M;
 		     (*stress)[2][2] -= material->lambda * epsilon_xx * M;
 		     //fprintf(stderr, " M_type=%f\n global_K_range=%d\n ijk[2]=%d\n, M = %f\n \n \n",  M_type, global_K_range, ijk[2], M);
 		   }		 
 		   if( M_type == 3 ){
-		     double M =  pow( (ijk[2]+0.0f) / ( global_K_range + 0.0f), 0.5 ) * (Me - Mb) + Mb;
+           double M =  pow( (ijk[2]+0.0f) / ( global_K_range + 0.0f), 0.5 ) * (Me - Mb) + Mb;
 		     (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * M;
 		     (*stress)[1][1] -= material->lambda * epsilon_xx * M;
 		     (*stress)[2][2] -= material->lambda * epsilon_xx * M;
 		     //fprintf(stderr, " M_type=%f\n global_K_range=%d\n ijk[2]=%d\n, M = %f\n \n \n",  M_type, global_K_range, ijk[2], M);
 		   }		 
 		   if( M_type == 4 ){
-		     double M =  pow( (ijk[2]+0.0f) / ( global_K_range + 0.0f), 0.333333 ) * (Me - Mb) + Mb;
+           double M =  pow( (ijk[2]+0.0f) / ( global_K_range + 0.0f), 0.333333 ) * (Me - Mb) + Mb;
 		     (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * M;
 		     (*stress)[1][1] -= material->lambda * epsilon_xx * M;
 		     (*stress)[2][2] -= material->lambda * epsilon_xx * M;
 		     //fprintf(stderr, " M_type=%f\n global_K_range=%d\n ijk[2]=%d\n, M = %f\n \n \n",  M_type, global_K_range, ijk[2], M);
 		   }		 
-		   
+		     //Hao Lu 2017-7-28 local changing M
+             //In input file, Mb and Me must be set as 0.2 to achive the designed function, which M is change within 0.3 to 0.7
+             //period 2Ma
+            if( M_type == 5 ){
+            double M = ((ijk[2]+0.0f) / ( global_K_range + 0.0f) * (Me - Mb) + Mb)*sin(((2*PI)/(6.3072e+13))*(self->currentTime))+0.5;
+             (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * M;
+             (*stress)[1][1] -= material->lambda * epsilon_xx * M;
+             (*stress)[2][2] -= material->lambda * epsilon_xx * M;
+                         //fprintf(stderr, " M_type=%f\n global_K_range=%d\n ijk[2]=%d\n, M = %f\n \n \n",  M_type, global_K_range, ijk[2], M);
+                
+                // printf("currentTime: %f    M = %f\n", self->currentTime, M);
+                // 20000 yrs data frequency
+                if ((long)self->currentTime % 630720000000 == 0)
+                {
+                    fp = fopen("data_2ma_period_type5.txt", "a+");
+                    if (fp == NULL)
+                    {
+                        printf("Cannot open file!\n");
+                        exit(0);
+                    }
+                    fprintf(fp, "%f\t%f\n", self->currentTime, M);
+                    if (fclose(fp))
+                        printf("File close error!\n");
+                }
+           }
+             //Hao Lu 2017-8-5
+             //period 1Ma
+             if( M_type == 6 ){
+             double M = M = ((ijk[2]+0.0f) / ( global_K_range + 0.0f) * (Me - Mb) + Mb)*sin(((2*PI)/(3.1536e+13))*(self->currentTime))+0.5;
+                 
+                 (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * M;
+                 (*stress)[1][1] -= material->lambda * epsilon_xx * M;
+                 (*stress)[2][2] -= material->lambda * epsilon_xx * M;
+                 
+                 // printf("currentTime: %f    M = %f\n", self->currentTime, M);
+                 //10000 yrs data frequency
+                 if ((long)self->currentTime % 315360000000 == 0)
+                 {
+                     fp = fopen("data_1ma_period_type6.txt", "a+");
+                     if (fp == NULL)
+                     {
+                         printf("Cannot open file!\n");
+                         exit(0);
+                     }
+                     fprintf(fp, "%f\t%f\n", self->currentTime, M);
+                     if (fclose(fp))
+                         printf("File close error!\n");
+                 }
+             }
+                //period 0.5Ma
+             if( M_type == 7 ){
+                 double M = ((ijk[2]+0.0f) / ( global_K_range + 0.0f) * (Me - Mb) + Mb)*sin(((2*PI)/(1.5768e+13))*(self->currentTime))+0.5;
+                 
+                 (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * M;
+                 (*stress)[1][1] -= material->lambda * epsilon_xx * M;
+                 (*stress)[2][2] -= material->lambda * epsilon_xx * M;
+                 
+                 // printf("currentTime: %f    M = %f\n", self->currentTime, M);
+                 // 5000 yrs data frequency
+                 if ((long)self->currentTime % 157680000000 == 0)
+                 {
+                     fp = fopen("data_500kyrs_period_type7.txt", "a+");
+                     if (fp == NULL)
+                     {
+                         printf("Cannot open file!\n");
+                         exit(0);
+                     }
+                     fprintf(fp, "%f\t%f\n", self->currentTime, M);
+                     if (fclose(fp))
+                         printf("File close error!\n");
+                 }
+             }
 
+                 //period 0.25Ma
+             if( M_type == 8 ){
+                 double M = ((ijk[2]+0.0f) / ( global_K_range + 0.0f) * (Me - Mb) + Mb)*sin(((2*PI)/(7.884e+12))*(self->currentTime))+0.5;
+                 
+                 (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * M;
+                 (*stress)[1][1] -= material->lambda * epsilon_xx * M;
+                 (*stress)[2][2] -= material->lambda * epsilon_xx * M;
+                 
+                 // printf("currentTime: %f    M = %f\n", self->currentTime, M);
+                 // 2500 yrs data frequency
+                 if ((long)self->currentTime % 78840000000 == 0)
+                 {
+                     fp = fopen("data250kyrs_period_type8.txt", "a+");
+                     if (fp == NULL)
+                     {
+                         printf("Cannot open file!\n");
+                         exit(0);
+                     }
+                     fprintf(fp, "%f\t%f\n", self->currentTime, M);
+                     if (fclose(fp))
+                         printf("File close error!\n");
+                 }
+             }
+
+             //period 0.1Ma
+             if( M_type == 9 ){
+                 double M = ((ijk[2]+0.0f) / ( global_K_range + 0.0f) * (Me - Mb) + Mb)*sin(((2*PI)/(3.1536e+12))*(self->currentTime))+0.5;
+                 
+                 (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * M;
+                 (*stress)[1][1] -= material->lambda * epsilon_xx * M;
+                 (*stress)[2][2] -= material->lambda * epsilon_xx * M;
+                 
+                 // printf("currentTime: %f    M = %f\n", self->currentTime, M);
+                 // 1000 yrs data frequency 
+                 if ((long)self->currentTime % 31536000000 == 0)
+                 {
+                     fp = fopen("data_100kyrs_period_type9.txt", "a+");
+                     if (fp == NULL)
+                     {
+                         printf("Cannot open file!\n");
+                         exit(0);
+                     }
+                     fprintf(fp, "%f\t%f\n", self->currentTime, M);
+                     if (fclose(fp))
+                         printf("File close error!\n");
+                 }
+           }
+            //period 0.05Ma
+             if( M_type == 10 ){
+                 double M = ((ijk[2]+0.0f) / ( global_K_range + 0.0f) * (Me - Mb) + Mb)*sin(((2*PI)/(1.5768e+12))*(self->currentTime))+0.5;
+                 
+                 (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * M;
+                 (*stress)[1][1] -= material->lambda * epsilon_xx * M;
+                 (*stress)[2][2] -= material->lambda * epsilon_xx * M;
+                 
+                 // printf("currentTime: %f    M = %f\n", self->currentTime, M);
+                 // 500 yrs data frequency
+                 if ((long)self->currentTime % 15768000000 == 0)
+                 {
+                     fp = fopen("data_50kyrs_period_type10.txt", "a+");
+                     if (fp == NULL)
+                     {
+                         printf("Cannot open file!\n");
+                         exit(0);
+                     }
+                     fprintf(fp, "%f\t%f\n", self->currentTime, M);
+                     if (fclose(fp))
+                         printf("File close error!\n");
+                 }
+             }
+             //period 0.01Ma
+             if( M_type == 11 ){
+                 double M = ((ijk[2]+0.0f) / ( global_K_range + 0.0f) * (Me - Mb) + Mb)*sin(((2*PI)/(3.1536e+11))*(self->currentTime))+0.5;
+                 
+                 (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * M;
+                 (*stress)[1][1] -= material->lambda * epsilon_xx * M;
+                 (*stress)[2][2] -= material->lambda * epsilon_xx * M;
+                 
+                 // printf("currentTime: %f    M = %f\n", self->currentTime, M);
+                 // 100 yrs data frequency
+                 if ((long)self->currentTime % 3153600000 == 0)
+                 {
+                     fp = fopen("data_10kyrs_period_type11.txt", "a+");
+                     if (fp == NULL)
+                     {
+                         printf("Cannot open file!\n");
+                         exit(0);
+                     }
+                     fprintf(fp, "%f\t%f\n", self->currentTime, M);
+                     if (fclose(fp))
+                         printf("File close error!\n");
+                 }
+             }
+             //period 0.005Ma
+             if( M_type == 12 ){
+                 double M = ((ijk[2]+0.0f) / ( global_K_range + 0.0f) * (Me - Mb) + Mb)*sin(((2*PI)/(1.5768e+11))*(self->currentTime))+0.5;
+                 
+                 (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * M;
+                 (*stress)[1][1] -= material->lambda * epsilon_xx * M;
+                 (*stress)[2][2] -= material->lambda * epsilon_xx * M;
+                 
+                 // printf("currentTime: %f    M = %f\n", self->currentTime, M);
+                 // 50 yrs data write frequency
+                 if ((long)self->currentTime % 1576800000 == 0)
+                 {
+                     fp = fopen("data_5kyrs_period_type12.txt", "a+");
+                     if (fp == NULL)
+                     {
+                         printf("Cannot open file!\n");
+                         exit(0);
+                     }
+                     fprintf(fp, "%f\t%f\n", self->currentTime, M);
+                     if (fclose(fp))
+                         printf("File close error!\n");
+                 }
+             }
+             
+             //period 2Ma 0.0-0.7
+             //to enable M change between 0~0.7,Mb=Me=0.35 in the input file.
+             if( M_type == 13 ){
+                 double M = ((ijk[2]+0.0f) / ( global_K_range + 0.0f) * (Me - Mb) + Mb)*sin(((2*PI)/(6.3072e+13))*(self->currentTime))+0.35;
+                 (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * M;
+                 (*stress)[1][1] -= material->lambda * epsilon_xx * M;
+                 (*stress)[2][2] -= material->lambda * epsilon_xx * M;
+                 //fprintf(stderr, " M_type=%f\n global_K_range=%d\n ijk[2]=%d\n, M = %f\n \n \n",  M_type, global_K_range, ijk[2], M);
+                 
+                 // printf("currentTime: %f    M = %f\n", self->currentTime, M);
+                 // 20000 yrs data frequency
+                 if ((long)self->currentTime % 630720000000 == 0)
+                 {
+                     fp = fopen("data_2ma_period_type13.txt", "a+");
+                     if (fp == NULL)
+                     {
+                         printf("Cannot open file!\n");
+                         exit(0);
+                     }
+                     fprintf(fp, "%f\t%f\n", self->currentTime, M);
+                     if (fclose(fp))
+                         printf("File close error!\n");
+                 }
+             }
+
+             //period 1Ma 0.0-0.7
+             if( M_type == 14 ){
+                 double M = M = ((ijk[2]+0.0f) / ( global_K_range + 0.0f) * (Me - Mb) + Mb)*sin(((2*PI)/(3.1536e+13))*(self->currentTime))+0.35;
+                 
+                 (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * M;
+                 (*stress)[1][1] -= material->lambda * epsilon_xx * M;
+                 (*stress)[2][2] -= material->lambda * epsilon_xx * M;
+                 
+                 // printf("currentTime: %f    M = %f\n", self->currentTime, M);
+                 //10000 yrs data frequency
+                 if ((long)self->currentTime % 315360000000 == 0)
+                 {
+                     fp = fopen("data_1ma_period_type14.txt", "a+");
+                     if (fp == NULL)
+                     {
+                         printf("Cannot open file!\n");
+                         exit(0);
+                     }
+                     fprintf(fp, "%f\t%f\n", self->currentTime, M);
+                     if (fclose(fp))
+                         printf("File close error!\n");
+                 }
+             }
+ 
+             //period 0.5Ma 0.0-0.7
+             if( M_type == 15 ){
+                 double M = ((ijk[2]+0.0f) / ( global_K_range + 0.0f) * (Me - Mb) + Mb)*sin(((2*PI)/(1.5768e+13))*(self->currentTime))+0.35;
+                 
+                 (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * M;
+                 (*stress)[1][1] -= material->lambda * epsilon_xx * M;
+                 (*stress)[2][2] -= material->lambda * epsilon_xx * M;
+                 
+                 // printf("currentTime: %f    M = %f\n", self->currentTime, M);
+                 // 5000 yrs data frequency
+                 if ((long)self->currentTime % 157680000000 == 0)
+                 {
+                     fp = fopen("data_500kyrs_period_type15.txt", "a+");
+                     if (fp == NULL)
+                     {
+                         printf("Cannot open file!\n");
+                         exit(0);
+                     }
+                     fprintf(fp, "%f\t%f\n", self->currentTime, M);
+                     if (fclose(fp))
+                         printf("File close error!\n");
+                 }
+             }
+
+             //period 0.25Ma 0.0-0.7
+             if( M_type == 16 ){
+                 double M = ((ijk[2]+0.0f) / ( global_K_range + 0.0f) * (Me - Mb) + Mb)*sin(((2*PI)/(7.884e+12))*(self->currentTime))+0.35;
+                 
+                 (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * M;
+                 (*stress)[1][1] -= material->lambda * epsilon_xx * M;
+                 (*stress)[2][2] -= material->lambda * epsilon_xx * M;
+                 
+                 // printf("currentTime: %f    M = %f\n", self->currentTime, M);
+                 // 2500 yrs data frequency
+                 if ((long)self->currentTime % 78840000000 == 0)
+                 {
+                     fp = fopen("data250kyrs_period_type16.txt", "a+");
+                     if (fp == NULL)
+                     {
+                         printf("Cannot open file!\n");
+                         exit(0);
+                     }
+                     fprintf(fp, "%f\t%f\n", self->currentTime, M);
+                     if (fclose(fp))
+                         printf("File close error!\n");
+                 }
+             }
+
+             //period 0.1Ma 0.0-0.7
+             if( M_type == 17 ){
+                 double M = ((ijk[2]+0.0f) / ( global_K_range + 0.0f) * (Me - Mb) + Mb)*sin(((2*PI)/(3.1536e+12))*(self->currentTime))+0.35;
+                 
+                 (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * M;
+                 (*stress)[1][1] -= material->lambda * epsilon_xx * M;
+                 (*stress)[2][2] -= material->lambda * epsilon_xx * M;
+                 
+                 // printf("currentTime: %f    M = %f\n", self->currentTime, M);
+                 // 1000 yrs data frequency
+                 if ((long)self->currentTime % 31536000000 == 0)
+                 {
+                     fp = fopen("data_100kyrs_period_type17.txt", "a+");
+                     if (fp == NULL)
+                     {
+                         printf("Cannot open file!\n");
+                         exit(0);
+                     }
+                     fprintf(fp, "%f\t%f\n", self->currentTime, M);
+                     if (fclose(fp))
+                         printf("File close error!\n");
+                 }
+             }
+
+             //period 0.05Ma 0.0-0.7
+             if( M_type == 18 ){
+                 double M = ((ijk[2]+0.0f) / ( global_K_range + 0.0f) * (Me - Mb) + Mb)*sin(((2*PI)/(1.5768e+12))*(self->currentTime))+0.35;
+                 
+                 (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * M;
+                 (*stress)[1][1] -= material->lambda * epsilon_xx * M;
+                 (*stress)[2][2] -= material->lambda * epsilon_xx * M;
+                 
+                 // printf("currentTime: %f    M = %f\n", self->currentTime, M);
+                 // 500 yrs data frequency
+                 if ((long)self->currentTime % 15768000000 == 0)
+                 {
+                     fp = fopen("data_50kyrs_period_type18.txt", "a+");
+                     if (fp == NULL)
+                     {
+                         printf("Cannot open file!\n");
+                         exit(0);
+                     }
+                     fprintf(fp, "%f\t%f\n", self->currentTime, M);
+                     if (fclose(fp))
+                         printf("File close error!\n");
+                 }
+             }
+
+             //period 0.01Ma 0.0-0.7
+             if( M_type == 19 ){
+                 double M = ((ijk[2]+0.0f) / ( global_K_range + 0.0f) * (Me - Mb) + Mb)*sin(((2*PI)/(3.1536e+11))*(self->currentTime))+0.35;
+                 
+                 (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * M;
+                 (*stress)[1][1] -= material->lambda * epsilon_xx * M;
+                 (*stress)[2][2] -= material->lambda * epsilon_xx * M;
+                 
+                 // printf("currentTime: %f    M = %f\n", self->currentTime, M);
+                 // 100 yrs data frequency
+                 if ((long)self->currentTime % 3153600000 == 0)
+                 {
+                     fp = fopen("data_10kyrs_period_type19.txt", "a+");
+                     if (fp == NULL)
+                     {
+                         printf("Cannot open file!\n");
+                         exit(0);
+                     }
+                     fprintf(fp, "%f\t%f\n", self->currentTime, M);
+                     if (fclose(fp))
+                         printf("File close error!\n");
+                 }
+             }
+
+             //period 0.005Ma 0.0-0.7
+             if( M_type == 20 ){
+                 double M = ((ijk[2]+0.0f) / ( global_K_range + 0.0f) * (Me - Mb) + Mb)*sin(((2*PI)/(1.5768e+11))*(self->currentTime))+0.35;
+                 
+                 (*stress)[0][0] -= (material->lambda + 2.0f * material->mu) * epsilon_xx * M;
+                 (*stress)[1][1] -= material->lambda * epsilon_xx * M;
+                 (*stress)[2][2] -= material->lambda * epsilon_xx * M;
+                 
+                 // printf("currentTime: %f    M = %f\n", self->currentTime, M);
+                 // 50 yrs data write frequency
+                 if ((long)self->currentTime % 1576800000 == 0)
+                 {
+                     fp = fopen("data_5kyrs_period_type20.txt", "a+");
+                     if (fp == NULL)
+                     {
+                         printf("Cannot open file!\n");
+                         exit(0);
+                     }
+                     fprintf(fp, "%f\t%f\n", self->currentTime, M);
+                     if (fclose(fp))
+                         printf("File close error!\n");
+                 }
+             }
+
+
+             
 		 }
 
 		 
