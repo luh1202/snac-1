@@ -1285,8 +1285,9 @@ void _Snac_Context_WriteLoopInfo( void* context ) {
 
 void _Snac_Context_DumpLoopInfo( void* context ) {
 	Snac_Context* self = (Snac_Context*)context;
-
+    // printf("\n_Snac_Context_DumpLoopInfo() is called!\n");
 	fprintf( self->timeStepInfo, "%16u %16g %16g\n", self->timeStep, self->currentTime, self->dt );
+    // printf("self->currentTime = %g\n\n", self->currentTime);
 	fflush( self->timeStepInfo );
 }
 

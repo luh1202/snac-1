@@ -1,0 +1,438 @@
+ifndef WHICH
+	WHICH=/usr/bin/which
+endif
+ifndef UNAME
+	UNAME=/usr/bin/uname
+endif
+ifndef UNAME_M
+	UNAME_M=/usr/bin/uname -m
+endif
+ifndef UNAME_R
+	UNAME_R=/usr/bin/uname -r
+endif
+ifndef MACHINE
+	MACHINE=x86_64
+endif
+ifndef KERNEL_RELEASE
+	KERNEL_RELEASE=OtherCats
+endif
+ifndef UNAME_S
+	UNAME_S=/usr/bin/uname -s
+endif
+ifndef SYSTEM
+	SYSTEM=Darwin
+endif
+ifndef MAKE
+	MAKE=/usr/bin/make
+endif
+ifndef SH
+	SH=/bin/sh
+endif
+ifeq (default,$(origin RM))
+	RM=/bin/rm
+endif
+ifndef RM
+	RM=/bin/rm
+endif
+ifndef RM_F
+	RM_F=/bin/rm -rf
+endif
+ifndef CD
+	CD=cd
+endif
+ifndef CP
+	CP=/bin/cp
+endif
+ifndef CP_F
+	CP_F=/bin/cp -f
+endif
+ifndef MV
+	MV=/bin/mv
+endif
+ifndef MV_F
+	MV_F=/bin/mv -f
+endif
+ifndef MKDIR
+	MKDIR=mkdir -p
+endif
+ifndef SED
+	SED=/usr/bin/sed
+endif
+ifndef FIND
+	FIND=/usr/bin/find
+endif
+ifndef LN
+	LN=/bin/ln
+endif
+ifndef LN_S
+	LN_S=/bin/ln -fs
+endif
+ifndef TEE
+	TEE=/usr/bin/tee
+endif
+ifndef NM
+	NM=/opt/passcal/other/bin/nm
+endif
+ifndef LS
+	LS=/bin/ls
+endif
+ifndef GREP
+	GREP=/usr/bin/grep
+endif
+ifndef AR
+	AR=/usr/bin/ar
+endif
+ifndef AR_C
+	AR_C=${AR} -cru
+endif
+ifndef RANLIB
+	RANLIB=/usr/bin/ranlib
+endif
+ifeq (default,$(origin CC))
+	CC=mpicc-mpich-mp
+endif
+ifndef CC
+	CC=mpicc-mpich-mp
+endif
+ifndef CC_TYPE
+	CC_TYPE=gnu
+endif
+ifeq (default,$(origin CXX))
+	CXX=mpicxx-mpich-mp
+endif
+ifndef CC_PIPE
+	CC_PIPE=-pipe
+endif
+ifndef CC_64
+	CC_64=-m64
+endif
+ifndef SYSTEM_SIZEOF_LONG
+	SYSTEM_SIZEOF_LONG=8
+endif
+ifndef SYSTEM_64
+	SYSTEM_64=1
+endif
+ifndef SYSTEM_BIG_ENDIAN
+	SYSTEM_BIG_ENDIAN=0
+endif
+ifndef OBJCC
+	OBJCC=
+endif
+ifndef OBJECTIVEC_LIBS
+	OBJECTIVEC_LIBS=
+endif
+ifndef CXX_EXT
+	CXX_EXT=cxx
+endif
+ifndef CXX
+	CXX=mpicxx-mpich-mp
+endif
+ifndef CXX_TYPE
+	CXX_TYPE=gnu
+endif
+ifndef CXX_PIPE
+	CXX_PIPE=-pipe
+endif
+ifeq (default,$(origin F77))
+	F77=
+endif
+ifndef F77
+	F77=
+endif
+ifndef F77_TYPE
+	F77_TYPE=
+endif
+ifndef LINKER
+	LINKER=mpicc-mpich-mp
+endif
+ifndef SO_EXT
+	SO_EXT=dylib
+endif
+ifndef MODULE_EXT
+	MODULE_EXT=so
+endif
+ifndef SO_CFLAGS
+	SO_CFLAGS=
+endif
+ifndef SO_LFLAGS
+	SO_LFLAGS=-dynamiclib -flat_namespace -undefined suppress -single_module
+endif
+ifndef MODULE_LFLAGS
+	MODULE_LFLAGS=-bundle -flat_namespace -undefined suppress
+endif
+ifndef RPATH_FLAG
+	RPATH_FLAG=
+endif
+ifndef RPATH
+	RPATH=
+endif
+ifndef RPATH_LFLAGS
+	RPATH_LFLAGS=
+endif
+ifndef EXPORT_DYNAMIC_LFLAGS
+	EXPORT_DYNAMIC_LFLAGS=-framework System -framework CoreServices -framework Foundation
+endif
+ifndef CC_CXX_LFLAGS
+	CC_CXX_LFLAGS=-lstdc++
+endif
+ifndef FORTRAN_COMPILER_LIBDIR
+	FORTRAN_COMPILER_LIBDIR=
+endif
+ifndef EXTRA_FORTRAN_LIBS
+	EXTRA_FORTRAN_LIBS=
+endif
+ifndef CC_FORTRAN_LFLAGS
+	CC_FORTRAN_LFLAGS=
+endif
+ifndef F77_LIBS
+	F77_LIBS=
+endif
+ifndef F77_SYMBOL_TRANSLATION
+	F77_SYMBOL_TRANSLATION=
+endif
+ifndef CC_WARNINGLEVEL
+	CC_WARNINGLEVEL=-Wall
+endif
+ifndef CC_SYMBOLLEVEL
+	CC_SYMBOLLEVEL=-g
+endif
+ifndef CC_OPTIMISATIONLEVEL
+	CC_OPTIMISATIONLEVEL=
+endif
+ifndef NOSHARED
+	NOSHARED=
+endif
+ifndef DL_DIR
+	DL_DIR=
+endif
+ifndef DL_LIBDIR
+	DL_LIBDIR=/lib
+endif
+ifndef DL_LIBFILES
+	DL_LIBFILES=-ldl
+endif
+ifndef DL_LIBS
+	DL_LIBS=-L${DL_LIBDIR} ${DL_LIBFILES}
+endif
+ifndef DL_INCDIR
+	DL_INCDIR=/include
+endif
+ifndef DL_INCLUDES
+	DL_INCLUDES=-I/include
+endif
+ifndef NOPYTHON
+	NOPYTHON=
+endif
+ifndef DOXYGEN
+	DOXYGEN=
+endif
+ifndef SVN
+	SVN=/usr/bin/svn
+endif
+ifndef HAVE_SVN
+	HAVE_SVN=1
+endif
+ifndef CSOAP_DIR
+	CSOAP_DIR=/usr/lib/libcsoap
+endif
+ifndef CSOAP_INCDIR
+	CSOAP_INCDIR=${CSOAP_DIR}/include/libcsoap-1.0
+endif
+ifndef CSOAP_INCLUDES
+	CSOAP_INCLUDES=-I${CSOAP_INCDIR}
+endif
+ifndef CSOAP_LIBDIR
+	CSOAP_LIBDIR=${CSOAP_DIR}/lib
+endif
+ifndef CSOAP_LIBFILES
+	CSOAP_LIBFILES=-lcsoap-1.0
+endif
+ifndef CSOAP_LIBS
+	CSOAP_LIBS=-L${CSOAP_LIBDIR} ${CSOAP_LIBFILES}
+endif
+ifndef NANOHTTP_DIR
+	NANOHTTP_DIR=${CSOAP_DIR}
+endif
+ifndef NANOHTTP_INCDIR
+	NANOHTTP_INCDIR=${NANOHTTP_DIR}/include/nanohttp-1.0
+endif
+ifndef NANOHTTP_INCLUDES
+	NANOHTTP_INCLUDES=-I${NANOHTTP_INCDIR}
+endif
+ifndef NANOHTTP_LIBDIR
+	NANOHTTP_LIBDIR=${NANOHTTP_DIR}/lib
+endif
+ifndef NANOHTTP_LIBFILES
+	NANOHTTP_LIBFILES=-lnanohttp-1.0
+endif
+ifndef NANOHTTP_LIBS
+	NANOHTTP_LIBS=-L${NANOHTTP_LIBDIR} ${NANOHTTP_LIBFILES}
+endif
+ifndef HAVE_SOAP
+	HAVE_SOAP=
+endif
+ifndef REGRESSTOR_URL
+	REGRESSTOR_URL=http://localhost/~alan/cgi-bin/RegresstorServices/Regresstor.cgi
+endif
+ifndef STGERMAIN_DIR
+	STGERMAIN_DIR=/Users/haolu/Software/snac/snac-1/build
+endif
+ifndef OPTIONS
+	OPTIONS=
+endif
+ifndef USE_RUN_LONG_TESTS
+	USE_RUN_LONG_TESTS=
+endif
+ifndef PROJ_ROOT
+	PROJ_ROOT=/Users/haolu/Software/snac/snac-1/Snac
+endif
+ifndef BLD_DIR
+	BLD_DIR=/Users/haolu/Software/snac/snac-1/build
+endif
+ifndef EXPORT_DIR
+	EXPORT_DIR=/Users/haolu/Software/snac/snac-1/build
+endif
+ifndef TMP_DIR
+	TMP_DIR=/Users/haolu/Software/snac/snac-1/build/tmp
+endif
+ifndef BIN_DIR
+	BIN_DIR=/Users/haolu/Software/snac/snac-1/build/bin
+endif
+ifndef LIB_DIR
+	LIB_DIR=/Users/haolu/Software/snac/snac-1/build/lib
+endif
+ifndef INC_DIR
+	INC_DIR=/Users/haolu/Software/snac/snac-1/build/include
+endif
+ifndef TST_DIR
+	TST_DIR=/Users/haolu/Software/snac/snac-1/build/tests
+endif
+ifndef PYB_DIR
+	PYB_DIR=/Users/haolu/Software/snac/snac-1/build/Python
+endif
+ifndef PYC_DIR
+	PYC_DIR=/Users/haolu/Software/snac/snac-1/build/Python
+endif
+ifndef SHARE_DIR
+	SHARE_DIR=/Users/haolu/Software/snac/snac-1/build/share
+endif
+PROJECT=Snac
+ifndef FIND_SUBDIRS
+	FIND_SUBDIRS=/usr/bin/find * -type d -follow -prune ! -name .svn
+endif
+ifndef MAKEFILE_FIND_SUBDIRS
+	MAKEFILE_FIND_SUBDIRS=$(shell ${FIND_SUBDIRS})
+endif
+ifndef GET_MODNAME
+	GET_MODNAME=basename /Users/haolu/Software/snac/snac-1/StGermain
+endif
+ifndef MAKEFILE_GET_MODNAME
+	MAKEFILE_GET_MODNAME=$(shell ${GET_MODNAME})
+endif
+ifndef MAKEFILE_CHECK_DEPENDENCIES
+	MAKEFILE_CHECK_DEPENDENCIES=$(foreach DEP,${DEPENDS},$(shell cd ${LIB_DIR} && if test -z `find . -name ${PROJECT}${DEP}*` ; then echo Compiling dependency: ${DEP} 1>&2 && cd ${PROJ_ROOT}/src && if test ! -z `find . -type d -name ${DEP}` ; then cd `find . -type d -name ${DEP}` && make 1>&2 ; else echo Cannot find dependency: ${DEP} 1>&2 ; fi ; fi ) )
+endif
+ifndef CC_SYMBOLLEVEL
+	CC_SYMBOLLEVEL=-g
+endif
+ifndef CC_WARNINGLEVEL
+	CC_WARNINGLEVEL=-Wall
+endif
+ifndef CC_DEBUGLEVEL
+	CC_DEBUGLEVEL=-DDEBUG -DQUERY_FP
+endif
+ifndef MATH_DIR
+	MATH_DIR=/usr
+endif
+ifndef MATH_INCDIR
+	MATH_INCDIR=/usr/include
+endif
+ifndef MATH_INCLUDES
+	MATH_INCLUDES=-I/usr/include
+endif
+ifndef MATH_LIBDIR
+	MATH_LIBDIR=/usr/lib
+endif
+ifndef MATH_LIBS
+	MATH_LIBS=-L/usr/lib -lm -lmx
+endif
+ifndef MPI_DIR
+	MPI_DIR=/opt/passcal/other
+endif
+ifndef MPI_BINDIR
+	MPI_BINDIR=/opt/passcal/other/bin
+endif
+ifndef MPI_LIBDIR
+	MPI_LIBDIR=/opt/passcal/other/lib/mpich-mp
+endif
+ifndef MPI_INCDIR
+	MPI_INCDIR=/opt/passcal/other/include/mpich-mp
+endif
+ifndef MPI_INCLUDES
+	MPI_INCLUDES=-I/opt/passcal/other/include/mpich-mp
+endif
+ifndef MPI_IMPLEMENTATION
+	MPI_IMPLEMENTATION=mpich
+endif
+ifndef MPI_LIBFILES
+	MPI_LIBFILES=-lmpich 
+endif
+ifndef MPI_RPATH
+	MPI_RPATH=
+endif
+ifndef MPI_LIBS
+	MPI_LIBS=-L/Users/haolu/Software/snac/snac-1/build/lib -lmpich -L/opt/passcal/other/lib/mpich-mp -lmpich  -L/sw/lib 
+endif
+ifndef MPI_RUN_COMMAND
+	MPI_RUN_COMMAND=mpirun
+endif
+ifndef MPI_RUN
+	MPI_RUN=/opt/passcal/other/bin/mpirun-mpich-mp
+endif
+ifndef MPI_NPROC
+	MPI_NPROC=-np
+endif
+HAVE_MPI=1
+ifndef XML2_CONFIG
+	XML2_CONFIG=/opt/passcal/other/bin/xml2-config
+endif
+ifndef XML_DIR
+	XML_DIR=/opt/passcal/other
+endif
+ifndef XML_CFLAGS
+	XML_CFLAGS=-I/opt/passcal/other/include/libxml2
+endif
+ifndef XML_INCLUDES
+	XML_INCLUDES=-I/opt/passcal/other/include/libxml2
+endif
+ifndef XML_LIBS
+	XML_LIBS=-L/opt/passcal/other/lib -lxml2 -lz -lpthread -liconv -lm
+endif
+ifndef STGERMAIN_DIR
+	STGERMAIN_DIR=/Users/haolu/Software/snac/snac-1/build
+endif
+ifndef STGERMAIN_INCDIR
+	STGERMAIN_INCDIR=${STGERMAIN_DIR}/include
+endif
+ifndef STGERMAIN_INCLUDES
+	STGERMAIN_INCLUDES=-I${STGERMAIN_INCDIR}
+endif
+ifndef STGERMAIN_LIBDIR
+	STGERMAIN_LIBDIR=${STGERMAIN_DIR}/lib
+endif
+ifndef STGERMAIN_LIBS
+	STGERMAIN_LIBS=-L${STGERMAIN_LIBDIR} -lStGermain
+endif
+ifndef STGERMAIN_RPATH
+	STGERMAIN_RPATH=
+endif
+ifndef HAVE_STGERMAIN
+	HAVE_STGERMAIN=1
+endif
+ifndef APPS_XML_DIR
+	APPS_XML_DIR=/Users/haolu/Software/snac/snac-1/build/lib/SNAC
+endif
+	EXPORT_INCLUDE_DIR=/Users/haolu/Software/snac/snac-1/build/lib/StGermain/Snac
+	EXAMPLES_DIR=/Users/haolu/Software/snac/snac-1/build/share/Snac
+	STG_INCLUDE_PATH=/Users/haolu/Software/snac/snac-1/build/lib/StGermain
+	EXPORT_INCLUDE_DIR=/Users/haolu/Software/snac/snac-1/build/lib/StGermain/Snac

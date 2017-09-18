@@ -273,7 +273,7 @@ void _AbstractContext_Init(
 	self->restartTimestep = Dictionary_GetUnsignedInt_WithDefault( self->dictionary, "restartTimestep", 0 );
 	self->checkPointPrefixString = Dictionary_GetString_WithDefault( self->dictionary, "checkPointPrefixString", "" );
 	if ( self->restartTimestep != 0 ) {
-		double dtFromFile;
+		double dtFromFile;  
 		self->loadFromCheckPoint = True;
 		self->timeStep = self->restartTimestep;
 		_AbstractContext_LoadTimeInfoFromCheckPoint( self, self->restartTimestep, &dtFromFile );

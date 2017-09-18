@@ -1,0 +1,431 @@
+MemoryField.c:180:8: warning: logical not is only applied to the left hand side of this comparison [-Wlogical-not-parentheses]
+MemoryField.c:180:8: note: add parentheses around left hand side expression to silence this warning
+1 warning generated.
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+Dictionary.c:53:18: warning: unused variable 'STRUCT_INIT_SIZE' [-Wunused-const-variable]
+Dictionary.c:54:18: warning: unused variable 'STRUCT_DELTA' [-Wunused-const-variable]
+2 warnings generated.
+Dictionary_Entry_Value.c:326:4: warning: variable 'copy' is used uninitialized whenever switch default is taken [-Wsometimes-uninitialized]
+Dictionary_Entry_Value.c:301:31: note: initialize the variable 'copy' to silence this warning
+Dictionary_Entry_Value.c:376:4: warning: variable 'copy' is used uninitialized whenever switch default is taken [-Wsometimes-uninitialized]
+Dictionary_Entry_Value.c:351:31: note: initialize the variable 'copy' to silence this warning
+2 warnings generated.
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+testRangeSet.c:68:7: warning: variable 'dstInds' is used uninitialized whenever 'if' condition is true [-Wsometimes-uninitialized]
+testRangeSet.c:68:7: warning: variable 'dstInds' is used uninitialized whenever '||' condition is true [-Wsometimes-uninitialized]
+testRangeSet.c:58:19: note: initialize the variable 'dstInds' to silence this warning
+2 warnings generated.
+ld: warning: directory not found for option '-L/sw/lib'
+Stg_ComponentFactory.c:290:19: warning: variable 'stream' is uninitialized when used here [-Wuninitialized]
+Stg_ComponentFactory.c:265:47: note: initialize the variable 'stream' to silence this warning
+1 warning generated.
+CallGraph.c:210:82: warning: all paths through this function will call itself [-Winfinite-recursion]
+CallGraph.c:46:19: warning: unused variable '_Stg_CallGraph_Stack_Type' [-Wunused-const-variable]
+CallGraph.c:47:19: warning: unused variable '_Stg_CallGraph_Entry_Type' [-Wunused-const-variable]
+3 warnings generated.
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+testCallGraph.c:176:40: warning: cast to 'Name' (aka 'char *') from smaller integer type 'Index' (aka 'unsigned int') [-Wint-to-pointer-cast]
+1 warning generated.
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ExtensionManager.c:469:63: warning: variable 'item_I' is uninitialized when used here [-Wuninitialized]
+ExtensionManager.c:381:12: note: initialize the variable 'item_I' to silence this warning
+1 warning generated.
+EntryPoint.c:57:19: warning: unused variable '_EntryPoint_Run_Type' [-Wunused-const-variable]
+1 warning generated.
+ld: warning: directory not found for option '-L/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+main.c:69:23: warning: variable 'dictionary' is uninitialized when used here [-Wuninitialized]
+main.c:48:26: note: initialize the variable 'dictionary' to silence this warning
+1 warning generated.
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+ParallelDelaunay.c:711:16: warning: argument type 'unsigned int *' doesn't match specified 'MPI' type tag that requires 'int *' [-Wtype-safety]
+ParallelDelaunay.c:761:16: warning: argument type 'unsigned int *' doesn't match specified 'MPI' type tag that requires 'int *' [-Wtype-safety]
+ParallelDelaunay.c:776:15: warning: argument type 'unsigned int *' doesn't match specified 'MPI' type tag that requires 'int *' [-Wtype-safety]
+ParallelDelaunay.c:851:16: warning: argument type 'unsigned int *' doesn't match specified 'MPI' type tag that requires 'int *' [-Wtype-safety]
+ParallelDelaunay.c:942:15: warning: argument type 'unsigned int *' doesn't match specified 'MPI' type tag that requires 'int *' [-Wtype-safety]
+ParallelDelaunay.c:1133:28: warning: cast to 'void *' from smaller integer type 'int' [-Wint-to-void-pointer-cast]
+ParallelDelaunay.c:1135:25: warning: cast to 'void *' from smaller integer type 'int' [-Wint-to-void-pointer-cast]
+7 warnings generated.
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+testComplexMath.c:130:5: warning: using floating point absolute value function 'fabs' when argument is of integer type [-Wabsolute-value]
+1 warning generated.
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+BelowCosinePlane.c:266:7: warning: using floating point absolute value function 'fabs' when argument is of integer type [-Wabsolute-value]
+1 warning generated.
+BelowPlane.c:257:7: warning: using floating point absolute value function 'fabs' when argument is of integer type [-Wabsolute-value]
+1 warning generated.
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+HexaEL.c:866:16: warning: variable 'telInd' is used uninitialized whenever 'if' condition is false [-Wsometimes-uninitialized]
+HexaEL.c:847:20: note: initialize the variable 'telInd' to silence this warning
+1 warning generated.
+HexaMD.c:1399:10: warning: passing 'int [3]' to parameter of type 'Index *' (aka 'unsigned int *') converts between pointers to integer types with different sign [-Wpointer-sign]
+HexaMD.c:1449:10: warning: passing 'int [3]' to parameter of type 'Index *' (aka 'unsigned int *') converts between pointers to integer types with different sign [-Wpointer-sign]
+2 warnings generated.
+testCommTopology.c:292:45: warning: incompatible pointer types passing 'unsigned int **' to parameter of type 'void **' [-Wincompatible-pointer-types]
+1 warning generated.
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+testDecompTransfer.c:77:1: warning: unused label 'done' [-Wunused-label]
+1 warning generated.
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+SobolGenerator.c:111:31: warning: implicit conversion from 'double' to 'unsigned int' changes value from 0.5 to 0 [-Wliteral-conversion]
+1 warning generated.
+Remesher.c:91:10: warning: implicit conversion from enumeration type 'Bool' (aka 'enum Bool') to different enumeration type 'AllocationType' (aka 'enum AllocationType') [-Wenum-conversion]
+1 warning generated.
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+VaryingCornerAttractors.c:39:34: warning: unused variable 'explosionPeriod' [-Wunused-variable]
+1 warning generated.
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+Mesh.c:56:18: warning: unused variable 'node_lI' [-Wunused-variable]
+1 warning generated.
+UpdateNode.c:497:11: warning: variable 'lapl_topo' is used uninitialized whenever 'if' condition is false [-Wsometimes-uninitialized]
+UpdateNode.c:497:11: warning: variable 'lapl_topo' is used uninitialized whenever '&&' condition is false [-Wsometimes-uninitialized]
+UpdateNode.c:406:7: warning: variable 'lapl_topo' is used uninitialized whenever 'if' condition is false [-Wsometimes-uninitialized]
+UpdateNode.c:406:68: warning: variable 'lapl_topo' is used uninitialized whenever '&&' condition is false [-Wsometimes-uninitialized]
+UpdateNode.c:406:7: warning: variable 'lapl_topo' is used uninitialized whenever '&&' condition is false [-Wsometimes-uninitialized]
+UpdateNode.c:406:8: warning: variable 'lapl_topo' is used uninitialized whenever '&&' condition is false [-Wsometimes-uninitialized]
+UpdateNode.c:388:22: note: initialize the variable 'lapl_topo' to silence this warning
+UpdateNode.c:525:6: warning: variable 'lapl_topo' is used uninitialized whenever 'if' condition is false [-Wsometimes-uninitialized]
+UpdateNode.c:525:6: warning: variable 'lapl_topo' is used uninitialized whenever '&&' condition is false [-Wsometimes-uninitialized]
+UpdateNode.c:520:22: note: initialize the variable 'lapl_topo' to silence this warning
+8 warnings generated.
+Context.c:1245:21: warning: incompatible pointer to integer conversion passing 'FILE *' (aka 'struct __sFILE *') to parameter of type 'int' [-Wint-conversion]
+Context.c:1549:21: warning: equality comparison with extraneous parentheses [-Wparentheses-equality]
+Context.c:1549:21: note: remove extraneous parentheses around the comparison to silence this warning
+Context.c:1551:26: warning: equality comparison with extraneous parentheses [-Wparentheses-equality]
+Context.c:1551:26: note: remove extraneous parentheses around the comparison to silence this warning
+3 warnings generated.
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+InitialConditions.c:118:38: warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+InitialConditions.c:124:34: warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+2 warnings generated.
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+VariableConditions.c:80:15: warning: argument type 'double (*)[elz]' doesn't match specified 'MPI' type tag that requires 'double *' [-Wtype-safety]
+VariableConditions.c:157:15: warning: argument type 'double (*)[elz]' doesn't match specified 'MPI' type tag that requires 'double *' [-Wtype-safety]
+VariableConditions.c:202:15: warning: argument type 'double (*)[elz]' doesn't match specified 'MPI' type tag that requires 'double *' [-Wtype-safety]
+VariableConditions.c:268:15: warning: argument type 'double (*)[elz]' doesn't match specified 'MPI' type tag that requires 'double *' [-Wtype-safety]
+4 warnings generated.
+ld: warning: directory not found for option '-L/sw/lib'
+HeatFlux.c:153:196: warning: incompatible integer to pointer conversion passing 'unsigned int' to parameter of type 'char *' [-Wint-conversion]
+1 warning generated.
+Heat.c:66:27: warning: unused variable 'contextExt' [-Wunused-variable]
+1 warning generated.
+VariableConditions.c:69:35: warning: unused variable 'material' [-Wunused-variable]
+VariableConditions.c:101:35: warning: unused variable 'midI' [-Wunused-variable]
+VariableConditions.c:102:35: warning: unused variable 'lmidI' [-Wunused-variable]
+VariableConditions.c:78:35: warning: unused variable 'topTemp' [-Wunused-variable]
+VariableConditions.c:177:35: warning: unused variable 'jCount' [-Wunused-variable]
+VariableConditions.c:281:20: warning: unused variable 'lmidI' [-Wunused-variable]
+VariableConditions.c:266:34: warning: unused variable 'material' [-Wunused-variable]
+VariableConditions.c:280:26: warning: unused variable 'midI' [-Wunused-variable]
+VariableConditions.c:319:26: warning: unused variable 'plugin' [-Wunused-variable]
+VariableConditions.c:318:26: warning: unused variable 'pluginsList' [-Wunused-variable]
+10 warnings generated.
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+Mesh.c:48:21: warning: unused variable 'self' [-Wunused-variable]
+1 warning generated.
+RemeshElements.c:313:21: warning: unused variable 'meshExt' [-Wunused-variable]
+1 warning generated.
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+Constitutive.c:224:97: warning: passing 'const char [25]' to parameter of type 'char *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+Constitutive.c:65:17: warning: unused variable 'temperatureEP' [-Wunused-variable]
+Constitutive.c:288:29: warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+Constitutive.c:407:19: warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+Constitutive.c:407:31: warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+Constitutive.c:407:19: warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+Constitutive.c:407:31: warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+Constitutive.c:411:17: warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+Constitutive.c:481:22: warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+9 warnings generated.
+ld: warning: directory not found for option '-L/sw/lib'
+InitialConditions.c:84:48: warning: comparison of unsigned expression >= 0 is always true [-Wtautological-compare]
+1 warning generated.
+ld: warning: directory not found for option '-L/sw/lib'
+ConstructExtensions.c:50:42: warning: unused variable 'tmpElementExt' [-Wunused-variable]
+1 warning generated.
+Constitutive.c:420:97: warning: passing 'const char [30]' to parameter of type 'char *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+Constitutive.c:120:13: warning: unused variable 'srexponent1' [-Wunused-variable]
+Constitutive.c:121:13: warning: unused variable 'srexponent2' [-Wunused-variable]
+Constitutive.c:488:29: warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+Constitutive.c:607:19: warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+Constitutive.c:607:31: warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+Constitutive.c:607:19: warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+Constitutive.c:607:31: warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+Constitutive.c:611:17: warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+Constitutive.c:681:22: warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+10 warnings generated.
+Output.c:100:9: warning: unused variable 'avgPlasticStrain' [-Wunused-variable]
+1 warning generated.
+ld: warning: directory not found for option '-L/sw/lib'
+InitialConditions.c:89:48: warning: comparison of unsigned expression >= 0 is always true [-Wtautological-compare]
+InitialConditions.c:65:26: warning: unused variable 'plugin' [-Wunused-variable]
+InitialConditions.c:63:8: warning: unused variable 'restart' [-Wunused-variable]
+InitialConditions.c:64:26: warning: unused variable 'pluginsList' [-Wunused-variable]
+4 warnings generated.
+ld: warning: directory not found for option '-L/sw/lib'
+Force.c:204:30: warning: unused variable 'mantleDensity' [-Wunused-variable]
+Force.c:210:13: warning: unused variable 'rosubg' [-Wunused-variable]
+Force.c:662:30: warning: unused variable 'mantleDensity' [-Wunused-variable]
+3 warnings generated.
+ld: warning: directory not found for option '-L/sw/lib'
+Track.c:251:58: warning: argument type 'int *' doesn't match specified 'MPI' type tag that requires 'char *' [-Wtype-safety]
+Track.c:251:20: warning: argument type 'int *' doesn't match specified 'MPI' type tag that requires 'char *' [-Wtype-safety]
+Track.c:292:34: warning: argument type 'unsigned int *' doesn't match specified 'MPI' type tag that requires 'int *' [-Wtype-safety]
+Track.c:293:31: warning: argument type 'unsigned int *' doesn't match specified 'MPI' type tag that requires 'int *' [-Wtype-safety]
+Track.c:297:2: warning: implicit declaration of function '_Snac_Context_AdjustDump' is invalid in C99 [-Wimplicit-function-declaration]
+Track.c:60:21: warning: unused variable 'geometry' [-Wunused-variable]
+Track.c:68:40: warning: unused variable 'unit_yAcceln' [-Wunused-variable]
+7 warnings generated.
+DeleteExtensions.c:39:26: warning: unused variable 'contextExt' [-Wunused-variable]
+1 warning generated.
+ld: warning: directory not found for option '-L/sw/lib'
+Force.c:65:12: warning: unused variable 'traction' [-Wunused-variable]
+1 warning generated.
+ld: warning: directory not found for option '-L/sw/lib'
+SnacCondFunc_ElementCondFunc.c:47:17: warning: unused variable 'element' [-Wunused-variable]
+1 warning generated.
+ld: warning: directory not found for option '-L/sw/lib'
+Constitutive.c:148:14: warning: incompatible pointer types initializing 'Coord *' (aka 'double (*)[3]') with an expression of type 'Coord' (aka 'double [3]'); take the address with & [-Wincompatible-pointer-types]
+Constitutive.c:203:22: warning: unused variable 'TT' [-Wunused-variable]
+Constitutive.c:125:10: warning: unused variable 'numer' [-Wunused-variable]
+Constitutive.c:126:10: warning: unused variable 'denom' [-Wunused-variable]
+Constitutive.c:82:9: warning: unused variable 'dZ' [-Wunused-variable]
+Constitutive.c:81:9: warning: unused variable 'dX' [-Wunused-variable]
+6 warnings generated.
+ld: warning: directory not found for option '-L/sw/lib'
+main.c:67:16: warning: unused variable 'componentDict' [-Wunused-variable]
+1 warning generated.
+ld: warning: directory not found for option '-L/sw/lib'
+ld: warning: directory not found for option '-L/lib'
+ld: warning: directory not found for option '-L/sw/lib'
+snac2dx.c:411:18: warning: format string is not a string literal (potentially insecure) [-Wformat-security]
+snac2dx.c:412:18: warning: format string is not a string literal (potentially insecure) [-Wformat-security]
+snac2dx.c:413:18: warning: format string is not a string literal (potentially insecure) [-Wformat-security]
+snac2dx.c:415:18: warning: format string is not a string literal (potentially insecure) [-Wformat-security]
+snac2dx.c:418:19: warning: format string is not a string literal (potentially insecure) [-Wformat-security]
+snac2dx.c:420:18: warning: format string is not a string literal (potentially insecure) [-Wformat-security]
+snac2dx.c:422:19: warning: format string is not a string literal (potentially insecure) [-Wformat-security]
+snac2dx.c:425:19: warning: format string is not a string literal (potentially insecure) [-Wformat-security]
+snac2dx.c:428:19: warning: format string is not a string literal (potentially insecure) [-Wformat-security]
+snac2dx.c:431:19: warning: format string is not a string literal (potentially insecure) [-Wformat-security]
+10 warnings generated.

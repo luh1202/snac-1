@@ -1,0 +1,11 @@
+prefix=/Users/haolu/Software/snac/snac-1/build
+exec_prefix=/Users/haolu/Software/snac/snac-1/build/bin
+libdir=/Users/haolu/Software/snac/snac-1/build/lib
+includedir=/Users/haolu/Software/snac/snac-1/build/include
+
+Name: StGermain
+Description: The StGermain Framework
+Version: 0
+Requires:
+Libs: -L/Users/haolu/Software/snac/snac-1/build/lib -lStGermain      -L/Users/haolu/Software/snac/snac-1/build/lib -lmpich -L/opt/passcal/other/lib/mpich-mp -lmpich  -L/sw/lib    -L/opt/passcal/other/lib -lxml2 -lz -lpthread -liconv -lm   -lm -lmx   -L/lib -ldl                        
+Cflags: -I/Users/haolu/Software/snac/snac-1/build/include       -I/opt/passcal/other/include/mpich-mp   -I/opt/passcal/other/include/libxml2     -I/include      
