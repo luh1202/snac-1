@@ -71,7 +71,7 @@ ifndef TEE
 	TEE=/usr/bin/tee
 endif
 ifndef NM
-	NM=/opt/passcal/other/bin/nm
+	NM=/opt/local/bin/nm
 endif
 ifndef LS
 	LS=/bin/ls

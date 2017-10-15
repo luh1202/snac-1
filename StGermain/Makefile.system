@@ -71,7 +71,7 @@ ifndef TEE
 	TEE=/usr/bin/tee
 endif
 ifndef NM
-	NM=/opt/passcal/other/bin/nm
+	NM=/opt/local/bin/nm
 endif
 ifndef LS
 	LS=/bin/ls
@@ -354,19 +354,19 @@ ifndef MATH_LIBS
 	MATH_LIBS=-L${MATH_LIBDIR} -lm -lmx
 endif
 ifndef XML2_CONFIG
-	XML2_CONFIG=/opt/passcal/other/bin/xml2-config
+	XML2_CONFIG=/opt/local/bin/xml2-config
 endif
 ifndef XML_DIR
-	XML_DIR=/opt/passcal/other
+	XML_DIR=/opt/local
 endif
 ifndef XML_CFLAGS
-	XML_CFLAGS=-I/opt/passcal/other/include/libxml2
+	XML_CFLAGS=-I/opt/local/include/libxml2
 endif
 ifndef XML_INCLUDES
-	XML_INCLUDES=-I/opt/passcal/other/include/libxml2
+	XML_INCLUDES=-I/opt/local/include/libxml2
 endif
 ifndef XML_LIBS
-	XML_LIBS=-L/opt/passcal/other/lib -lxml2 -lz -lpthread -liconv -lm
+	XML_LIBS=-L/opt/local/lib -lxml2 -L/opt/local/lib -lz -L/opt/local/lib -llzma -lpthread -liconv -lm
 endif
 ifndef MPI_DIR
 	MPI_DIR=/opt/passcal/other

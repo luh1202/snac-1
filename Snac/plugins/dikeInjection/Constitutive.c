@@ -350,7 +350,7 @@ void SnacDikeInjection_Constitutive( void* _context, Element_LocalIndex element_
                  // 2500 yrs data frequency
                  if ((long)self->currentTime % 78840000000 == 0)
                  {
-                     fp = fopen("data250kyrs_period_type8.txt", "a+");
+                     fp = fopen("data_250kyrs_period_type8.txt", "a+");
                      if (fp == NULL)
                      {
                          printf("Cannot open file!\n");
@@ -540,7 +540,7 @@ void SnacDikeInjection_Constitutive( void* _context, Element_LocalIndex element_
 	       // 2500 yrs data frequency
 	       if ((long)self->currentTime % 78840000000 == 0)
                  {
-		   fp = fopen("data250kyrs_period_type16.txt", "a+");
+		   fp = fopen("data_250kyrs_period_type16.txt", "a+");
 		   if (fp == NULL)
                      {
 		       printf("Cannot open file!\n");
